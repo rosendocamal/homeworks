@@ -1,0 +1,163 @@
+\documentclass[letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{amssymb, amsmath}
+
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+\title{C\'alculo Integral}
+\author{Jose Rosendo Camal Teh}
+\date{15 de marzo de 2026}
+
+\pagestyle{plain}
+
+\begin{document}
+   
+	\begin{titlepage}
+	    \centering
+	    {\scshape\LARGE Universidad Aztlán \par}
+	    \vspace{1cm}
+	    {\scshape\Large Sede Playa del Carmen \par}
+	    \vspace{3cm}
+	    {\scshape\Huge Integrales \par}
+	    \vspace{1cm}
+	    {\itshape\Large Ejercicios\par}
+	    \vspace{3cm}
+	    {\Large José Rosendo Camal Teh \par}
+	    \vfill
+	    {\Large Ingeniería en Sistemas Computacionales \par}
+	    {\Large Segundo Cuatrimestre \par}
+	    {\Large C\'alculo Integral \par}
+	    \vfill
+	    {\Large Profe. Xicontecatl Carreto \par}
+	    \vfill
+	    {\Large 15 de marzo de 2026 \par}
+	    \vfill
+	    {\Large Playa del Carmen, Quintana Roo \par}
+	\end{titlepage}
+
+	
+	\section*{C\'alculo Integral}
+	\textbf{Instrucciones:} Calcular las siguientes integrales inmediatas.
+
+	\subsection*{Ejercicio 1} % Primera integral inmediata
+		\vspace{0.5cm}
+		% Integral 1
+		\[ \int \frac{9}{x^4} \, dx  \]
+		\vspace{0.5cm}
+		% Desarrollo
+		\vspace{0.2cm}
+		Desarollamos y buscamos la antiderivada:
+		\begin{align*}
+			\int \frac{9}{x^4} \, dx &= \int 9 \cdot \frac{1}{x^4} \, dx \\
+			&= 9 \int \frac{1}{x^4} \, dx \\
+			&= 9 \int x^{-4} \, dx \\
+			&= 9 \left[ \frac{x^{-4 + 1}}{-4 + 1} \right] + C \\
+			&= 9 \left[ \frac{x^{-3}}{-3} \right] + C \\
+			&= 9 \cdot \frac{x^{-3}}{-3} + C \\
+			&= 9 \cdot \left( \frac{1}{-3} \right) \cdot x^{-3} + C \\
+			&= 9 \cdot \left( -\frac{1}{3} \right) \cdot x^{-3} + C \\
+			&= -\frac{9}{3} x^{-3} + C \\
+			&= -3 x^{-3} + C \\
+			&= -\frac{3}{x^3} + C
+		\end{align*}
+		\vspace{0.2cm}
+		Comprobamos:
+		\begin{align*}
+			\frac{9}{x^4} &= \frac{d}{dx} -\frac{3}{x^3} + C \\
+			&= \frac{d}{dx} -\frac{3}{x^3} + \frac{d}{dx} C \\
+			&= -3 \frac{d}{dx} \frac{1}{x^3} + 0 \\
+			&= -3 \frac{d}{dx} x^{-3} \\
+			&= -3 \left( -3 x^{-3 - 1} \right) \\
+			&= -3 \left( -3 x^{-4} \right) \\
+			&= 9 x^{-4} \\
+			\frac{9}{x^4} &= \frac{9}{x^4}
+		\end{align*}
+		% Resultado
+		\vspace{0.2cm}
+		Resultado:
+		\[ \int \frac{9}{x^4} \, dx = -\frac{3}{x^3} + C\]
+		
+	\subsection*{Ejercicio 2} % Segunda integral inmediata
+		
+		% Integral 2
+		\vspace{0.5cm}
+		\[ \int \frac{\, dx}{x^{-2}} \]
+		\vspace{0.5cm}
+		% Desarrollo
+		\vspace{0.2cm}
+		Desarrollamos la integral y buscamos la antiderivada:
+		\begin{align*}
+			\int \frac{\, dx}{x^{-2}} &= \int \frac{1}{x^{-2}} \, dx \\
+			&= \int \frac{1}{ \frac{1}{x^2} } \, dx \\
+			&= \int \frac{ \frac{1}{1} }{ \frac{1}{x^2} } \, dx \\
+			&= \int \frac{x^2}{1} \, dx \\
+			&= \int x^2 \, dx \\
+			&= \frac{x^{2 + 1}}{2 + 1} + C \\
+			&= \frac{x^3}{3} + C \\
+			&= \frac{1}{3} x^3 + C
+		\end{align*}
+		\vspace{0.2cm}
+		Comprobamos:
+		\begin{align*}
+			\frac{1}{x^{-2}} &= \frac{d}{dx} \frac{1}{3} x^3 + C \\
+			&= \frac{d}{dx} \frac{1}{3} x^3 + \frac{d}{dx} C \\
+			&= \frac{1}{3} \frac{d}{dx} x^3 + 0 \\
+			&= \frac{1}{3} \left( 3 x^{3 - 1} \right) \\
+			&= \frac{1}{3} \left( 3 x^2 \right) \\
+			&= \frac{3}{3} x^2 \\
+			\frac{1}{x^{-2}} &= x^2 \\
+			\frac{1}{ \frac{1}{x^2}} &= \\
+			x^2 &= x^2
+		\end{align*}
+		% Resultado
+		\vspace{0.2cm}
+		Resultado:
+		\[ \int \frac{\, dx}{x^{-2}} = \frac{1}{3} x^3 + C \]
+		
+	\subsection*{Ejercicio 3} % Tercera integral inmediata
+		
+		% Integral 3
+		\vspace{0.5cm}
+		\[ \int x^{ \frac{2}{3} } \, dx \]
+		\vspace{0.5cm}
+		% Desarrollo
+		\vspace{0.2cm}
+		Desarrollamos la integral y buscamos la antiderivada:
+		\begin{align*}
+			\int x^{ \frac{2}{3} } \, dx &= \frac{x^{ \frac{2}{3} + 1}}{ \frac{2}{3} + 1} + C \\
+			&= \frac{x^{ \frac{2}{3} + \frac{3}{3} }}{ \frac{2}{3} + \frac{3}{3} } + C \\
+			&= \frac{x^{ \frac{2 + 3}{3} }}{ \frac{2 + 3}{3} } + C \\
+			&= \frac{x^{ \frac{5}{3} }}{ \frac{5}{3} } + C \\
+			&= \frac{ \sqrt[3]{x^5} }{ \frac{5}{3} } + C \\
+			&= \frac{ \frac{ \sqrt[3]{x^5} }{1} }{ \frac{5}{3} } + C \\
+			&= \frac{3  \sqrt[3]{x^5}}{5} + C \\
+			&= \frac{3x \sqrt[3]{x^2}}{5} + C
+		\end{align*}
+		\vspace{0.2cm}
+		Comprobamos:
+		\begin{align*}
+			x^{ \frac{2}{3} } &= \frac{d}{dx} \frac{3x \sqrt[3]{x^2}}{5} + C \\
+			&= \frac{d}{dx} \frac{3x \sqrt[3]{x^2}}{5} + \frac{d}{dx} C \\
+			&= \frac{3}{5} \frac{d}{dx} x \sqrt[3]{x^2} + 0 \\
+			&= \frac{3}{5} \frac{d}{dx} \sqrt[3]{x^3} \sqrt[3]{x^2} \\
+			&= \frac{3}{5} \frac{d}{dx} x^{ \frac{3}{3} } \cdot x^{ \frac{2}{3} } \\
+			&= \frac{3}{5} \frac{d}{dx} x^{ \frac{3}{3} + \frac{2}{3} } \\
+			&= \frac{3}{5} \frac{d}{dx} x^{ \frac{5}{3} } \\
+			&= \frac{3}{5} \cdot \frac{5}{3} x^{\frac{5}{3} - 1} \\
+			&= \frac{3}{5} \cdot \frac{5}{3} x^{ \frac{5}{3} - \frac{3}{3} } \\
+			&= \frac{3}{5} \cdot \frac{5}{3} \cdot x^{ \frac{5 - 3}{3} } \\
+			&= \frac{3}{5} \cdot \frac{5}{3} \cdot x^{ \frac{2}{3} } \\
+			&= \left( \frac{3}{5} \cdot \frac{5}{3} \right) \cdot x^{ \frac{2}{3} } \\
+			&= x^{ \frac{2}{3} } \\
+			x^{ \frac{2}{3} } &= x^{ \frac{2}{3} }
+		\end{align*}
+		% Resultado
+		\vspace{0.2cm}
+		Resultado:
+		\[ \int x^{ \frac{2}{3} } \, dx = \frac{ 3x \sqrt[3]{x^2}}{5} + C \]
+
+\end{document}

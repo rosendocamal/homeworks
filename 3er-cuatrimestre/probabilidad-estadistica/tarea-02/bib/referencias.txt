@@ -1,0 +1,41 @@
+@book{sackman2022,
+  author    = {Sackman Gaona, Arturo},
+  title     = {Probabilidad y estadística},
+  publisher = {Ktdra},
+  year      = {2022},
+  address   = {México}
+}
+
+@online{matefaciles,
+  author   = {Mates Fáciles},
+  title    = {Media, mediana y moda para datos agrupados},
+  url      = {https://lasmatesfaciles.com/2021/05/07/media-mediana-y-moda-para-datos-agrupados/},
+  urldate  = {2026-07-26},
+  year     = {2021}
+}
+
+@online{p_e_ord,
+  author   = {Gisbert Juárez, Marc},
+  title    = {Variable ordinal},
+  url      = {https://www.probabilidadyestadistica.net/variable-ordinal/},
+  urldate  = {2026-07-26},
+  year     = {2026}
+}
+
+@online{p_e_rel,
+  author   = {Gisbert Juárez, Marc},
+  title    = {Frecuencia relativa},
+  url      = {https://www.probabilidadyestadistica.net/frecuencia-relativa/},
+  urldate  = {2026-07-26},
+  year     = {2026}
+}
+
+@online{anthropic2026,
+  author       = {Anthropic},
+  title        = {Medidas de tendencia central para datos agrupados},
+  note         = {Chat de IA generativa},
+  organization = {Claude Haiku 4.5},
+  url          = {https://claude.ai/},
+  urldate      = {2026-07-26},
+  year         = {2026}
+}

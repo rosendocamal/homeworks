@@ -1,0 +1,394 @@
+\documentclass[12pt]{article}
+
+% ========== Paquetes ===========
+
+% Codificación de caracteres e idioma
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% Paquete para referencias bibliográficas
+\usepackage[backend=biber, cytestyle=authoryear, style=apa]{biblatex}
+
+% Tamaño de página y márgenes
+\usepackage[letterpaper, margin=2.54cm]{geometry}
+
+% Comillas, columnas, gráficos, símbolos matemáticos e ingreso de código de programación
+\usepackage{csquotes, multicol, graphicx, amssymb, amsmath, listings, xcolor}
+
+% Fijar tamaño de columna en tablas
+\usepackage{array}
+
+% Links en texto
+\usepackage{hyperref}
+
+% Interlineado 1.5
+\usepackage{setspace}
+\onehalfspacing
+
+% \usepackage{uarial}
+% \renewcommand{\familydefault}{\sfdefault}
+
+% Uso de punto decimal, en lugar de coma
+\decimalpoint
+
+% Separación de columnas y sangría
+\setlength{\columnsep}{2cm} 
+\setlength{\parindent}{0cm}
+
+% Páginado
+\pagestyle{plain}
+
+% Evitar separación de palabras
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\sloppy
+
+% Archivo de referencias bibliográficas
+\addbibresource{bib/referencias.bib}
+
+
+% ========== Documento ==========
+
+\begin{document}
+
+% ========== Portada ============
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE Universidad Aztlán \par}
+	\vspace{1cm}
+	{\scshape\Large Campus Playa del Carmen \par}
+	\vspace{1.75cm}
+	{\scshape\Huge Análisis de un SGDB para una operadora de experiencias turísticas \par}
+    \vfill
+    {\itshape\Large Sistemas Gestores de Bases de Datos \par}
+	\vspace{2cm}
+    {\itshape\Large Presentado por: \par}
+	{\Large José Rosendo Camal Teh \par}
+	\vfill
+	{\Large Ingeniería en Sistemas Computacionales \par}
+	{\Large Cuarto Cuatrimestre \par}
+	{\Large Fundamentos de Bases de Datos \par}
+	\vfill
+	{\Large Mtro. Irvin Arlin Chan Ac \par}
+	\vfill
+	{\Large 10 de agosto de 2026 \par}
+	\vfill
+	{\Large Playa del Carmen, Quintana Roo \par}
+\end{titlepage}
+\newpage
+
+\tableofcontents
+\newpage
+
+% ========== Cuerpo =============
+
+% Introducción 
+\section*{\centering Introducción}
+\addcontentsline{toc}{section}{Introducción}
+
+% proposito del trabajo, importancia de bases de datos, problema de ruta del mayab,  apartados que se desarollaran
+
+Hoy en día, estamos rodeados de información y es tal el volumen y el valor de los datos que es necesario organizarlos y almacenarlos de una forma en la que tengamos acceso, la garantía de su seguridad e integridad. Para esta situación surge el concepto de base de datos y los sistemas de gestión de base de datos. El propósito de este trabajo es diseñar, para una empresa, de manera conceptual una base de datos, el modelado de datos y la elección de una opción de sistemas de gestión de bases de datos disponibles en el mercado.
+\newline
+
+Esta empresa, Rutas del Mayab, organiza recorridos en sitios naturales, experiencias en contacto con la naturaleza, eventos culturales y más actividades relacionadas con el turismo ecológico y de aventura, y a pesar de lo sorprendente que puede ser los servicios que ofrecen, su gestión de los datos es deficiente y hasta manual con apariencia de modernidad. Esto le acarrea problemas y por eso la necesidad de determinar cuáles son, sus consecuencias y la comprensión de como un sistema de gestión de base de datos le ayudaría en el manejo de sus datos.
+\newline
+
+Lo anterior se desarrollará a lo largo del documento, el presente proyecto seguirá la siguiente ruta: revisión de literatura respecto a la base de datos y el modelado de datos, el diagnóstico profundo de los problemas de la empresa mencionada, la identificación de los procesos que da lugar al acceso, registro y modificación de datos de la empresa, el perfil de los usuarios o empleados que tengan requieran hacer uso de datos, la identificación y diseño del modelo relacional mediante la identificación de entidades y sus relaciones, así como la elección de una capa de software para la gestión de datos. 
+\newpage
+
+% Revisión de literatura
+\section*{\centering Revisión de literatura}
+\addcontentsline{toc}{section}{Revisión de literatura}
+
+%% Acerca de dato, información y base de datos.
+
+El gestionar volúmenes de información y datos ha llevado a crear tecnologías como las bases de datos. Es importante comprender, antes de avanzar, los términos \textit{datos}, \textit{información} y \textit{bases de datos}. La palabra \textbf{dato} se refiere a los hechos conocidos que se pueden guardar y que tienen un significado implícito \parencite{Elmasri2007}. El dato, en términos intuitivos, puede ser los nombres, los números de teléfonos y direcciones de nuestros familiares, estos pueden ser guardados en una libreta o en una aplicación de contactos. Estos datos, así como el conjunto de ellas, se puede extraer información. La información como tal es el valor o la utilidad de los datos o el conjunto de ellas. 
+\newline
+
+Según \textcite{Elmasri2007}, el conjunto o la colección de datos cuyos datos estén relacionados entre sí es una \textbf{base de datos}. Por otro lado, \textcite{ibm} define explicítamente la \textbf{base de datos} como el sistema para almacenar y gestionar datos, que abarca desde los medios físicos de almacenamiento hasta el software que se utiliza para administrar y acceder a los datos. Las bases de datos son sistemas sólidos y con una gestión central que pueden admitir una gran variedad de datos y formatos, al mismo tiempo que permiten y controlan el acceso a consultas de información avanzadas y complejas. Mientras que Elsmari y Navathe van desarrollando de manera segmentada la definición de una base de datos desde el concepto de datos, Konsiski lo expone de forma deliberada con enfoque más holístico.
+\newline
+
+Sin embargo, hay que tener cuidado con llamar bases de datos a lo que no es. Por ejemplo, en las hojas de cálculo se pueden guardar datos a manera de tablas (registros y columnas o campos) y esto es muy similar a como se organiza en \textit{modelos relacionales de base de datos} [concepto que indagaremos más adelante], pero el primero es un solo archivo no un sistema. Aunque ello no implica utilizar hojas de cálculo como software para base de datos, siempre y cuando el volumen y complejidad de los datos sea adecuados para este tipo de archivos y desafortunadamente, en la mayoría de los casos no es así.
+\newline
+
+%% Acerca de sistema gestor de bases de datos
+
+La colección de datos, denominada normalmente como base de datos, requiere de un software o conjunto de programas para permitir a las personas como las aplicaciones de usuario que interactúen con dichos datos \parencite{microsoft, Elmasri2007}. A esta capa de software se conoce como \textbf{Sistema Gestor de Base de Datos} o SGBD y es la encargada del almacenamiento de datos (organización y estructura de los datos), el control de acceso a los datos (administración de permisos y autenticación), la recuperación y la protección de la colección de los datos y de los mismos datos de manera individual. Igualmente, se puede entender como SGBD como la colección de los datos, la base de datos, y los programas para acceder a dicho conjunto cuyo objetivo es proporcionar una forma de almacenar y recuperar la información de la colección de datos de manera pragmática y eficiente \parencite{Silberschatz2014}.
+\newline
+%% Acerca de las principales funciones de un SGBD
+
+Una de las maneras de gestión de datos que se utilizaban anteriormente y que dió motivo para la iniciativa de crear un \textit{Sistema Gestor de Base de Datos} fue el \textbf{procesamiento de datos mediante archivos}. Este método trae como resultados la redudancia e inconsistencia de datos, un aumento considerable en el tiempo de anomalías en el acceso concurrente a los archivos y a los datos, la dificultad de acceder a los datos tanto en tiempo como en la búsqueda de los archivos, problemas de integridad, problemas de atomicidad y posibles riesgos de seguridad (ya que es díficil garantizar la seguridad en miles de ficheros). Así es como lo afirma autores como \textcite{Silberschatz2014}.
+\newline
+
+Las funciones críticas de un \textit{Sistema Gestor de Base de Datos} son el almacenamiento de los datos, el control de acceso a la base de datos, permitir crear copias de seguridad y la restauración del sistema, la optimización del rendimiento-indexación, el almacenamiento en caché, el planeamiento de consultas y de particionamiento de base de datos para acelerar las operaciones relacionadas al uso y acceso de información \parencite{microsoft}. Las ventajas de utilizar un SGBD, según \textcite{Ramirez2009} son la independencia de datos, la accesibilidad limitada, los datos al día y sin redudancias, la consistencia, una interfaz única, entrada directa a los datos, la recuperación por diferentes accesos, función completa de interrogantes, la estandarización y la seguridad de la base de datos, del software y del hardware en donde se aloja, así como la facilitación del trabajo a los usuarios de la información.
+\newline
+
+Una de las principales funciones del SGBD es la protección de datos y su mantenimiento a lo largo del tiempo. Así lo señala \textcite{Elmasri2007}:
+
+
+\begin{displayquote}
+	Otras funciones importantes ofrecidas por el DBMS son la protección de la base de datos y su mantenimiento durante un largo periodo de tiempo. La protección incluye la protección del sistema contra el funcionamiento defectuoso del hardware o el software (caídas) y la protección de la seguridad contra el acceso no autorizado o malintencionado. Una gran base de datos típica puede tener un ciclo de vida de muchos años, por lo que el DBMS debe ser capaz de mantener el sistema de bases de datos permitiendo que el sistema evolucione según cambian los requisitos con el tiempo.
+\end{displayquote}
+
+%% Niveles de abstracción: externo, conceptual e interno.
+
+Con todo lo anterior surge una diferenciación grande en la manera con la que se trabaja y perciben cada uno de los componentes del SGBD y del concepto de bases de datos. Con la finalidad de ocultar la complejidad o de facilitar las actividades a los usuarios del SGBD se ha utilizado \textbf{abstracciones}, los cuales se han dividido en tres niveles:
+
+\begin{itemize}
+	\item \textbf{Nivel externo o de vista.} Es el nivel más elevado de abstracción y sirve para simplificar la interacción del sistema. De esta manera, solo a los usuarios interesados se les permite ver una parte de la bases de datos, la que necesitan o solicitan, y el resto de los datos se les oculta \parencite{Silberschatz2014, Elmasri2007}.
+	\item \textbf{Nivel conceptual o lógico.} Es el nivel de abstracción intermedio y describe qué datos se almacenan y sus relaciones entre sí. Este nivel se asemeja más al entendimiento de la base de datos como diagramas o esquemas, mediante conceptos como entidades, tipos de datos, las relaciones y las operaciones y restricciones de los usuarios. En pocas palabras, es el modelo de implementación de la base de datos, ajena a la complejidad física de los componentes electrónicos y digitales \parencite{Silberschatz2014, Elmasri2007}.
+	\item \textbf{Nivel interno o físico.} Es el nivel más bajo de las abstracciones. Este describe al detalle el almacenamiento de los datos en los estructuras físicas, los tipos de estructuras de datos computacionales, las rutas de acceso a la base de datos. Es el esquema físico de la base de datos, en donde interviene la infraestructura y los cimientos de implementación del software de bajo nivel \parencite{Silberschatz2014, Elmasri2007}.
+\end{itemize}
+
+%% Tipos de usuario de una base de datos
+
+Las personas que harán uso de una base de datos o del SGBD se les denomina usuarios. Estos son los \textbf{diseñadores de bases de datos}, los \textbf{usuarios finales} (administrativos, analistas, vendedores, gerentes, auditores, etc.), y \textbf{analistas de sistemas} y \textbf{programadores de aplicaciones}. Los criterios para dividir e identificar a los tipos de usuarios, como señalan \textcite{Elmasri2007, Silberschatz2014}, son los siguientes: el usuario va a crear la base de datos o el SGBD; el usuario hará de la SGBD como una herramienta en sus actividades; o el usuario será partícipe de la conexión y el acceso del SGBD a otras herramientas más intuitivas para que otros usuarios accedan a la base de datos.
+\newline
+
+%% Modelo de datos más importantes
+
+Tomando en cuenta que un SGBD necesita de una base de datos, y que un SGBD no tiene sentido sin que haya usuarios que requieran de sus servicios, es necesario que los datos esten organizados de cierta manera tal que se le permita a los usuarios interactuar con ella y que tenga sentido para la información que guardan. Para ello se hace de \textbf{modelos de datos}. \textcite{amazon} define el modelo de base de datos como la estructura lógica, conceptual donde se describen las relaciones de los datos y las reglas de almacenamiento, organización y manipulación de la información. Los modelos de datos más importantes son los \textbf{modelos de datos de alto nivel} (basado en entidades y relaciones), los \textbf{modelos de datos de nivel bajo o físicos} y en los \textbf{modelos de datos representativos o de implementación} (basados en registros, orientados a objetos) \parencite{Elmasri2007, Castillo1995}.
+\newline
+
+%% Características generales del modelo relacional
+En 1970, el Dr. Codd, empleado en IBM y como narra \textcite{Castillo1995}, propuso el modelo de base de datos relacional. Se considera el modelo relacional como aquella representación de los datos como tablas compuestas de de renglones (registros) y columnas (campos de datos). Y este es el modelo de datos más usado actualmente. En el modelo relacional, la representación de la información y datos del mundo real se establece en tablas sencillas de dos dimensiones relacionadas entre sí por columnas, y cada línea se le denomina como tupla y las columnas como atributos \parencite{Ramirez2009}.
+\newline
+
+%% Llave foránea y primaria
+
+Los conceptos de \textbf{clave o llave primaria}, \textit{primary key}, y de \textbf{clave o llave foránea}, \textit{foreign key}, son importantes para comprender las relaciones entre las tablas e incluso para implementar dichas relaciones. La \textbf{clave primaria} es el medio de identificación principal de cada de unas líneas o tuplas de una relación y como advierte \textcite{Silberschatz2014} es relevante entender que las claves son propiedades de las relaciones, no de cada uno de los registros o tuplas. Aunque podamos pensar que las claves primarias son identificadores de los registros o tuplas de una tabla, en realidad es una confusión, ya que facilita la identificación de un registro de una tabla, a pesar de que su propósito es identificarlas o anexarlas en un contexto de relación entre dos o más tablas. El concepto de \textbf{clave foránea} es una manera de restricción referencial entre dos tablas, es decir, permite referenciar tuplas de otras tablas bajo cierta restricciones entre ellas [la restricción no es más que la manera que se referencían la tupla de un tabla con las tuplas de otra tabla] \parencite{Elmasri2007}.
+\newline
+
+%% Integridad, seguridad  y ética en el manejo de bases de datos
+
+Como se ha dicho anteriormente una de las funciones de un SGBD es la integridad y la protección de los datos. Esto tiene implicaciones más allá que la mera protección e integridad de los datos, aunque esté fuera del alcance de la capa de software de un SGBD, como en la ética y la actitudes que toman los usuarios frente al manejo y la implementación de base de datos. Hoy en día, las base de datos se emplean para el tratamiento, acceso y almacenaje de información valiosa, confidencial y crítica como los datos personales de los ciudadados, información de centrales eléctricas e hídricas así como información de grado militar. Esto hace que hasta las pequeñas bases de datos sean objetivos de ataques y a la mala utilización de las mismas, por ello la administración de los SGBDs y de las base de datos se deben acompañar de una planificación minuciosa tomando en cuenta no solo el aspecto técnico, también se requiere valorar los factores externos y la ética de las personas. Por ello, algunos autores como \textcite{Navas2018}, proponen seguir lineamientos estandarizados (como el \textbf{COBIT 5 Framework}) e implementarlos para evitar o minimizar los vectores de ataque y el mal uso de una base de datos. \textcite{Navas2018} describe y proporciona evidencia de que la implementación de la guía técnica del \textbf{COBIT 5} mejora la tolerancia, la tenacidad y la capacidad de actuación ante los mecanismos de ataque y mal uso, al mismo tiempo que permite ver el estado de seguridad de la empresa y así conocer sus puntos débiles y fuertes para una mejora continua.
+\newline
+
+Uno de los casos de incidentes de seguridad en las bases de datos es el método conocido como \textbf{SQL Injection}. Estos métodos son posibles de efectuar debido a una configuración deficiente o errónea de procesos de la SGBD, aún cuando exista una preocupación por la seguridad de los datos tal como hace hincapié el investigador \textcite{Villalobos2008a}. Por ello, se proponen capacitarse en la manera de configuración de las conexiones de bases de datos, reconociendo los posibles errores y seguir recomendaciones para disminuir el riesgo asociado a estos procesos, así como realizar controles y auditorías enfocadas en los objetos y las transacciones. Es relevante hacer nota que mucho de estos mecanismos lo promovee los SGBDs, por lo que es importante conocerlos y sobretodo, utilizarlos tanto como prevención y mitigación \parencite{Villalobos2008b}.
+\newpage
+
+% Desarrollo
+\section*{\centering Caso de Rutas del Mayab}
+\addcontentsline{toc}{section}{Caso de Rutas del Mayab}
+
+La empresa ficticia Rutas del Mayab organiza recorridos en bicicleta, visitas a cenotes, rutas gastronómicas, avistamiento de aves, talleres culturales y excursiones a reservas naturales. Actualmente utiliza archivos y hojas de cálculo independientes para registrar visitantes, experiencias, salidas programadas, guías, reservaciones y pagos. Esta forma de trabajo le provoca duplicidad de información, errores en los cupos disponibles, dificultad para identificar reservaciones sin pagar y poca trazabilidad sobre los guías asignados. La empresa
+necesita determinar cómo un SGBD podría ayudarle a organizar y proteger su información.
+
+% Parte A
+
+\subsection*{Diagnóstico del problema}
+\addcontentsline{toc}{subsection}{Diagnóstico del problema}
+
+A continuación se enumera algunas causas, sus consecuencias y lo que el uso de un \textbf{SGBD} facilitaría para evitar dichas problemas y sus efectos negativos.
+
+\begin{itemize}
+	\item \textbf{Duplicidad de datos}. La dificultad radica en mantener al día los datos de los visitantes, sitios, reservas, empleados y otra información de la empresa sin que haya complejidad para acceder a los datos necesarios para ejecutar los procesos del negocio. Para poder acceder a la información se requiere una complejidad en las hojas de cálculo, en el manejo de tablas pivotales (dinámicas) y por lo tanto, un nivel de dominio intermedio o avanzado en el manejo de las paqueterías de ofimática; y sin contar la creación de nuevos archivos al crear o actualizar datos. Esto implica que cierta parte de los empleados deben cumplir con el requisito de poseer ciertas habilidades informáticas más allá de lo elemental o necesario que lo que sugiere su puesto. Aquí un \textbf{SGBD} podría facilitar la implementación de una interfaz al usuario que le oculte la complejidad técnica al empleado, y también, proporcionar el uso del \textit{modelo relacional}, el uso de \textit{llaves foráneas}, la elección de adecuadas \textit{entidades}, además de creación de filtros para evitar la introducción de datos si ya existe en la base de datos, además que da a lugar a una actualización más rápida y en tiempo real de la información.
+	\item \textbf{Diferencias entre el estado de reservación y pago}. Díficilmente se determina si un vistante haya pagado antes de reservar, si reservó sin efectuar el pago o si reservó y pagó. Aún cuando la empresa haya realizado sus plantillas de hojas de cálculo con condicionales y filtros, referencias entre pestañas y libros, no impide discrepancias y la trazabilidad, aún habiendo las opciones de rastrear dependencias y precedentes, no garantiza más que una búsqueda y trazabilidad manual con apariencia de automatización. Eso sin contemplar la revisión de los diversos tipos de archivos que se requiere para esta labor. Aquí un  \textbf{SGBD} ayuda a generar vistas que permitan cruzar datos más rápidos, evita actualizar datos si no se requiere según las condiciones de reserva y pago, y permite manejar un historial para trazar y corregir mediante la implementación de \textit{triggers}.
+	\item \textbf{Pérdida o alteración de la información}. Los archivos se pueden corromper estando en uso (edición o lectura), en el proceso de compartición o el equipo donde se aloja no responde provocan que la operaciones del negocio se paralicen, no puedan continuar o avanzar ya que requieren de los archivos y la información contenidad en estos como \textquote{materia prima}. Otra posible consecuencia podría ser la pérdida potencial de la cartera de clientes si están almacenadas en los archivos potencialmente pérdidos o corruptos, lo mismo podría suceder con los eventos planeados y los pagos. Un \textbf{SGBD} facilita y obliga hacer un control de versiones de los datos, de \textit{backups}, de \textit{restauración de los datos} y puede permitir que el centro de cómputo en donde se alojan la información digital sean varios dispositivos tipo servidores y evite la pérdida del acceso si un dispositivo servidor se inhabilita.
+	\item \textbf{Acceso no autorizado}. Cualquier usuario tiene acceso a información que no necesita para desempeñar sus funciones, además es díficil rastrear cada archivo de la empresa y no solo rastrearlo, sino saber quién tiene acceso e impedir que solo lo lea el personal que le compete. Las consecuencias son el acceso sencillo a una variedad de datos, la exposición de los mismos por parte de los empleados a otros actores externos o ajenos a la empresa, la dificultad de proteger y rastrear cada uno de los archivos y la garantía de su protección no es fácilmente medible ni predecible. Por lo tanto, un \textbf{SGBD} facilita la decisión de quién tiene acceso a los datos, a qué datos y qué puede hacer con ellos o qué no puede hacer.
+	\item \textbf{Dificultad para conocer el cupo disponible}. Hallar el cupo disponible resulta en una espera prolongada de tiempo para un dato importante, pero cuyo costo de obtener no siempre vale la pena. Esto trae consecuencias para la empresa desde que un cliente no tolere una espera en el cálculo de los cupos, que debería tenerse siempre a la mano y actualizado, hasta la pérdida o inconvenientes en las ventas por haber sobrecupo o indicar que está lleno los espacios cuando no es así. Un \textbf{SGBD} permite el cálculo más rápido y actualizable en tiempo real, y por lo tanto conocer de manera muy rápida la cantidad de cupos disponibles.
+	\item \textbf{Extensión y escabilidad en la recopilación de nuevos datos}. No se puede guardar nuevos datos o campos de datos de los que ya se recopilan porque se tendría que modificar o crear múltiples formatos de cada uno de los tipos de archivos que maneja la organización. Ya ni hablar de la actualización de los archivos, comunicar sobre la obsolencia de los formatos a todos los integrantes de la compañía y la imposibilidad temporal del desuso de formatos anteriores.
+\end{itemize}
+
+Otro aspecto de las consecuencias de los problemas mencionados es la redudancia de información que se manifiesta en un mayor volumen de datos, mayor volumen de información y por tanto, en la necesidad de ampliar capacidades de almacenamiento físico y digital. Un \textbf{SGBD}, configurado correctamente, nunca permitirá la duplicación y redudancia de información (o al menos de forma controlada), ya que los datos están almacenados en una forma, y solo se accede con esa vía conforme a las necesidades del negocio.
+
+% Parte B
+
+\subsection*{Información que debe administrar el sistema}
+\addcontentsline{toc}{subsection}{Información que debe administrar el sistema}
+
+A continuación se enumera en el \textbf{Cuadro \ref{tab:procesos}} algunos procesos del sistema evaluado, los datos que requiere, los usuarios responsables y la información que se obtendrá.
+
+\begin{table}[h!]
+	\centering
+	\small
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|p{0.21\textwidth}|p{0.28\textwidth}|p{0.19\textwidth}|p{0.22\textwidth}|}
+		\hline
+		\textbf{Proceso} & \textbf{Datos necesarios} & \textbf{Usuario} & \textbf{Información obtenida} \\
+		\hline
+		Registrar una reservación & Visitante, salida, fecha y número de personas & Agente de reservaciones & Confirmación y cupo \\
+		\hline
+		Pago, reembolso o solución & Visitante, salida, fecha, estado del pago, precios & Atención al cliente, agente de reservaciones y responsable de finanzas & Confirmación, estado y proceso de pago o devolución \\
+		\hline
+		Asignación de guías & Guías, salida, fecha, número de personas, horario laboral de los guías, y horario de los sitios & Guías, coordinador de operaciones & Asignación de guías y coordinación de salidas \\
+		\hline
+		Asignación de transporte & Choferes, unidades de transportes, número de personas, horario de los choferes, horario de los sitios & Choferes, coordinador de operaciones & Asignación de choferes, asignación de unidades de transporte y planeación de las rutas \\
+		\hline
+		Información del servicio & Sitios, cupos disponibles y precios & Atención al cliente, visitante, agente de reservaciones & Disponibilidad de la información de los servicios ofrecidos \\
+		\hline
+	\end{tabular}%
+	}
+	\caption{Procesos del negocio}
+	\label{tab:procesos}
+\end{table}
+
+% Parte C
+\subsection*{Usuarios y niveles de acceso}
+\addcontentsline{toc}{subsection}{Usuarios y niveles de acceso}
+
+Se enlista los usuarios del sistema de la empresa y la información que pueden o no acceder y lo que pueden hacer con dicha información.
+
+\begin{itemize}
+	\item \textbf{Administrador de base de datos (ABD).}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} El ABD puede acceder a software privilegiado, a la información correspondiente a los permisos y restricciones de los usuarios, de la manera en la que se creó la base de datos y la implementación del SGBD.
+			\item \textit{Qué puede registrar o modificar.} Los permisos y restricciones de los usuarios, la implementación de la bases de datos.
+			\item \textit{Qué información no debería acceder.} No debe acceder a consultar información específica de cada usuario, como claves y tokens (aunque el ABD los genere) así como la información específica que maneja cada usuario (como el de finanzas) de manera directa o sin firma de responsabilidad por manejo de datos sensibles, además mucha información no debe ser visible (debe estar ofuscada o encriptada) de tal manera que ni el ABD lo pueda ver (cuando se conveniente realizar esto).
+		\end{itemize}
+	\item \textbf{Agente de reservaciones.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Puede consultar salidas disponibles, horarios, resrvaciones del visitante, información con antigüedad menor de 3 meses.
+			\item \textit{Qué puede registrar o modificar.} Puede registrar y modificar lo relativo a la información del usuario, en cuánto a los pagos, solo puede registrar si pagó o no el usuario. Puede ver salidas y los horarios, pero no modificarlos.
+			\item \textit{Qué información no debería acceder.} Información mayor o igual a tres meses, ya que tendría exposición a mucha información y al mismo tiempo, deja abierto a la exposición de muchos datos a vectores de ataque ajenos al agente de reservaciones como manipulaciones de crímenes presenciales o por acto del visitante si se lo propone. Igual, no tendría sentido por lo anterior, a tener acceso a otros datos que no le ayuden a mejorar su trabajo porque solo estaría exponiendo de más.
+		\end{itemize}
+	\item \textbf{Coordinador de operaciones.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Puede consultar a lo relativo de los horarios y salidas, los choferes disponibles, la cantidad de visitantes que van a salir en tal ruta a tal sitio, de los transportes y de los guías.
+			\item \textit{Qué puede registrar o modificar.} Puede modificar la asignación de choferes y vehículos, de los horarios de salida y la asignación de guías, pero no acerca de los sitios que pueden ir ni acceder a datos de los visitantes más que la cantidad de ellos.
+			\item \textit{Qué información no debería acceder.} No puede acceder a la modificación de los datos de los visitantes, ni a lo relacionado a los pagos. Ya que por temas de ética, y la posible ventaja o desventaja que pueda ocasionar a los visitantes en su experiencia al tener información de ellos (por preferencia a un visitante en particular), o en la manipulación de información financiera.
+		\end{itemize}
+	\item \textbf{Chofer.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Solo puede acceder a información de horarios, salidas, de la cantidad de gente que va a abordar en los vehículos y de sus compañeros guías.
+			\item \textit{Qué puede registrar o modificar.} Solo puede consultar información.
+			\item \textit{Qué información no debería acceder.} No necesita acceder a otra información, solo estaría accediendo a información innecesaria para llevar a cabo su trabajo.
+		\end{itemize}
+	\item \textbf{Guía.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Solo puede consultar sobre los horarios, salidas, sobre los visitantes que va a guiar, de los transportes y sus rutas.
+			\item \textit{Qué puede registrar o modificar.} Solo puede consultar información.
+			\item \textit{Qué información no debería acceder.} No necesita acceder a otra información, solo estaría accediendo a información innecesaria para llevar a cabo su trabajo.
+		\end{itemize}
+	\item \textbf{Finanzas.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Puede ver información de los visitantes, de los pagos y precios.
+			\item \textit{Qué puede registrar o modificar.} Puede modificar información financiera de pagos, y solo puede consultar información de los clientes.
+			\item \textit{Qué información no debería acceder.} No tiene sentido acceder a más datos del que necesita para realizar su labor. La información relacionada con los métodos de pago como tarjetas de crédito deben estar \textit{hasheadas} o encriptadas. De esta manera, el responsable de finanzas aún teniendo información de los métodos de pagos, no puede hacer mal uso del recurso de los clientes no por ética, sino por imposición técnica.
+		\end{itemize}
+	\item \textbf{Visitante.}
+		\begin{itemize}
+			\item \textit{Información que puede consultar.} Sobre su información y métodos de pago, sobre los sitios que puede disfrutar.
+			\item \textit{Qué puede registrar o modificar.}
+			Puede registrar y modificar solo sus datos personales y el méotodo de pago. 
+			No puede modificar sobre su historial de reservaciones ni reservaciones que hayan sido pagadas, pero sin haberlas disfrutado.
+			\item \textit{Qué información no debería acceder.} No puede acceder a otra información ya que sería confidencial. 
+		\end{itemize}
+\end{itemize}
+
+La mayoría de la información que los potenciales usuarios pueden acceder se limita al uso de la información propia o de aquellos datos mínimos y necesarios que le permiten realizar sus funciones. De lo contrario, si acceden a mayor información, más allá del tema ético, se encuentra la información a un espacio más amplio de vectores de ataque por descuido del usuario.
+
+% Parte D
+\subsection*{Identificación inicial de identidades}
+\addcontentsline{toc}{subsection}{Identificación inicial de identidades}
+
+A continuación se enlista en el \textbf{Cuadro \ref{tab:identidades}} las entidades principales que conforma el sistema de la empresa y la manera en la que podemos llevarlo en teoría a una futura implementación con un SGBD.
+
+\begin{table}[ht!]
+	\centering
+	\small
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|>{\raggedright\arraybackslash}p{0.15\textwidth}|>{\raggedright\arraybackslash}p{0.15\textwidth}|>{\raggedright\arraybackslash}p{0.15\textwidth}|>{\raggedright\arraybackslash}p{0.15\textwidth}|>{\raggedright\arraybackslash}p{0.15\textwidth}|}
+		\hline
+		\textbf{Entidad} & \textbf{Qué representa} & \textbf{Atributos principales} & \textbf{Llave primaria} & \textbf{Posibles llaves foráneas} \\
+		\hline
+		Reservación & Solicitud de lugares realizada por un visitante & Fecha, personas y estado & id\_reservación & id\_visitante, id\_salida \\
+		\hline
+		Visitante & El cliente que realiza, realizó o realizará una reservación & Nombre, edad, sexo, sitio a visitar, estado del pago & id\_visitante & id\_salida, id\_pago \\
+		\hline
+		Experiencia & El sitio de aventura o a visitar & Sitio, disponibilidad, capacidad máxima de gente, precio & id\_sitio & id\_salida \\
+		\hline
+		Salida & La ida al sitio acordado & Salida, horario, visitantes, sitios, guías, transporte, chofer, experiencia & id\_salida & id\_visitante, id\_ruta, id\_sitio \\
+		\hline
+		Guía & El que ayuda y guía a los visitantes durante la experiencia & Nombre del guía, visitantes, sitios, disponibilidad y horarios de los guías & id\_guia & id\_visitante, id\_salida \\
+		\hline
+		Pago & La relación del estado del pago de una reservación & Visitante, salida, estado, precio & id\_pago & id\_reservacion \\
+		\hline
+		Ruta & La asignación de ruta con chofer y transporte & Chofer, transporte, salida & id\_ruta & id\_salida \\
+		\hline
+	\end{tabular}%
+	}
+	\caption{Identidades}
+	\label{tab:identidades}
+\end{table}
+
+% Parte E
+\subsection*{Vínculos entre las entidades}
+\addcontentsline{toc}{subsection}{Vínculos entre las entidades}
+
+\begin{itemize}
+	\item La entidad \textbf{Reservación} podría vincularse con la entidad \textbf{Visitante} mediante el atributo $id\_visitante$, utilizado como \textit{llave foránea} en \textbf{Reservación}. Una reservación está ligada a un solo visitante.
+	\item La entidad \textbf{Reservación} podría vincularse con la entidad \textbf{Salida} mediante el atributo $id\_salida$, utilizado como \textit{llave foránea} en \textbf{Reservación}. Una reservación está ligado a una sola salida, mientras que una salida puede tener muchas reservaciones.
+	\item La entidad \textbf{Salida} podría vincularse con la entidad \textbf{Experiencia} mediante el atributo $id\_sitio$, utilizado como \textit{llave foránea} en \textbf{Salida}. Una salida está vinculado a un solo sitio, por otra parte, un solo sitio puede tener muchas salidas.
+	\item La entidad \textbf{Salida} podría vincularse con la entidad \textbf{Guía} mediante el atributo $id\_guia$, utilizado como \textit{llave foránea} en \textbf{Salida}. Una sola salida puede estar ligada a muchos guías, así como guías con muchas salidas.
+	\item La entidad \textbf{Pago} podría vincularse con la entidad \textbf{Reservación} mediante el atributo $id\_reservacion$, utilizado como \textit{llave foránea} en \textbf{Pago}. Un solo pago está vinculada a una reservación, y una reservación está vinculado a una solo pago.
+	\item La entidad \textbf{Ruta} podría vincularse con la entidad \textbf{Salida} mediante el atributo $id\_salida$, utilizado como \textit{llave foránea} en \textbf{Ruta}. Una ruta está asociada con una salida, mientras que una salida puede tener muchas rutas.
+\end{itemize}
+
+% Parte F
+\subsection*{Selección de un SGBD}
+\addcontentsline{toc}{subsection}{Selección de un SGBD}
+
+En el \textbf{Cuadro \ref{tab:sgdb-versus}} se muestra una comparación rápida entre los \textbf{SGBD} de \textit{SQLite} y \textit{PostgreSQL}, de las que forman parte de las opciones para la mejora de la gestión de datos de Rutas del Mayab.
+
+\begin{table}[ht!]
+	\centering
+	\small
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|p{0.30\textwidth}|p{0.30\textwidth}|p{0.30\textwidth}|}
+		\hline
+		\textbf{Criterio} & \textbf{SQLite} & \textbf{PostgreSQL} \\
+		\hline
+		Tipo de licencia & \href{https://www.sqlite.org/copyright.html}{Libre} & \href{https://www.postgresql.org/about/licence/?lang=en}{Licencia PostgreSQL, partes con derecho de autor} \\
+		\hline
+		Facilidad de instalación & \href{https://www.sqlite.org/quickstart.html}{Fácil, } \href{https://www.sqlite.org/zeroconf.html}{zero-configuration} & \href{https://www.postgresql.org/docs/current/tutorial-install.html}{Fácil, medio} \\
+		\hline
+		Seguridad & Medio & Alto \\
+		\hline
+		Herramientas disponibles & \href{https://www.sqlite.org/cli.html}{SQLite CLI, DB Browser for SQLite, SQLiteStudio} & \href{https://www.postgresql.org/download/product-categories/}{pgAdmin, DBeaver, psql, PostgreSQL CLI}\\
+		\hline
+		Uso recomendado & \href{https://www.sqlite.org/whentouse.html}{DB pequeñas, PYME, sistemas embebidos o dispositivos móviles} & \href{}{DB con millones de transacciones y concurrencia, alto volumen de datos} \\
+		\hline
+	\end{tabular}%
+	}
+	\caption{Comparación de SQLite y PostgreSQL}
+	\label{tab:sgdb-versus}
+\end{table}
+
+Como se puede apreciar en la tabla y en la documentación de cada uno de los SGBDs mencionados, la elección va a depender de varios criterios: la capacidad financiera para adquirir cómputo y personal técnico, la cantidad de operaciones de la empresa y la manera en la que se accede, registra o modifica la información (concurrente, secuencial), tamaño de la empresa y sus necesidades logísticas. Dado que Rutas del Mayab no ha brindado más información sobre sus procesos y necesidades de información tendré que evaluar conforme a los criterios técnicos de los SGBDs mencionados.
+
+\begin{itemize}
+	\item \textbf{SQLite.} Este SGBD es una buena elección si la empresa no requiere acceso concurrente y en múltiples dispositivos, además como está basado en archivos, le permite hacer una transición cultural en la manera de trabajar. Aquí lo que se debe cuidar es la manera en la que se comparte la base de datos, ya que es un archivo. Esto se recomienda si la empresa es considerada como pequeña y con volumen de operaciones relativamente sencuenciales, o si la necesidad logística de alojamiento implique dispositivos fijos, embebidos o smartphones. Además de actuar como puente de cultura o si la empresa es pequeña, también puede servir como alternativa temporal mientras implementan PostgreSQL.
+	\item \textbf{PostgreSQL.} Este es el ganador si la empresa tiene o contratará personal técnico para la implementación y mantenimiento de la base de datos. Es ideal si las operaciones son concurrentes, además de soportar un gran volumen de transacciones, y si se desea acceder mediante varios dispositivos y en diferentes lugares se puede hacer uso del modelo cliente-servidor, una funcionalidad que hace de PostgreSQL una opción para la grandes empresas. 
+\end{itemize}
+
+Por lo tanto, si la empresa tiene el suficiente capital y la necesidad logística de manejar mucha información, transacciones y concurrencia es recomendable comenzar con el SGBD de \textbf{\textcite{postgresql}}. Si no es así, usar \textbf{\textcite{sqlite}} sería ideal ya que tiene la filosofía de \textit{Zero-configuration} lo que lo hace relativamente fácil de instalar y usar al momento. En todo caso, el personal que tendrá acceso a la base de datos, ya sea por una interfaz o sea el diseñador o el mantenedor, debe tener poseer los conocimientos mínimos o competentes en uso de base de datos, considerando también que en los últimos años ya es una competencia digital básica en múltiples países y regiones.
+\newpage
+
+% Conclusión
+\section*{\centering Conclusión}
+\addcontentsline{toc}{section}{Conclusión}
+
+% aprendizajes obtenidos, importancia del sgdb para la empresa, beneficio del uso de entidades y llaves, posibles dificultades de implementar una solución, reflexión sobre la seguridad de los datos
+
+Conocer la importancia de los conceptos más usados dentro del tema de base de datos tal como el término \textit{dato} así como sobre los tipos de usuario que hacen uso de una base de datos, los niveles de abstracción de los datos, así como el desarrollo de un esquema preliminar de un modelado de datos para una posible implementación de un sistema gestor de base de datos es crucial para sacar el máximo partido y evitar riesgos, sobre todo para evitar o minimizar los riegos de seguridad y mal uso de datos.
+\newline
+
+Esto tiene relevancia para las empresas, ya que como diseñador, mantenedor o cualquier otro usuario en una empresa que haga uso de una base de datos es pertinente saber a lo que se tiene enfrente y las consecuencias de ello, aún cuando no sean negativas. La implementación de un sistema gestor de base de datos o tan siquiera el modelado de datos tiene costo en tiempo y en la capacidad técnica de recursos humanos, por lo que es importante tener en cuenta si vale la pena realizar tal inversión, por lo que es necesario tomar en cuenta lo trivial de saber qué es una base de datos, qué es un SGBD y cuáles son las funciones principales y cuál es el problema que soluciona o promete solucionar.
+\newline
+
+El punto no es meramente técnico, sino solucionar el problema a una empresa y necesitamos saber si dicho problema se puede eliminar con un SGBD. De los problemas que trae la implementación de un SGBD es el costo en tiempo y en recurso humano para poder realizar un cambio organizacional en los procesos de la empresa, no es la capa de software o el hardware, y por lo tanto, es necesario abstraer los usuarios y procesos de la empresa y transformarlo en entidades y buscar sus relaciones mediante llaves con el efecto de modelar los datos y realizar el esquema de la base de datos. Todo esto se tiene que realizar con cuidado y pensando los peores escenarios, ya que una mala configuración o una mala planeación, puede derivar en detalles de vulnerabilidades y exponer en riesgo el recurso de información de la empresa.
+\newpage
+
+% ========== Bibliografía =======
+
+
+%\nocite{*}
+\printbibliography[heading=bibintoc, title={Referencias}]
+\newpage
+
+\listoftables
+\newpage
+
+\end{document}

@@ -1,0 +1,114 @@
+\documentclass[12pts]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{amssymb, amsmath}
+
+\usepackage{geometry}
+\geometry{margin=2.54cm}
+
+\pagestyle{plain}
+
+\begin{document}
+
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Universidad Aztlán \par}
+		\vspace{1cm}
+		{\scshape\Large Campus Playa del Carmen \par}
+		\vspace{3cm}
+		{\scshape\Huge Integrales \par}
+		\vspace{1cm}
+		{\itshape\Large Ejercicios \par}
+		\vspace{3cm}
+		{\Large José Rosendo Camal Teh \par}
+		\vfill
+		{\Large Ingeniería en Sistemas Computacionales \par}
+		{\Large Segundo Cuatrimestre \par}
+		{\Large Cálculo Integral \par}
+		\vfill
+		{\Large Profe. Xicontecatl Carreto \par}
+		\vfill
+		{\Large 26 de marzo de 2026 \par}
+		\vfill
+		{\Large Playa del Carmen, Quintana Roo \par}
+	\end{titlepage}
+
+	\section*{Cálculo Integral}
+	\paragraph{\textbf{Instrucciones:}} Calcular las siguientes integrales inmediatas.
+
+	% Desarrollo del ejercicio 1
+	\subsection*{Ejercicio 1}
+
+	\[ \int \sqrt{25x} \, dx \]
+
+	Desarrollamos la integral:
+
+	\begin{align*}
+		\int \sqrt{25x} \, dx &= 5 \int \sqrt{x} \, dx \\
+		&= 5 \cdot \frac{ x^{ \frac{3}{2} } }{ \frac{3}{2} } + C \\
+		&= 5 \cdot \frac{2}{3} \cdot x^{ \frac{3}{2} } + C \\
+		&= \frac{10}{3} x \sqrt{x} + C
+	\end{align*}
+
+	Comprobamos:
+
+	\begin{align*}
+		\sqrt{25x} &= \frac{d}{dx} \left( \frac{10}{3} x \sqrt{x} + C \right) \\
+		&= \frac{d}{dx} \left( \frac{10}{3} x^{ \frac{3}{2} } + C \right) \\
+		&= \frac{10}{3} \cdot \frac{3}{2} x^{ \frac{1}{2} } \\
+		&= 5 \sqrt{x}
+	\end{align*}
+
+	Resultado:
+	
+	\[ \int \sqrt{25x} \, dx = \frac{10}{3} x \sqrt{x} + C \]
+
+	\newpage
+	% Desarrollo del ejercicio 2
+	\subsection*{Ejercicio 2}
+
+	\[ \int \frac{2}{ \sqrt{ x^{4} }} \, dx \]
+
+	Desarrollamos la integral:
+
+	\begin{align*}
+		\int \frac{2}{ \sqrt{ x^{4} }} \, dx &= 2 \int x^{-2} \, dx \\
+		&= -2x^{-1} + C
+	\end{align*}
+
+	Comprobamos:
+
+	\begin{align*}
+		\frac{2}{ \sqrt{ x^{4} }} &= \frac{d}{dx} \left( -2x^{-1} + C \right) \\
+		&= 2x^{-2}
+	\end{align*}
+
+	Resultado:
+
+	\[ \int \frac{2}{ \sqrt{ x^{4} }} \, dx = -2x^{-1} + C \]
+
+	\newpage
+	% Desarrollo del ejercicio 3
+	\subsection*{Ejercicio 3}
+
+	\[ \int \left( 3x^{3} + 5x^{2} - x \right) \, dx \]
+
+	Desarrollamos la integral:
+
+	\begin{align*}
+		\int \left( 3x^{3} + 5x^{2} - x \right) \, dx &= \frac{3}{4} x^{4} + \frac{5}{3} x^{3} - \frac{1}{2} x^{2} + C
+	\end{align*}
+
+	Comprobamos:
+
+	\begin{align*}
+		3x^{3} + 5x^{2} - x &= \frac{d}{dx} \left( \frac{3}{4} x^{4} + \frac{5}{3} x^{3} - \frac{1}{2} x^2 + C \right) \\
+		&= 3x^{3} + 5x^{2} - x
+	\end{align*}
+
+	Resultado:
+	\[ \int \left( 3x^{3} + 5x^{2} - x \right) = \frac{3}{4} x^{4} + \frac{5}{3} x^{3} - \frac{1}{2} x^{2} + C \]
+
+\end{document}
