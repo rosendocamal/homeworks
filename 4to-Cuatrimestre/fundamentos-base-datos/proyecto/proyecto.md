@@ -382,15 +382,7 @@ erDiagram
 
 ### Relaciones N:M
 
-Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas.
-
-| Entidad asociativa        | Descripción                                                              | Origen                                          |
-| ------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
-| **Catálogo de proveedor** | Los productos ofertados por los proveedores.                             | Relación entre **Productos** y **Proveedores**. |
-| **Detalle de recepción**  | El desglose de mercancía recibida de un proveedor.                       | Relación entre **Productos** y **Recepciones**. |
-| **Detalle de pedido**     | El desglose de mercancía solicitada a un proveedor.                      | Relación entre **Productos** y **Pedidos**.     |
-| **Detalle de venta**      | El desglose de una venta, los productos y precios vendidos a un cliente. | Relación entre **Ventas** y **Productos**.      |
-En esta tabla se ilustra las claves primarias de estas relaciones.
+Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas. Veáse las tablas de las entidades en la sección **Entidades**. En la tabla ulterior se ilustran las claves primarias de estas relaciones.
 
 | Entidad                   | Clave primaria 1    | Clave primaria 2   | Tipo de entidad     |
 | ------------------------- | ------------------- | ------------------ | ------------------- |
@@ -399,30 +391,7 @@ En esta tabla se ilustra las claves primarias de estas relaciones.
 | **Detalle de pedido**     | Número de pedido    | Código de producto | Entidad asociativa. |
 | **Detalle de venta**      | Número de venta     | Código de producto | Entidad asociativa. |
 
-Se enumeran a continuación los atributos de las entidades asociativas.
-
-- **Catálogo de proveedor**:
-	- Número de proveedor,
-	- Código de producto, y
-	- Costo unitario.
-- **Detalle de recepción**:
-	- Número de recepción,
-	- Código de producto,
-	- Cantidad recibida por cada producto,
-	- Precio unitario, y
-	- Valor monetario total por código de producto (costo).
-- **Detalle de pedido**:
-	- Número de pedido,
-	- Código de producto,
-	- Cantidad solicitada de cada producto,
-	- Costo unitario, y
-	- Valor monetario total por código de producto (costo).
-- **Detalle de venta**:
-	- Número de venta,
-	- Código de producto,
-	- Cantidad vendida de cada producto,
-	- Precio unitario (precio venta), y
-	- Valor monetario de cada producto.
+Veáse listado de atributos de las entidades asociativas en la sección **Atributos de las entidades**.
 
 ### Diagrama Entidad-Relación
 
@@ -437,10 +406,10 @@ Se enumeran a continuación los atributos de las entidades asociativas.
 erDiagram
 	Products {
 		int productId PK
-		string name
-		float salePrice
-		string stock
-		int categoryId FK
+		string name "NOT NULL"
+		float salePrice "CHECK"
+		int stock "NOT NULL"
+		int categoryId FK "NOT NULL"
 	}
 ```
 
@@ -448,9 +417,9 @@ erDiagram
 erDiagram
 	Suppliers {
 		int supplierId PK
-		string name
-		string email
-		int phoneNumber
+		string name "NOT NULL"
+		string email "NOT NULL, UNIQUE"
+		int phoneNumber "NOT NULL, UNIQUE"
 }
 ```
 
@@ -458,11 +427,11 @@ erDiagram
 erDiagram
 	Entries {
 		int entryId PK
-		int orderId FK
-		int supplierId FK
-		string reference
-		datetime fullDate
-		float costEntry
+		int orderId FK "NOT NULL"
+		int supplierId FK "NOT NULL"
+		string reference "NOT NULL"
+		datetime fullDate "NOT NULL"
+		float costEntry "CHECK"
 	}
 ```
 
@@ -470,9 +439,9 @@ erDiagram
 erDiagram
 	Orders {
 		int orderId PK
-		int supplierId FK
-		datetime fullDate
-		float costOrder
+		int supplierId FK "NOT NULL"
+		datetime fullDate "NOT NULL"
+		float costOrder "CHECK"
 	}
 ```
 
@@ -480,9 +449,9 @@ erDiagram
 erDiagram
 	Sales {
 		int ticket PK
-		datetime fullDate
-		int customerId FK
-		float amount
+		datetime fullDate "NOT NULL"
+		int customerId FK "NOT NULL"
+		float amount "CHECK"
 	}
 ```
 
@@ -490,17 +459,17 @@ erDiagram
 erDiagram
 	Customers {
 		int customerId PK
-		string name
-		string email
-		int phoneNumber
+		string name "NOT NULL"
+		string email "NOT NULL, UNIQUE"
+		int phoneNumber "NOT NULL, UNIQUE"
 	}
 ```
 
 ```mermaid
 erDiagram
 	Categories {
-		int categoryId Pk
-		string category	
+		int categoryId PK
+		string category	"NOT NULL, UNIQUE"
 	}
 ```
 
@@ -509,7 +478,7 @@ erDiagram
 	SupplierCatalogo {
 		int supplierId PK,FK
 		int productId PK,FK
-		float unitCost
+		float unitCost "CHECK"
 	}
 ```
 
@@ -518,9 +487,9 @@ erDiagram
 	EntryDetail {
 		int entryId PK,FK
 		int productId PK,FK
-		int quantity
-		float unitCost
-		float totalCost
+		int quantity "CHECK"
+		float unitCost "CHECK"
+		float totalCost "CHECK"
 	}
 ```
 
@@ -529,9 +498,9 @@ erDiagram
 	OrderDetail {
 		int orderId PK,FK
 		int productId PK,FK
-		int quantity
-		float unitCost
-		float totalCost
+		int quantity "CHECK"
+		float unitCost "CHECK"
+		float totalCost "CHECK"
 	}
 ```
 
@@ -540,9 +509,9 @@ erDiagram
 	SaleDetail {
 		int ticket PK,FK
 		int productId PK,FK
-		int quantity
-		float unitPrice
-		float totalSale
+		int quantity "CHECK"
+		float unitPrice "CHECK"
+		float totalSale "CHECK"
 	}
 ```
 
@@ -568,22 +537,12 @@ Véase la sección de **Relaciones entre dos identidades**. En la tabla se muest
 
 > Particapación total NOT NULL o NULL, no elegidas como PK pero candidatas UNIQUE, politica referencial ON DELETE y ON UPDATE (restrict, cascade, set null). reglas de dominio (CHECK)
 
-### Normalización
-
-> Normalización 1FN, 2FN, 3FN y BCNF
-
 ### Esquema Relacional
 
 > Esquema relacional con tablas, PK, FK y restricciones. 
 
 ## Diccionario de Datos
 
-## SQL y DBSM - implemetación db
+## Implementación de la Base de Datos
 
-## Testing, ejecución, resultados, consultas
-
-## Justificación decisiones diseño
-
-## Entregables
-
-## Presentación o exposición
+## Pruebas de la Base de Datos
