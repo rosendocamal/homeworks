@@ -22,7 +22,7 @@ Una tienda comercial necesita organizar la información de sus productos, provee
 Por lo tanto, se diseñará y desarollará una base de datos que permita a la tienda administrar la información comercial y facilitar la generación de reportes. 
 
 Los empleados de la empresa deben poder ejecutar las siguientes operaciones[^+]:
-- **Listado** de los todos los productos registrados.
+- **Listado** de todos los productos registrados.
 - **Búsqueda** de productos por nombre o categoría.
 - **Consulta** de las ventas realizadas.
 - **Consulta** de los productos más vendidos.
@@ -36,7 +36,7 @@ Los puntos o conceptos más importantes de la problemática de la tienda son: `b
 
 [^+]: La mayoría de las operaciones no son descritas con precisión ni claridad. Se asumirán primero reglas intuitivas y sencillas, lo demás detalles serán tratados en la fase pertinente.
 
-[^\*]: Un reporte de productos vendidos con formato de tabla cuyas columnas sean el producto, precio, cantidades e importe total vendido por producto. La indicación no es clara ni precisa, así que se asumirá un periodo desde el inicio de operaciones de la tienda, las cantidades y el importe serán las acumuladas desde apertura, y la identificación del producto se hará con su nombre y código de identificación.
+[^\*]: Un reporte de productos vendidos con formato de tabla cuyas columnas sean el producto, precio, cantidades e importe total vendido por producto. La indicación no es clara ni precisa, así que se asumirá un periodo desde el inicio de operaciones de la tienda, las cantidades y el importe serán las acumuladas desde apertura y se asumirán que son de ventas, y la identificación del producto se hará con su nombre y código de identificación.
 
 ## Modelo Conceptual
 
