@@ -146,14 +146,13 @@ CREATE TABLE IF NOT EXISTS SALE_DETAIL (
 ```sql
 -- Listado de todos los productos registrados.
 SELECT
-	PRODUCTS.id AS "No.",
+	PRODUCTS.id AS "NO.",
 	PRODUCTS.sku AS "SKU",
 	PRODUCTS.name AS "PRODUCTO",
 	CATEGORIES.category AS "CATEGORÍA"
 FROM PRODUCTS
 INNER JOIN CATEGORIES
 ON PRODUCTS.categoryId = CATEGORIES.id
-GROUP BY CATEGORY.category
 ORDER BY PRODUCTS.name asc;
 
 -- Búsqueda de productos por nombre o categoría.
@@ -168,7 +167,6 @@ ON PRODUCTS.categoryId = CATEGORIES.id
 WHERE
 	PRODUCTS.name = "NAME_INPUT" OR -- Reemplazar NAME_INPUT.
 	CATEGORIES.category = "CATEGORY_INPUT" -- Reemplazar CATEGORY_INPUT.
-GROUP BY CATEGORY.category
 ORDER BY PRODUCTS.name asc;
 
 -- Consulta de las ventas realizadas.
@@ -179,40 +177,40 @@ SELECT
 	amount AS "TOTAL"
 FROM SALES
 ORDER BY fullDate DESC
-LIMIT 1000000; -- Es lo máximo que permite manipular de registros MS Excel.
+LIMIT 1000000; -- Límite modificable.
 
 -- Consulta de los productos más vendidos.
 SELECT
 	PRODUCTS.id AS "NO.",
 	PRODUCTS.sku AS "SKU",
 	PRODUCTS.name AS "PRODUCTO",
-	SUM(SALE_DETAIL.quantity) AS "CANTIDADES VENDIDAS"
-	SUM(SALE_DETAIL.totalSale) AS "VENTAS ACUMULADAS (MXN)",
+	SUM(SALE_DETAIL.quantity) AS "CANTIDADES VENDIDAS",
+	SUM(SALE_DETAIL.totalSale) AS "VENTAS ACUMULADAS (MXN)"
 FROM SALE_DETAIL
 INNER JOIN PRODUCTS
 ON SALE_DETAIL.productId = PRODUCTS.id
-ORDER BY SALE_DETAIL.quantity DESC; -- Lo más vendido no siempre es lo que más ingresos genera.
+GROUP BY PRODUCTS.id
+ORDER BY SUM(SALE_DETAIL.quantity) DESC -- Lo más vendido no siempre es lo que más ingresos genera.
 LIMIT 100; -- Se puede modificar este límite.
 
 -- Cálculo del total de ventas por periodo.
 SELECT
 	SUM(amount) AS "VENTAS DEL PERIODO (MXN)"
 FROM SALES
-WHERE fullDate >= "YYYY-MM-DD" AND fullDate <= "YYYY-MM-DD" -- Las fechas son entradas del usuario.
-ORDER BY fullDate DESC;
+WHERE fullDate >= "YYYY-MM-DD" AND fullDate < "YYYY-MM-DD"; -- Las fechas son entradas del usuario. La fecha final es excluyente, la fecha final es el día siguiente del fin de periodo.
 
 -- Identificación de productos con existencias bajas.
 SELECT
 	id AS "NO.",
 	sku AS "SKU",
 	name AS "PRODUCTO",
-	stock AS "EXISTENCIAS",
+	stock AS "EXISTENCIAS"
 FROM PRODUCTS
-ORDER BY stock DESC
+ORDER BY stock
 LIMIT 100; -- Se puede modificar este límite.
 
 -- Consulta de ventas de un cliente específico.
-SELECT
+SELECT -- Consulta por CUSTOMERS.id
 	SALES.id AS "TICKET",
 	SALES.fullDate AS "FECHA",
 	SALES.amount AS "MONTO (MXN)"
@@ -220,8 +218,19 @@ FROM SALES
 INNER JOIN CUSTOMERS
 ON SALES.customerId = CUSTOMERS.id
 WHERE
-	CUSTOMERS.id = INT_INPUT OR -- Reemplazar INT_INPUT.
-	CUSTOMERS.name = "NAME_INPUT" -- Reemplazar INT_INPUT.
+	CUSTOMERS.id = INT_INPUT -- Reemplazar INT_INPUT.
+ORDER BY fullDate DESC
+LIMIT 1000000;
+
+SELECT -- Consulta por CUSTOMERS.name
+	SALES.id AS "TICKET",
+	SALES.fullDate AS "FECHA",
+	SALES.amount AS "MONTO (MXN)"
+FROM SALES
+INNER JOIN CUSTOMERS
+ON SALES.customerId = CUSTOMERS.id
+WHERE
+	CUSTOMERS.name = "NAME_INPUT" -- Reemplazar NAME_INPUT.
 ORDER BY fullDate DESC
 LIMIT 1000000;
 
@@ -231,11 +240,12 @@ SELECT
 	PRODUCTS.sku AS "SKU",
 	PRODUCTS.name AS "PRODUCTO",
 	SUM(SALE_DETAIL.quantity) AS "CANTIDADES VENDIDAS",
-	AVG(SALE_DETAIL.salePrice) AS "PRECIO PROMEDIO", -- Precio de venta promedio.
+	AVG(SALE_DETAIL.unitPrice) AS "PRECIO DE VENTA PROMEDIO", -- Precio de venta promedio.
 	SUM(SALE_DETAIL.totalSale) AS "VENTAS ACUMULADAS"
 FROM PRODUCTS
 INNER JOIN SALE_DETAIL
 ON PRODUCTS.id = SALE_DETAIL.productId
+GROUP BY PRODUCTS.id
 ORDER BY PRODUCTS.name ASC
 LIMIT 1000000; -- Límite modificable.
 ```
