@@ -130,73 +130,85 @@ De igual forma, se presenta las *entidades asociativas* como resultado a la solu
 | **Detalle de pedido**     | El desglose de mercancía solicitada a un proveedor.                      | Relación entre **Productos** y **Pedidos**.     |
 | **Detalle de venta**      | El desglose de una venta, los productos y precios vendidos a un cliente. | Relación entre **Ventas** y **Productos**.      |
 
-### Atributos de las entidades
+Las entidades se podrán identificar de dos formas:
 
-> **Definir los atributos.** Propiedades de cada entidad, clasificadas como simples o compuestos, monovaluados o multivaluados y derivados. Los multivaluados y compuestos suelen resolver luego en tablas o entidades aparte.
+- Productos -> `Products`
+- Proveedores -> `Suppliers`
+- Recepciones -> `Entries`
+- Pedidos -> `Orders`
+- Ventas -> `Sales`
+- Clientes -> `Customers`
+- Categorías -> `Categories
+- Catálogo de proveedor -> `SupplierCatalogo`
+- Detalle de recepción -> `EntryDetail`
+- Detalle de pedido -> `OrderDetail`
+- Detalle de venta -> `SaleDetail`
+
+### Atributos de las entidades
 
 A continuación se enumeran los *atributos* de las entidades fuertes identificadas y seleccionadas de la sección anterior.
 
 - **Productos**:
-	- Código de producto,
-	- Nombre del producto,
-	- Precio de venta,
-	- Existencias, y
-	- Categoría de producto.
+	- Código de producto -> `productId`,
+	- Nombre del producto -> `name`,
+	- Precio de venta -> `salePrice` ,
+	- Existencias -> `stock`, y
+	- Categoría de producto -> `categoryId`.
 - **Proveedores**:
-	- Número de proveedor,
-	- Nombre del proveedor,
-	- Correo electrónico, y
-	- Número telefónico.
+	- Número de proveedor -> `supplierId`,
+	- Nombre del proveedor -> `name`,
+	- Correo electrónico -> `email`, y
+	- Número telefónico -> `phoneNumber`.
 - **Recepciones**:
-	- Número de recepción,
-	- Número de pedido a surtir,
-	- Número de proveedor, 
-	- Referencia (número de nota de venta o de factura del proveedor),
-	- Fecha y hora de recepción, y
-	- Valor monetario de la recepción (costo).
+	- Número de recepción -> `entryId,
+	- Número de pedido a surtir -> `orderId`,
+	- Número de proveedor -> `supplierId`, 
+	- Referencia (número de nota de venta o de factura del proveedor) -> `reference`,
+	- Fecha y hora de recepción -> `fullDate`, y
+	- Valor monetario de la recepción (costo) -> `costEntry.
 - **Pedidos**:
-	- Número de pedido,
-	- Número de proveedor,
-	- Fecha y hora del pedido, y
-	- Valor monetario del pedido (costo).
+	- Número de pedido -> `orderId`,
+	- Número de proveedor -> `supplierId`,
+	- Fecha y hora del pedido -> `fullDate`, y
+	- Valor monetario del pedido (costo) -> `costOrder`.
 - **Ventas**:
-	- Número de venta,
-	- Fecha y hora de la venta, 
-	- Número de cliente, y
-	- Monto de venta.
+	- Número de venta -> `ticket`,
+	- Fecha y hora de la venta -> `fullDate`, 
+	- Número de cliente -> `customerId`, y
+	- Monto de venta -> `amount`.
 - **Clientes**:
-	- Número de cliente,
-	- Nombre del cliente,
-	- Correo electrónico, y
-	- Número de teléfono.
+	- Número de cliente -> `customerId,
+	- Nombre del cliente -> `name`,
+	- Correo electrónico -> `email`, y
+	- Número de teléfono -> `phoneNumber`.
 - **Categorías**:
-	- Identificador de categoría, y
-	- Categoría.
+	- Identificador de categoría -> `categoryId`, y
+	- Categoría `category`.
 
 Listado de atributos de las entidades asociativas:
 
 - **Catálogo de proveedor**:
-	- Número de proveedor,
-	- Código de producto, y
-	- Costo unitario.
+	- Número de proveedor -> `supplierId`,
+	- Código de producto -> `productId`, y
+	- Costo unitario -> `unitCost`.
 - **Detalle de recepción**:
-	- Número de recepción,
-	- Código de producto,
-	- Cantidad recibida por cada producto,
-	- Precio unitario, y
-	- Valor monetario total por código de producto (costo).
+	- Número de recepción -> `entryId`,
+	- Código de producto -> `productId`,
+	- Cantidad recibida por cada producto -> `quantity`,
+	- Costo unitario `unitCost`, y
+	- Valor monetario total por código de producto (costo) -> `totalCost`.
 - **Detalle de pedido**:
-	- Número de pedido,
-	- Código de producto,
-	- Cantidad solicitada de cada producto,
-	- Costo unitario, y
-	- Valor monetario total por código de producto (costo).
+	- Número de pedido -> `orderId`,
+	- Código de producto -> `productId`,
+	- Cantidad solicitada de cada producto -> `quantity`,
+	- Costo unitario -> `unitCost`, y
+	- Valor monetario total por código de producto (costo) -> `totalCost`.
 - **Detalle de venta**:
-	- Número de venta,
-	- Código de producto,
-	- Cantidad vendida de cada producto,
-	- Precio unitario (precio venta), y
-	- Valor monetario de cada producto.
+	- Número de venta -> `ticket`,
+	- Código de producto -> `productId`,
+	- Cantidad vendida de cada producto -> `quantity`,
+	- Precio unitario (precio venta) -> `unitPrice`, y
+	- Valor monetario de cada producto -> `totalSale`.
 
 ### Claves primarias
 
@@ -285,7 +297,7 @@ erDiagram
 
 #### Relaciones entre dos entidades
 
-A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**.
+A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -294,7 +306,7 @@ erDiagram
 	VENTAS }o--|| CLIENTES : "realizado a"
 ```
 
-En una **venta** se despachan al menos un **producto**. Y todo **producto** puede aparecer en cero o más **ventas**.
+En una **venta** se despachan al menos un **producto**. Y todo **producto** puede aparecer en cero o más **ventas**. Esta es una relación de _cardinalidad_ `N:M`.
 
 ```mermaid
 erDiagram
@@ -303,7 +315,7 @@ erDiagram
 	VENTAS }|--o{ PRODUCTOS : "se despacha"
 ```
 
-Los **productos** son ofertadas por uno o más **proveedores**. Todo **proveedor** debe ofertar al menos un **producto**.[^1]
+Los **productos** son ofertadas por uno o más **proveedores**. Todo **proveedor** debe ofertar al menos un **producto**.[^1] Esta es una relación de _cardinalidad_ `N:M`.
 
 [^1]: Los proveedores se deben inscribir en un proceso aparte, si se realiza un acuerdo pero aún no oferta su catálogo o al menos un producto. Aquí solo se contempla aquellos que ya tienen cargados y disponibles su oferta.
 
@@ -314,7 +326,7 @@ erDiagram
 	PROVEEDORES }|--|{ PRODUCTOS : "oferta"
 ```
 
-Un **producto** tiene una sola **categoría** y una **categoría** clasifica a cero o más **productos**.
+Un **producto** tiene una sola **categoría** y una **categoría** clasifica a cero o más **productos**. Esta es una relación de _cardinalidad_ `1:N`.
 
 ```mermaid
 erDiagram
@@ -323,7 +335,7 @@ erDiagram
 	PRODUCTOS }o--|| CATEGORÍAS : "clasificado como"
 ```
 
-Se realiza un **pedido** con al menos un **producto**. Y todo **producto** aparece en cero o más **pedidos**.
+Se realiza un **pedido** con al menos un **producto**. Y todo **producto** aparece en cero o más **pedidos**. Esta es una relación de _cardinalidad_ `N:M`.
 
 ```mermaid
 erDiagram
@@ -332,7 +344,7 @@ erDiagram
 	PEDIDOS }o--|{ PRODUCTOS : "se pide"
 ``` 
 
-En toda **recepción** se debe recibir al menos un **producto** y cada **producto** puede estar en varias **recepciones** o en ninguna.
+En toda **recepción** se debe recibir al menos un **producto** y cada **producto** puede estar en varias **recepciones** o en ninguna. Esta es una relación de _cardinalidad_ `N:M`.
 
 ```mermaid
 erDiagram
@@ -341,7 +353,7 @@ erDiagram
 	RECEPCIONES }o--|{ PRODUCTOS : "se recibe"
 ```
 
-Los **proveedores** reciben varios **pedidos** o ninguno. Los **pedidos** se realizan a nombre de un solo **proveedor**.
+Los **proveedores** reciben varios **pedidos** o ninguno. Los **pedidos** se realizan a nombre de un solo **proveedor**. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -350,7 +362,7 @@ erDiagram
 	PEDIDOS }o--|| PROVEEDORES : "solicita a"
 ```
 
-Las **recepciones** están a nombre de un solo **proveedor**. Y cada **proveedor** le puede realizar varias **recepciones** o ninguna.
+Las **recepciones** están a nombre de un solo **proveedor**. Y cada **proveedor** le puede realizar varias **recepciones** o ninguna. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -359,7 +371,7 @@ erDiagram
 	RECEPCIONES }o--|| PROVEEDORES : "le realiza a"
 ```
 
-Las **recepciones** ocurren y se vinculan al surtirse un **pedido**. Un **pedido** puede generar una única **recepción** o nunca surtirse.
+Las **recepciones** ocurren y se vinculan al surtirse un **pedido**. Un **pedido** puede generar una única **recepción** o nunca surtirse. Esta es una relación de _cardinalidad_ `1:1`.
 
 ```mermaid
 erDiagram
@@ -370,39 +382,187 @@ erDiagram
 
 ### Relaciones N:M
 
-> **Resolver las relaciones N:M.** Convertirlas en una entidad asociativa con clave compuesta por las claves de ambas.
+Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas.
 
+| Entidad asociativa        | Descripción                                                              | Origen                                          |
+| ------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
+| **Catálogo de proveedor** | Los productos ofertados por los proveedores.                             | Relación entre **Productos** y **Proveedores**. |
+| **Detalle de recepción**  | El desglose de mercancía recibida de un proveedor.                       | Relación entre **Productos** y **Recepciones**. |
+| **Detalle de pedido**     | El desglose de mercancía solicitada a un proveedor.                      | Relación entre **Productos** y **Pedidos**.     |
+| **Detalle de venta**      | El desglose de una venta, los productos y precios vendidos a un cliente. | Relación entre **Ventas** y **Productos**.      |
+En esta tabla se ilustra las claves primarias de estas relaciones.
 
+| Entidad                   | Clave primaria 1    | Clave primaria 2   | Tipo de entidad     |
+| ------------------------- | ------------------- | ------------------ | ------------------- |
+| **Catálogo de proveedor** | Número de proveedor | Código de producto | Entidad asociativa. |
+| **Detalle de recepción**  | Número de recepción | Código de producto | Entidad asociativa. |
+| **Detalle de pedido**     | Número de pedido    | Código de producto | Entidad asociativa. |
+| **Detalle de venta**      | Número de venta     | Código de producto | Entidad asociativa. |
+
+Se enumeran a continuación los atributos de las entidades asociativas.
+
+- **Catálogo de proveedor**:
+	- Número de proveedor,
+	- Código de producto, y
+	- Costo unitario.
+- **Detalle de recepción**:
+	- Número de recepción,
+	- Código de producto,
+	- Cantidad recibida por cada producto,
+	- Precio unitario, y
+	- Valor monetario total por código de producto (costo).
+- **Detalle de pedido**:
+	- Número de pedido,
+	- Código de producto,
+	- Cantidad solicitada de cada producto,
+	- Costo unitario, y
+	- Valor monetario total por código de producto (costo).
+- **Detalle de venta**:
+	- Número de venta,
+	- Código de producto,
+	- Cantidad vendida de cada producto,
+	- Precio unitario (precio venta), y
+	- Valor monetario de cada producto.
 
 ### Diagrama Entidad-Relación
 
-notación de peter chen, crow's foot
-
-```mermaid
----
-title: Diagrama Entidad-Relación
----
-erDiagram
-	VENTAS }o--|| CLIENTES : "realizado a"
-	VENTAS }|--o{ PRODUCTOS : "se despacha"
-	PRODUCTOS }o--|| CATEGORÍAS : "clasificado como"
-	PROVEEDORES }|--|{ PRODUCTOS : "oferta"
-	PEDIDOS }o--|{ PRODUCTOS : "se pide"
-	RECEPCIONES }o--|{ PRODUCTOS : "se recibe"
-	PEDIDOS }o--|| PROVEEDORES : "solicita a"
-	RECEPCIONES }o--|| PROVEEDORES : "le realiza a"
-	RECEPCIONES ||--o| PEDIDOS : "ligado a"
-```
+> [!IMPORTANT]
+> **FALTA EL DIAGRAMA DE ENTIDAD RELACIÓN CON NOTACIÓN DE PETER CHEN**
 
 ## Modelo Relacional
 
-### Entidades en relaciones (tablas)
+### Entidades en tablas
 
-> **Tablas**
+```mermaid
+erDiagram
+	Products {
+		int productId PK
+		string name
+		float salePrice
+		string stock
+		int categoryId FK
+	}
+```
 
-### Relaciones -> claves foráneas o tablas
+```mermaid
+erDiagram
+	Suppliers {
+		int supplierId PK
+		string name
+		string email
+		int phoneNumber
+}
+```
 
-> Cardinalidad y claves
+```mermaid
+erDiagram
+	Entries {
+		int entryId PK
+		int orderId FK
+		int supplierId FK
+		string reference
+		datetime fullDate
+		float costEntry
+	}
+```
+
+```mermaid
+erDiagram
+	Orders {
+		int orderId PK
+		int supplierId FK
+		datetime fullDate
+		float costOrder
+	}
+```
+
+```mermaid
+erDiagram
+	Sales {
+		int ticket PK
+		datetime fullDate
+		int customerId FK
+		float amount
+	}
+```
+
+```mermaid
+erDiagram
+	Customers {
+		int customerId PK
+		string name
+		string email
+		int phoneNumber
+	}
+```
+
+```mermaid
+erDiagram
+	Categories {
+		int categoryId Pk
+		string category	
+	}
+```
+
+```mermaid
+erDiagram
+	SupplierCatalogo {
+		int supplierId PK,FK
+		int productId PK,FK
+		float unitCost
+	}
+```
+
+```mermaid
+erDiagram
+	EntryDetail {
+		int entryId PK,FK
+		int productId PK,FK
+		int quantity
+		float unitCost
+		float totalCost
+	}
+```
+
+```mermaid
+erDiagram
+	OrderDetail {
+		int orderId PK,FK
+		int productId PK,FK
+		int quantity
+		float unitCost
+		float totalCost
+	}
+```
+
+```mermaid
+erDiagram
+	SaleDetail {
+		int ticket PK,FK
+		int productId PK,FK
+		int quantity
+		float unitPrice
+		float totalSale
+	}
+```
+
+### Relaciones y claves foráneas
+
+Véase la sección de **Relaciones entre dos identidades**. En la tabla se muestran las claves foráneas de las entidades:
+
+| Entidad                   | Clave foránea                                  | Tipo de entidad     |
+| ------------------------- | ---------------------------------------------- | ------------------- |
+| **Productos**             | Categoría de producto                          | Entidad fuerte.     |
+| **Proveedores**           | —                                              | Entidad fuerte.     |
+| **Recepciones**           | Número de pedido a surtir; Número de proveedor | Entidad fuerte.     |
+| **Pedidos**               | Número de proveedor                            | Entidad fuerte.     |
+| **Ventas**                | Número de cliente                              | Entidad fuerte.     |
+| **Clientes**              | —                                              | Entidad fuerte.     |
+| **Categorías**            | —                                              | Entidad fuerte.     |
+| **Catálogo de proveedor** | Número de proveedor; Código de producto        | Entidad asociativa. |
+| **Detalle de recepción**  | Número de recepción; Código de producto        | Entidad asociativa. |
+| **Detalle de pedido**     | Número de pedido; Código de producto           | Entidad asociativa. |
+| **Detalle de venta**      | Número de venta; Código de producto            | Entidad asociativa. |
 
 ### Restricciones de seguridad
 
