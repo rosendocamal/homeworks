@@ -94,8 +94,6 @@ flowchart TD
 
 ### Entidades
 
-> **Identificar las entidades.** Objetos o conceptos con existencia propia y relevancia para el dominio. Distinguir las *fuertes* de las *débiles*.
-
 Una vez conocido el dominio se puede identifican las siguientes entidades:
 
 - **Productos**.
@@ -132,17 +130,17 @@ De igual forma, se presenta las *entidades asociativas* como resultado a la solu
 
 Las entidades se podrán identificar de dos formas:
 
-- Productos -> `Products`
-- Proveedores -> `Suppliers`
-- Recepciones -> `Entries`
-- Pedidos -> `Orders`
-- Ventas -> `Sales`
-- Clientes -> `Customers`
-- Categorías -> `Categories
-- Catálogo de proveedor -> `SupplierCatalogo`
-- Detalle de recepción -> `EntryDetail`
-- Detalle de pedido -> `OrderDetail`
-- Detalle de venta -> `SaleDetail`
+- Productos -> `PRODUCTS`
+- Proveedores -> `SUPPLIERS`
+- Recepciones -> `ENTRIES`
+- Pedidos -> `ORDERS`
+- Ventas -> `SALES`
+- Clientes -> `CUSTOMERS`
+- Categorías -> `CATEGORIES
+- Catálogo de proveedor -> `SUPPLIER_CATALOGO`
+- Detalle de recepción -> `ENTRY_DETAIL`
+- Detalle de pedido -> `ORDER_DETAIL`
+- Detalle de venta -> `SALE_DETAIL`
 
 ### Atributos de las entidades
 
@@ -214,19 +212,19 @@ Listado de atributos de las entidades asociativas:
 
 Dada la sección anterior, se ha desglosado los atributos que contienen cada entidad fuerte y cada entidad asociativa. En la tabla siguiente se define las *claves primarias* de cada entidad.
 
-| Entidad                   | Clave primaria                          | Tipo de entidad     |
-| ------------------------- | --------------------------------------- | ------------------- |
-| **Productos**             | Código de producto                      | Entidad fuerte.     |
-| **Proveedores**           | Número de proveedor                     | Entidad fuerte.     |
-| **Recepciones**           | Número de recepción                     | Entidad fuerte.     |
-| **Pedidos**               | Número de pedido                        | Entidad fuerte.     |
-| **Ventas**                | Número de venta                         | Entidad fuerte.     |
-| **Clientes**              | Número de cliente                       | Entidad fuerte.     |
-| **Categorías**            | Identificador de categoría              | Entidad fuerte.     |
-| **Catálogo de proveedor** | Número de proveedor; Código de producto | Entidad asociativa. |
-| **Detalle de recepción**  | Número de recepción; Código de producto | Entidad asociativa. |
-| **Detalle de pedido**     | Número de pedido; Código de producto    | Entidad asociativa. |
-| **Detalle de venta**      | Número de venta; Código de producto     | Entidad asociativa. |
+| Entidad                   | Clave primaria                                                       | Tipo de entidad     |
+| ------------------------- | -------------------------------------------------------------------- | ------------------- |
+| **Productos**             | Código de producto (`productId`)                                     | Entidad fuerte.     |
+| **Proveedores**           | Número de proveedor (`supplierId`)                                   | Entidad fuerte.     |
+| **Recepciones**           | Número de recepción (`entryId`)                                      | Entidad fuerte.     |
+| **Pedidos**               | Número de pedido (`orderId`)                                         | Entidad fuerte.     |
+| **Ventas**                | Número de venta (`ticket`)                                           | Entidad fuerte.     |
+| **Clientes**              | Número de cliente (`customerId`)                                     | Entidad fuerte.     |
+| **Categorías**            | Identificador de categoría (`categoryId`)                            | Entidad fuerte.     |
+| **Catálogo de proveedor** | Número de proveedor (`supplierId`); Código de producto (`productId`) | Entidad asociativa. |
+| **Detalle de recepción**  | Número de recepción (`entryId`); Código de producto (`productId`)    | Entidad asociativa. |
+| **Detalle de pedido**     | Número de pedido (`orderId`); Código de producto (`productId`)       | Entidad asociativa. |
+| **Detalle de venta**      | Número de venta (`ticket`); Código de producto (`productId`)         | Entidad asociativa. |
 
 ### Relaciones
 
@@ -297,7 +295,7 @@ erDiagram
 
 #### Relaciones entre dos entidades
 
-A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**. Esta es una relación de _cardinalidad_ `N:1`.
+A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**. Esta es una relación de _cardinalidad_ `N:1`.****
 
 ```mermaid
 erDiagram
@@ -326,7 +324,7 @@ erDiagram
 	PROVEEDORES }|--|{ PRODUCTOS : "oferta"
 ```
 
-Un **producto** tiene una sola **categoría** y una **categoría** clasifica a cero o más **productos**. Esta es una relación de _cardinalidad_ `1:N`.
+Un **producto** tiene una sola **categoría** y una **categoría** clasifica a cero o más **productos**. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -362,7 +360,7 @@ erDiagram
 	PEDIDOS }o--|| PROVEEDORES : "solicita a"
 ```
 
-Las **recepciones** están a nombre de un solo **proveedor**. Y cada **proveedor** le puede realizar varias **recepciones** o ninguna. Esta es una relación de _cardinalidad_ `N:1`.
+Las **recepciones** están a nombre de un solo **proveedor**. Y cada **proveedor** se le pueden realizar varias **recepciones** o ninguna. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -384,12 +382,12 @@ erDiagram
 
 Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas. Veáse las tablas de las entidades en la sección **Entidades**. En la tabla ulterior se ilustran las claves primarias de estas relaciones.
 
-| Entidad                   | Clave primaria 1    | Clave primaria 2   | Tipo de entidad     |
-| ------------------------- | ------------------- | ------------------ | ------------------- |
-| **Catálogo de proveedor** | Número de proveedor | Código de producto | Entidad asociativa. |
-| **Detalle de recepción**  | Número de recepción | Código de producto | Entidad asociativa. |
-| **Detalle de pedido**     | Número de pedido    | Código de producto | Entidad asociativa. |
-| **Detalle de venta**      | Número de venta     | Código de producto | Entidad asociativa. |
+| Entidad                   | Clave primaria 1                   | Clave primaria 2                 | Tipo de entidad     |
+| ------------------------- | ---------------------------------- | -------------------------------- | ------------------- |
+| **Catálogo de proveedor** | Número de proveedor (`supplierId`) | Código de producto (`productId`) | Entidad asociativa. |
+| **Detalle de recepción**  | Número de recepción (`entryId`)    | Código de producto (`productId`) | Entidad asociativa. |
+| **Detalle de pedido**     | Número de pedido (`orderId`)       | Código de producto (`productId`) | Entidad asociativa. |
+| **Detalle de venta**      | Número de venta (`ticket`)         | Código de producto (`productId`) | Entidad asociativa. |
 
 Veáse listado de atributos de las entidades asociativas en la sección **Atributos de las entidades**.
 
@@ -402,9 +400,14 @@ Veáse listado de atributos de las entidades asociativas en la sección **Atribu
 
 ### Entidades en tablas
 
+Se muestra el formato de _tabla_ las entidades descritas en las secciones anteriores incluyendo sus atributos e indicando sus llaves primarias, llaves foráneas y sus restricciones.
+
 ```mermaid
+---
+title: Productos
+---
 erDiagram
-	Products {
+	PRODUCTS {
 		int productId PK
 		string name "NOT NULL"
 		float salePrice "CHECK"
@@ -414,8 +417,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Proveedores
+---
 erDiagram
-	Suppliers {
+	SUPPLIERS {
 		int supplierId PK
 		string name "NOT NULL"
 		string email "NOT NULL, UNIQUE"
@@ -424,8 +430,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Recepciones
+---
 erDiagram
-	Entries {
+	ENTRIES {
 		int entryId PK
 		int orderId FK "NOT NULL"
 		int supplierId FK "NOT NULL"
@@ -436,8 +445,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Pedidos
+---
 erDiagram
-	Orders {
+	ORDERS {
 		int orderId PK
 		int supplierId FK "NOT NULL"
 		datetime fullDate "NOT NULL"
@@ -446,8 +458,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Ventas
+---
 erDiagram
-	Sales {
+	SALES {
 		int ticket PK
 		datetime fullDate "NOT NULL"
 		int customerId FK "NOT NULL"
@@ -456,8 +471,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Clientes
+---
 erDiagram
-	Customers {
+	CUSTOMERS {
 		int customerId PK
 		string name "NOT NULL"
 		string email "NOT NULL, UNIQUE"
@@ -466,16 +484,22 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Categorías
+---
 erDiagram
-	Categories {
+	CATEGORIES {
 		int categoryId PK
 		string category	"NOT NULL, UNIQUE"
 	}
 ```
 
 ```mermaid
+---
+title: Catálogo de proveedor
+---
 erDiagram
-	SupplierCatalogo {
+	SUPPLIER_CATALOGO {
 		int supplierId PK,FK
 		int productId PK,FK
 		float unitCost "CHECK"
@@ -483,8 +507,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Detalle de recepción
+---
 erDiagram
-	EntryDetail {
+	ENTRY_DETAIL {
 		int entryId PK,FK
 		int productId PK,FK
 		int quantity "CHECK"
@@ -494,8 +521,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Detalle de pedido
+---
 erDiagram
-	OrderDetail {
+	ORDER_DETAIL {
 		int orderId PK,FK
 		int productId PK,FK
 		int quantity "CHECK"
@@ -505,8 +535,11 @@ erDiagram
 ```
 
 ```mermaid
+---
+title: Detalle de venta
+---
 erDiagram
-	SaleDetail {
+	SALE_DETAIL {
 		int ticket PK,FK
 		int productId PK,FK
 		int quantity "CHECK"
@@ -519,30 +552,312 @@ erDiagram
 
 Véase la sección de **Relaciones entre dos identidades**. En la tabla se muestran las claves foráneas de las entidades:
 
-| Entidad                   | Clave foránea                                  | Tipo de entidad     |
-| ------------------------- | ---------------------------------------------- | ------------------- |
-| **Productos**             | Categoría de producto                          | Entidad fuerte.     |
-| **Proveedores**           | —                                              | Entidad fuerte.     |
-| **Recepciones**           | Número de pedido a surtir; Número de proveedor | Entidad fuerte.     |
-| **Pedidos**               | Número de proveedor                            | Entidad fuerte.     |
-| **Ventas**                | Número de cliente                              | Entidad fuerte.     |
-| **Clientes**              | —                                              | Entidad fuerte.     |
-| **Categorías**            | —                                              | Entidad fuerte.     |
-| **Catálogo de proveedor** | Número de proveedor; Código de producto        | Entidad asociativa. |
-| **Detalle de recepción**  | Número de recepción; Código de producto        | Entidad asociativa. |
-| **Detalle de pedido**     | Número de pedido; Código de producto           | Entidad asociativa. |
-| **Detalle de venta**      | Número de venta; Código de producto            | Entidad asociativa. |
+| Entidad                   | Clave foránea                                                             | Tipo de entidad     |
+| ------------------------- | ------------------------------------------------------------------------- | ------------------- |
+| **Productos**             | Categoría de producto (`categoryId`)                                      | Entidad fuerte.     |
+| **Proveedores**           | —                                                                         | Entidad fuerte.     |
+| **Recepciones**           | Número de pedido a surtir (`orderId`); Número de proveedor (`supplierId`) | Entidad fuerte.     |
+| **Pedidos**               | Número de proveedor (`supplierId`)                                        | Entidad fuerte.     |
+| **Ventas**                | Número de cliente (`customerId`)                                          | Entidad fuerte.     |
+| **Clientes**              | —                                                                         | Entidad fuerte.     |
+| **Categorías**            | —                                                                         | Entidad fuerte.     |
+| **Catálogo de proveedor** | Número de proveedor (`supplierId`); Código de producto (`productId`)      | Entidad asociativa. |
+| **Detalle de recepción**  | Número de recepción (`entryId`); Código de producto (`productId`)         | Entidad asociativa. |
+| **Detalle de pedido**     | Número de pedido (`orderId`); Código de producto (`productId`)            | Entidad asociativa. |
+| **Detalle de venta**      | Número de venta (`ticket`); Código de producto (`productId`)              | Entidad asociativa. |
 
 ### Restricciones de seguridad
 
-> Particapación total NOT NULL o NULL, no elegidas como PK pero candidatas UNIQUE, politica referencial ON DELETE y ON UPDATE (restrict, cascade, set null). reglas de dominio (CHECK)
+Se aplicó `NOT NULL` a los atributos que requieran una medida adicional para evitar introducir datos vacíos como las referencias de llaves foráneas u otros casos. En las llaves primarias no se aplicó `NOT NULL` ni en los campos que requieran reglas de dominio ya que estas por definición o restricción no pueden estar vacíos. Algunos atributos que pudieron ser candidatos a llave primaria así como datos de correos y números telefónicos se aplicó `UNIQUE` con la finalidad de evitar duplicaciones en campos de valores únicos o información de carácter unívoco. Por cuestiones de tiempo, no se preparó una política referencial como `ON DELETE` y `ON UPDATE` (`RESTRICT`, `CASCADE`, `SET NULL` ) y este es de lo detalles críticos que se han de trabajar en la siguiente ronda de desarrollo. Por último, algunos atributos como los campos de precios y cantidades de productos (excepto en cuestión de existencias) se aplicaron reglas de dominio `CHECK` con la finalidad de que estos tengan valores flotantes o decimales no negativos.
 
 ### Esquema Relacional
 
-> Esquema relacional con tablas, PK, FK y restricciones. 
+```mermaid
+erDiagram
+	SALES }o--|| CUSTOMERS : ""
+	SALES }|--|| SALE_DETAIL : ""
+	PRODUCTS }o--|| SALE_DETAIL : ""
+	PRODUCTS }o--|| CATEGORIES : ""
+	SUPPLIERS }|--|| SUPPLIER_CATALOGO : ""
+	PRODUCTS }|--|| SUPPLIER_CATALOGO : ""
+	ORDERS }o--|| ORDER_DETAIL : ""
+	PRODUCTS }|--|| ORDER_DETAIL : ""
+	ENTRIES }o--|| ENTRY_DETAIL : ""
+	PRODUCTS }|--|| ENTRY_DETAIL : ""
+	ORDERS }o--|| SUPPLIERS : ""
+	ENTRIES }o--|| SUPPLIERS : ""
+	ENTRIES ||--o| ORDERS : ""
+	
+	PRODUCTS {
+		int productId PK
+		string name "NOT NULL"
+		float salePrice "CHECK"
+		int stock "NOT NULL"
+		int categoryId FK "NOT NULL"
+	}
+
+	SUPPLIERS {
+		int supplierId PK
+		string name "NOT NULL"
+		string email "NOT NULL, UNIQUE"
+		int phoneNumber "NOT NULL, UNIQUE"
+	}
+
+	ENTRIES {
+		int entryId PK
+		int orderId FK "NOT NULL"
+		int supplierId FK "NOT NULL"
+		string reference "NOT NULL"
+		datetime fullDate "NOT NULL"
+		float costEntry "CHECK"
+	}
+
+	ORDERS {
+		int orderId PK
+		int supplierId FK "NOT NULL"
+		datetime fullDate "NOT NULL"
+		float costOrder "CHECK"
+	}
+
+	SALES {
+		int ticket PK
+		datetime fullDate "NOT NULL"
+		int customerId FK "NOT NULL"
+		float amount "CHECK"
+	}
+
+	CUSTOMERS {
+		int customerId PK
+		string name "NOT NULL"
+		string email "NOT NULL, UNIQUE"
+		int phoneNumber "NOT NULL, UNIQUE"
+	}
+
+	CATEGORIES {
+		int categoryId PK
+		string category	"NOT NULL, UNIQUE"
+	}
+
+	SUPPLIER_CATALOGO {
+		int supplierId PK,FK
+		int productId PK,FK
+		float unitCost "CHECK"
+	}
+
+	ENTRY_DETAIL {
+		int entryId PK,FK
+		int productId PK,FK
+		int quantity "CHECK"
+		float unitCost "CHECK"
+		float totalCost "CHECK"
+	}
+
+	ORDER_DETAIL {
+		int orderId PK,FK
+		int productId PK,FK
+		int quantity "CHECK"
+		float unitCost "CHECK"
+		float totalCost "CHECK"
+	}
+	
+	SALE_DETAIL {
+		int ticket PK,FK
+		int productId PK,FK
+		int quantity "CHECK"
+		float unitPrice "CHECK"
+		float totalSale "CHECK"
+	}
+```
 
 ## Diccionario de Datos
 
+En este apartado se describe, de forma estructurada y exhaustiva, cada elemento del modelo de datos: las tablas, las columnas, los tipos, las restricciones, las claves y las relaciones. Este apartado es y será la referencia que fija el significado, el dominio y las reglas de cada dato introducido a la base de datos.
+
+###  Por tabla (entidad)
+
+Se han identificado 11 entidades para el modelo relacional para la base de datos, y por lo tanto, 11 tablas de especificaciones se describirán a continuación.
+
+| Campo                | Contenido                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------ |
+| Nombre               | `PRODUCTS`                                                                                       |
+| Descripción          | Los artículos que vende una tienda, que adquiere el cliente y fabrica o distribuye un proveedor. |
+| Clave(s) primaria(s) | `productId`                                                                                      |
+| Clave(s) foránea(s)  | `categoryId`                                                                                     |
+
+| Campo                | Contenido                                                                              |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| Nombre               | `SUPPLIERS`                                                                            |
+| Descripción          | Los agentes que entregan la mercancía a la tienda para que este lo distribuya y venda. |
+| Clave(s) primaria(s) | `supplierId`                                                                           |
+| Clave(s) foránea(s)  | —                                                                                      |
+
+| Campo                | Contenido                                                      |
+| -------------------- | -------------------------------------------------------------- |
+| Nombre               | `ENTRIES`                                                      |
+| Descripción          | El proceso de una tienda de recibir la mercancía al proveedor. |
+| Clave(s) primaria(s) | `entryId`                                                      |
+| Clave(s) foránea(s)  | `orderId`, `supplierId`                                        |
+
+| Campo                | Contenido                                                                  |
+| -------------------- | -------------------------------------------------------------------------- |
+| Nombre               | `ORDERS`                                                                   |
+| Descripción          | El proceso de una tienda de solicitar resurtido de mercancía al proveedor. |
+| Clave(s) primaria(s) | `orderId`                                                                  |
+| Clave(s) foránea(s)  | `supplierId`                                                               |
+
+| Campo                | Contenido                                                                                             |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| Nombre               | `SALES`                                                                                               |
+| Descripción          | Las transacciones entre clientes y la tienda, donde el primero adquiere un artículo usando su dinero. |
+| Clave(s) primaria(s) | `ticket`                                                                                              |
+| Clave(s) foránea(s)  | `customerId`                                                                                          |
+
+| Campo                | Contenido                                                       |
+| -------------------- | --------------------------------------------------------------- |
+| Nombre               | `CUSTOMERS`                                                     |
+| Descripción          | Los agentes que adquiere los productos ofertados por la tienda. |
+| Clave(s) primaria(s) | `customerid`                                                    |
+| Clave(s) foránea(s)  | —                                                               |
+
+| Campo                | Contenido                                                                        |
+| -------------------- | -------------------------------------------------------------------------------- |
+| Nombre               | `CATEGORIES`                                                                     |
+| Descripción          | La clasificación de la mercancía según su utilidad, caducidad u otros criterios. |
+| Clave(s) primaria(s) | `categoryId`                                                                     |
+| Clave(s) foránea(s)  | —                                                                                |
+
+| Campo                | Contenido                                    |
+| -------------------- | -------------------------------------------- |
+| Nombre               | `SUPPLIER_CATALOGO`                          |
+| Descripción          | Los productos ofertados por los proveedores. |
+| Clave(s) primaria(s) | `supplierId`, `productId`                    |
+| Clave(s) foránea(s)  | `supplierId`, `productId`                    |
+
+| Campo                | Contenido                                          |
+| -------------------- | -------------------------------------------------- |
+| Nombre               | `ENTRY_DETAIL`                                     |
+| Descripción          | El desglose de mercancía recibida de un proveedor. |
+| Clave(s) primaria(s) | `entryId`, `productId`                             |
+| Clave(s) foránea(s)  | `entryId`, `productId`                             |
+
+| Campo                | Contenido                                           |
+| -------------------- | --------------------------------------------------- |
+| Nombre               | `ORDER_DETAIL`                                      |
+| Descripción          | El desglose de mercancía solicitada a un proveedor. |
+| Clave(s) primaria(s) | `orderId`, `produtId`                               |
+| Clave(s) foránea(s)  | `orderId`, `productId`                              |
+
+| Campo                | Contenido                                                                |
+| -------------------- | ------------------------------------------------------------------------ |
+| Nombre               | `SALE_DETAIL`                                                            |
+| Descripción          | El desglose de una venta, los productos y precios vendidos a un cliente. |
+| Clave(s) primaria(s) | `ticket`, `productId`                                                    |
+| Clave(s) foránea(s)  | `ticket`, `productId`                                                    |
+
+### Por columna (atributo)
+
+Se han identificado 11 entidades para el modelo relacional para la base de datos, y por lo tanto, 11 tablas de especificaciones de atributos se describirán a continuación.
+
+| Tabla      | Columna      | Tipo   | Longitud o precisión | Nulo | Clave              | Valor por defecto | Restricciones | Descripción                      |
+| ---------- | ------------ | ------ | -------------------- | ---- | ------------------ | ----------------- | ------------- | -------------------------------- |
+| `PRODUCTS` | `productId`  | INT    |                      | No   | PK                 | AUTO_INCREMENTAL  |               | Identificador único de producto. |
+|            | `name`       | STRING | 50                   | No   |                    |                   |               | Nombre descriptivo del producto. |
+|            | `salePrice`  | FLOAT  | (10, 2)              | No   |                    |                   | CHECK >= 0    | Precio de venta.                 |
+|            | `stock`      | INT    |                      | No   |                    |                   |               | Existencias del producto.        |
+|            | `categoryId` | INT    |                      | No   | FK -> `CATEGORIES` |                   |               | Categoría única del producto.    |
+
+| Tabla       | Columna       | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                          |
+| ----------- | ------------- | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------------ |
+| `SUPPLIERS` | `supplierId`  | INT    |                      | No   | PK    |                   |               | Identificador único de proveedor.    |
+|             | `name`        | STRING |                      | No   |       |                   |               | Nombre o razón social del proveedor. |
+|             | `email`       | STRING |                      | No   |       |                   | UNIQUE        | Correo electrónico del proveedor.    |
+|             | `phoneNumber` | INT    |                      | No   |       |                   | UNIQUE        | Número telefónico del proveedor.     |
+
+| Tabla     | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto      | Restricciones | Descripción                                         |
+| --------- | ------------ | -------- | -------------------- | ---- | ----------------- | ---------------------- | ------------- | --------------------------------------------------- |
+| `ENTRIES` | `entryId`    | INT      |                      | No   | PK                |                        |               | Identificador único de recepción de mercancía.      |
+|           | `orderId`    | INT      |                      | No   | FK -> `ORDERS`    |                        |               | Identificador de pedido.                            |
+|           | `supplierId` | INT      |                      | No   | FK -> `SUPPLIERS` |                        |               | Identificador de proveedor.                         |
+|           | `reference`  | STRING   |                      | No   |                   |                        |               | Nota de venta o factura entregada por el proveedor. |
+|           | `fullDate`   | DATETIME |                      | No   |                   | CURRENT_TIMESTAMP      |               | Fecha y hora de recepción.                          |
+|           | `costEntry`  | FLOAT    | (10, 2)              | No   |                   | Suma en `ENTRY_DETAIL` | CHECK >= 0    | Costo total de la recepción.                        |
+
+| Tabla    | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto      | Restricciones | Descripción                                 |
+| -------- | ------------ | -------- | -------------------- | ---- | ----------------- | ---------------------- | ------------- | ------------------------------------------- |
+| `ORDERS` | `orderId`    | INT      |                      | No   | PK                |                        |               | Identificador único de pedido de mercancía. |
+|          | `supplierId` | INT      |                      | No   | FK -> `SUPPLIERS` |                        |               | Identificador de proveedor.                 |
+|          | `fullDate`   | DATETIME |                      | No   |                   | CURRENT_TIMESTAMP      |               | Fecha y hora de solicitud de pedido.        |
+|          | `costOrder`  | FLOAT    | (10, 2)              | No   |                   | Suma en `ORDER_DETAIL` | CHECK >= 0    | Costo total del pedido.                     |
+
+| Tabla   | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto     | Restricciones | Descripción                    |
+| ------- | ------------ | -------- | -------------------- | ---- | ----------------- | --------------------- | ------------- | ------------------------------ |
+| `SALES` | `ticket`     | INT      |                      | No   | PK                |                       |               | Identificador único de venta.  |
+|         | `fullDate`   | DATETIME |                      | No   |                   |                       |               | Fecha y hora de la venta.      |
+|         | `customerId` | INT      |                      | No   | FK -> `CUSTOMERS` | CURRENT_TIMESTAMP     |               | Cliente vinculado a la compra. |
+|         | `amount`     | FLOAT    | (10,2)               | No   |                   | Suma en `SALE_DETAIL` | CHECK >= 0    | Monto total de la venta.       |
+
+| Tabla       | Columna       | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                     |
+| ----------- | ------------- | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------- |
+| `CUSTOMERS` | `customerId`  | INT    |                      | No   | PK    |                   |               | Identificador único de cliente. |
+|             | `name`        | STRING |                      | No   |       |                   |               | Nombre del cliente.             |
+|             | `email`       | STRING |                      | No   |       |                   | UNIQUE        | Correo electrónico del cliente. |
+|             | `phoneNumber` | INT    |                      | No   |       |                   | UNIQUE        | Número telefónico del cliente.  |
+
+| Tabla        | Columna      | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                         |
+| ------------ | ------------ | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ----------------------------------- |
+| `CATEGORIES` | `categoryId` | INT    |                      | No   | PK    |                   |               | Identificador único de categoría.   |
+|              | `category`   | STRING |                      | No   |       |                   | UNIQUE        | Nombre descriptivo de la categoría. |
+
+| Tabla               | Columna      | Tipo  | Longitud o precisión | Nulo | Clave                 | Valor por defecto | Restricciones | Descripción                                    |
+| ------------------- | ------------ | ----- | -------------------- | ---- | --------------------- | ----------------- | ------------- | ---------------------------------------------- |
+| `SUPPLIER_CATALOGO` | `supplierId` | INT   |                      | No   | PK, FK -> `SUPPLIERS` |                   |               | Identificador de proveedor.                    |
+|                     | `productId`  | INT   |                      | No   | PK, FK -> `PRODUCTS`  |                   |               | Identificador de producto.                     |
+|                     | `unitCost`   | FLOAT | (10,2)               | No   |                       |                   | CHECK >= 0    | Costo unitario, precio proveedor del producto. |
+
+| Tabla          | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto    | Restricciones | Descripción                                   |
+| -------------- | ----------- | ----- | -------------------- | ---- | -------------------- | -------------------- | ------------- | --------------------------------------------- |
+| `ENTRY_DETAIL` | `entryId`   | INT   |                      | No   | PK, FK -> `ENTRIES`  |                      |               | Identificador de recepción de mercancía.      |
+|                | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                      |               | Identificador de producto.                    |
+|                | `quantity`  | INT   |                      | No   |                      |                      | CHECK >= 0    | Cantidad recibida de producto.                |
+|                | `unitCost`  | FLOAT | (10,2)               | No   |                      |                      | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
+|                | `totalCost` | FLOAT | (10,2)               | No   |                      | quantity \* unitCost | CHECK >= 0    | Costo total por producto                      |
+
+| Tabla          | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto    | Restricciones | Descripción                                   |
+| -------------- | ----------- | ----- | -------------------- | ---- | -------------------- | -------------------- | ------------- | --------------------------------------------- |
+| `ORDER_DETAIL` | `orderId`   | INT   |                      | No   | PK, FK -> `ORDERS`   |                      |               | Identificador de pedido de mercancía.         |
+|                | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                      |               | Identificador de producto.                    |
+|                | `quantity`  | INT   |                      | No   |                      |                      | CHECK >= 0    | Cantidad solicitada de producto.              |
+|                | `unitCost`  | FLOAT | (10,2)               | No   |                      |                      | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
+|                | `totalCost` | FLOAT | (10,2)               | No   |                      | quantity \* unitCost | CHECK >= 0    | Costo total por producto                      |
+
+| Tabla         | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto     | Restricciones | Descripción                                    |
+| ------------- | ----------- | ----- | -------------------- | ---- | -------------------- | --------------------- | ------------- | ---------------------------------------------- |
+| `SALE_DETAIL` | `ticket`    | INT   |                      | No   | PK, FK -> `ORDERS`   |                       |               | Identificador de venta.                        |
+|               | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                       |               | Identificador de producto.                     |
+|               | `quantity`  | INT   |                      | No   |                      |                       | CHECK >= 0    | Cantidad vendida de producto.                  |
+|               | `unitPrice` | FLOAT | (10,2)               | No   |                      |                       | CHECK >= 0    | Precio unitario, precio de venta del producto. |
+|               | `totalSale` | FLOAT | (10,2)               | No   |                      | quantity \* unitPrice | CHECK >= 0    | Monto total de venta.                          |
+
+### Por relación
+
+Se han identificado 9 relaciones principales para el modelo relacional para la base de datos, y por lo tanto, 9 relaciones se describirán a continuación.
+
+| Relación                | Entidades                                    | Cardinalidad | Política referencial |
+| ----------------------- | -------------------------------------------- | ------------ | -------------------- |
+| `SALES - CUSTOMERS`     | `SALES`, `CUSTOMERS`                         | `N:1`        | No implementado.     |
+| `SALES - PRODUCTS`      | `SALES`, `SALE_DETAIL`, `PRODUCTS`           | `N:M`        | No implementado.     |
+| `SUPPLIERS - PRODUCTS`  | `SUPPLIERS`, `SUPPLIER_CATALOGO`, `PRODUCTS` | `N:M`        | No implementado.     |
+| `PRODUCTS - CATEGORIES` | `PRODUCTS`, `CATEGORIES`                     | `N:1`        | No implementado.     |
+| `ORDERS - PRODUCTS`     | `ORDERS`, `ORDER_DETAIL`, `PRODUCTS`         | `N:M`        | No implementado.     |
+| `ENTRIES - PRODUCTS`    | `ENTRIES`, `ENTRY_DETAIL`, `PRODUCTS`        | `N:M`        | No implementado.     |
+| `ORDERS - SUPPLIERS`    | `ORDERS`, `SUPPLIERS`                        | `N:1`        | No implementado.     |
+| `ENTRIES - SUPPLIERS`   | `ENTRIES`, `SUPPLIERS`                       | `N:1`        | No implementado.     |
+| `ENTRIES - ORDERS`      | `ENTRIES`, `ORDERS`                          | `1:1`        | No implementado.     |
+
 ## Implementación de la Base de Datos
 
+> Creación de la base de datos y sus tablas. Realización de consultas. Scripts para inserción de datos.
+
 ## Pruebas de la Base de Datos
+
+> Pruebas de estrés al automatizar la creación de la base de datos, las tablas, las consultas y la inserción de datos. Además de explotar vulnerabilidades o defectos sin protección. Es decir, hallar los límites, identificarlos, corregirlos o presentar los límites.
