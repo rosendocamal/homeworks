@@ -384,6 +384,7 @@ ORDER BY ENTRIES.fullDate DESC, SUPPLIERS.name, PRODUCTS.name;
 -- Creación de detalles de recepción
 -- Creación de detalles de pedido
 -- Creación de detalles de venta
+-- Existencias de mercancía (PRODUCTS.stock)
 ```
 
 # Inserción fundamental de datos
