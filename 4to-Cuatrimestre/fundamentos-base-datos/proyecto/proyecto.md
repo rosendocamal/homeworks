@@ -19,7 +19,7 @@ categories:
 
 Una tienda comercial necesita organizar la información de sus productos, proveedores, clientes y ventas. Actualmente, los registros se llevan de manera desordenada, lo que dificulta conocer las existencias, identificar los productos más vendidos y consultar los ingresos generados. Por ello, la tienda se ha propuesto utilizar una base de datos como la solución que le facilite controlar productos, proveedores, clientes, ventas y detalles de ventas, manteniendo la integridad y consistencia de la información generada en algunas de sus operaciones.
 
-Por lo tanto, se diseñará y desarollará una base de datos que permita administrar la información comercial y facilitar la generación de reportes. 
+Por lo tanto, se diseñará y desarollará una base de datos que permita a la tienda administrar la información comercial y facilitar la generación de reportes. 
 
 Los empleados de la empresa deben poder ejecutar las siguientes operaciones[^+]:
 - **Listado** de los todos los productos registrados.
@@ -30,9 +30,9 @@ Los empleados de la empresa deben poder ejecutar las siguientes operaciones[^+]:
 - **Identificación** de productos con existencias bajas.
 - **Consulta** de ventas de un cliente específico.
 - Utilización de operaciones de inserción y consulta de datos.
-- Generación un reporte[^\*] que muestre los productos vendidos, las cantidades, los precios y el importe total vendido por producto.
+- Generación de un reporte[^\*] que muestre los productos vendidos, las cantidades, los precios y el importe total vendido por producto.
 
-Los puntos o conceptos más importantes de la problemática de la tienda son: `base de datos`, `productos`, `proveedores`, `clientes`, `ventas`, `detalles de ventas`, `generación de reportes`, `operaciones en la base de datos`. Estos conceptos son el núcleo de lo que el usuario (la tienda comercial) solicita como fundamental y crítico en su petición. En síntesis, la tienda requiere una base de datos para apoyar el **proceso o ciclo de compra-venta**.
+Los puntos o conceptos más importantes de la problemática de la tienda son: `base de datos`, `productos`, `proveedores`, `clientes`, `ventas`, `detalles de ventas`, `generación de reportes`, `operaciones en la base de datos`. Estos conceptos son el núcleo de lo que el usuario (la tienda comercial) solicita como fundamental y crítico en su petición. Por lo que se comprende que la tienda no requiere control relacionado con la gestión de empleados, nómina, contabilidad y otras áreas de operación y administración. En síntesis, la tienda requiere una base de datos para apoyar a su **proceso o ciclo de compra-venta**. 
 
 [^+]: La mayoría de las operaciones no son descritas con precisión ni claridad. Se asumirán primero reglas intuitivas y sencillas, lo demás detalles serán tratados en la fase pertinente.
 
@@ -42,7 +42,7 @@ Los puntos o conceptos más importantes de la problemática de la tienda son: `b
 
 ### Dominio
 
-Dada la información obtenida en el enunciado de la problemática, el sistema o proceso de la tienda comercial a modelar es el *proceso o ciclo de compra-venta*. En tal modelo, los agentes y procesos principales son la **tienda**, el **producto**, el **inventario**, la **venta** y el **cliente** y el **proveedor**. Estos agentes y procesos se consideran parte de las entidades para un modelo relacional de bases de datos. Cabe añadir que las acciones de **vender** productos, **comprar** productos, **recepcionar** mercancía, **pedir** mercancía y **entregar** mercancía forman parte de los candidatos a relación.
+Dada la información obtenida en el enunciado de la problemática, el sistema o proceso de la tienda comercial a modelar es el *proceso o ciclo de compra-venta*. En tal modelo, los agentes y procesos principales son la **tienda**, el **producto**, el **inventario**, la **venta** , el **cliente** y el **proveedor**. Estos agentes y procesos se consideran parte de las entidades para un modelo relacional de bases de datos. Cabe añadir que las acciones de **vender** productos, **comprar** productos, **recepcionar** mercancía, **pedir** mercancía y **entregar** mercancía forman parte de los candidatos a relación.
 
 El proceso de compra-venta en perspectiva del producto —y de forma simplificada— se muestra en el diagrama siguiente:
 
@@ -57,7 +57,7 @@ flowchart
 	TIENDA --> CLIENTE
 ```
 
-En tal flujo se observa de donde sale el producto y en donde termina, ahora tendremos que desglosar y exponer de forma descriptiva dicho diagrama. El producto es ofertado por el proveedor y este le vende dicho artículo a la tienda comercial. La tienda ingresa el producto a su inventario. La tienda le vende el artículo a un cliente, y el cliente lo compra. Es necesario aclarar que dicho proceso es simplificado y modela únicamente la secuencia de un único producto desde el almacén del proveedor hasta que el cliente lo hace suyo.
+En tal flujo se observa de donde sale el producto y en donde termina, ahora tendremos que desglosar y exponer de forma descriptiva dicho diagrama. El producto es ofertado por el proveedor y este le vende dicho artículo a la tienda comercial. La tienda ingresa el producto a su inventario. La tienda le vende el artículo a un cliente, y el cliente lo compra. Es necesario aclarar que este proceso es simplificado y modela únicamente la secuencia de un único producto desde el almacén del proveedor hasta que el cliente lo hace suyo.
 
 ```mermaid
 sequenceDiagram
@@ -136,7 +136,7 @@ Las entidades se podrán identificar de dos formas:
 - Pedidos -> `ORDERS`
 - Ventas -> `SALES`
 - Clientes -> `CUSTOMERS`
-- Categorías -> `CATEGORIES
+- Categorías -> `CATEGORIES`
 - Catálogo de proveedor -> `SUPPLIER_CATALOGO`
 - Detalle de recepción -> `ENTRY_DETAIL`
 - Detalle de pedido -> `ORDER_DETAIL`
@@ -147,40 +147,40 @@ Las entidades se podrán identificar de dos formas:
 A continuación se enumeran los *atributos* de las entidades fuertes identificadas y seleccionadas de la sección anterior.
 
 - **Productos**:
-	- Código de producto -> `productId`,
+	- Identificador de producto -> `id`,
+	- Código de producto -> `sku`,
 	- Nombre del producto -> `name`,
 	- Precio de venta -> `salePrice` ,
 	- Existencias -> `stock`, y
 	- Categoría de producto -> `categoryId`.
 - **Proveedores**:
-	- Número de proveedor -> `supplierId`,
+	- Número o identificador de proveedor -> `id`,
 	- Nombre del proveedor -> `name`,
 	- Correo electrónico -> `email`, y
 	- Número telefónico -> `phoneNumber`.
 - **Recepciones**:
-	- Número de recepción -> `entryId,
+	- Número de recepción -> `id,
 	- Número de pedido a surtir -> `orderId`,
-	- Número de proveedor -> `supplierId`, 
 	- Referencia (número de nota de venta o de factura del proveedor) -> `reference`,
 	- Fecha y hora de recepción -> `fullDate`, y
 	- Valor monetario de la recepción (costo) -> `costEntry.
 - **Pedidos**:
-	- Número de pedido -> `orderId`,
+	- Número de pedido -> `id`,
 	- Número de proveedor -> `supplierId`,
 	- Fecha y hora del pedido -> `fullDate`, y
 	- Valor monetario del pedido (costo) -> `costOrder`.
 - **Ventas**:
-	- Número de venta -> `ticket`,
+	- Número de venta -> `id`,
 	- Fecha y hora de la venta -> `fullDate`, 
 	- Número de cliente -> `customerId`, y
 	- Monto de venta -> `amount`.
 - **Clientes**:
-	- Número de cliente -> `customerId,
+	- Número de cliente -> `id,
 	- Nombre del cliente -> `name`,
 	- Correo electrónico -> `email`, y
 	- Número de teléfono -> `phoneNumber`.
 - **Categorías**:
-	- Identificador de categoría -> `categoryId`, y
+	- Identificador de categoría -> `id`, y
 	- Categoría `category`.
 
 Listado de atributos de las entidades asociativas:
@@ -214,13 +214,13 @@ Dada la sección anterior, se ha desglosado los atributos que contienen cada ent
 
 | Entidad                   | Clave primaria                                                       | Tipo de entidad     |
 | ------------------------- | -------------------------------------------------------------------- | ------------------- |
-| **Productos**             | Código de producto (`productId`)                                     | Entidad fuerte.     |
-| **Proveedores**           | Número de proveedor (`supplierId`)                                   | Entidad fuerte.     |
-| **Recepciones**           | Número de recepción (`entryId`)                                      | Entidad fuerte.     |
-| **Pedidos**               | Número de pedido (`orderId`)                                         | Entidad fuerte.     |
-| **Ventas**                | Número de venta (`ticket`)                                           | Entidad fuerte.     |
-| **Clientes**              | Número de cliente (`customerId`)                                     | Entidad fuerte.     |
-| **Categorías**            | Identificador de categoría (`categoryId`)                            | Entidad fuerte.     |
+| **Productos**             | Identificador de producto (`id`)                                     | Entidad fuerte.     |
+| **Proveedores**           | Número o identificador de proveedor (id)                             | Entidad fuerte.     |
+| **Recepciones**           | Número de recepción (`id`)                                           | Entidad fuerte.     |
+| **Pedidos**               | Número de pedido (`id`)                                              | Entidad fuerte.     |
+| **Ventas**                | Número de venta (`id`)                                               | Entidad fuerte.     |
+| **Clientes**              | Número de cliente (`id`)                                             | Entidad fuerte.     |
+| **Categorías**            | Identificador de categoría (`id`)                                    | Entidad fuerte.     |
 | **Catálogo de proveedor** | Número de proveedor (`supplierId`); Código de producto (`productId`) | Entidad asociativa. |
 | **Detalle de recepción**  | Número de recepción (`entryId`); Código de producto (`productId`)    | Entidad asociativa. |
 | **Detalle de pedido**     | Número de pedido (`orderId`); Código de producto (`productId`)       | Entidad asociativa. |
@@ -295,7 +295,7 @@ erDiagram
 
 #### Relaciones entre dos entidades
 
-A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**. Esta es una relación de _cardinalidad_ `N:1`.****
+A un **cliente** le pueden o no realizar una **venta**. Y toda **venta** está realizada a un único **cliente**. Esta es una relación de _cardinalidad_ `N:1`.
 
 ```mermaid
 erDiagram
@@ -380,7 +380,7 @@ erDiagram
 
 ### Relaciones N:M
 
-Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas. Veáse las tablas de las entidades en la sección **Entidades**. En la tabla ulterior se ilustran las claves primarias de estas relaciones.
+Se presentan las entidades asociativas como resultado a la solución de relaciones de cardinalidad `N:M`. Son cuatro las relaciones `N:M` identificadas. Veáse las tablas de las entidades en la sección **Entidades** y revise la sección anterior. En la tabla ulterior se ilustran las claves primarias de estas relaciones.
 
 | Entidad                   | Clave primaria 1                   | Clave primaria 2                 | Tipo de entidad     |
 | ------------------------- | ---------------------------------- | -------------------------------- | ------------------- |
@@ -404,93 +404,93 @@ Se muestra el formato de _tabla_ las entidades descritas en las secciones anteri
 
 ```mermaid
 ---
-title: Productos
+title: Tabla de Productos
 ---
 erDiagram
 	PRODUCTS {
-		int productId PK
-		string name "NOT NULL"
-		float salePrice "CHECK"
-		int stock "NOT NULL"
-		int categoryId FK "NOT NULL"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR sku "NOT NULL, UNIQUE"
+		VARCHAR name "NOT NULL"
+		DECIMAL salePrice "NOT NULL, CHECK"
+		INT stock "NOT NULL"
+		INT categoryId FK "NOT NULL"
 	}
 ```
 
 ```mermaid
 ---
-title: Proveedores
+title: Tabla de Proveedores
 ---
 erDiagram
 	SUPPLIERS {
-		int supplierId PK
-		string name "NOT NULL"
-		string email "NOT NULL, UNIQUE"
-		int phoneNumber "NOT NULL, UNIQUE"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR name "NOT NULL"
+		VARCHAR email "NOT NULL, UNIQUE"
+		VARCHAR phoneNumber "NOT NULL, UNIQUE"
 }
 ```
 
 ```mermaid
 ---
-title: Recepciones
+title: Tabla de Recepciones
 ---
 erDiagram
 	ENTRIES {
-		int entryId PK
-		int orderId FK "NOT NULL"
-		int supplierId FK "NOT NULL"
-		string reference "NOT NULL"
-		datetime fullDate "NOT NULL"
-		float costEntry "CHECK"
+		INT id PK "UTO_INCREMENT"
+		INT orderId FK "NOT NULL"
+		VARCHAR reference "NOT NULL"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		DECIMAL costEntry "NOT NULL, CHECK"
 	}
 ```
 
 ```mermaid
 ---
-title: Pedidos
+title: Tabla de Pedidos
 ---
 erDiagram
 	ORDERS {
-		int orderId PK
-		int supplierId FK "NOT NULL"
-		datetime fullDate "NOT NULL"
-		float costOrder "CHECK"
+		INT id PK "AUTO_INCREMENT"
+		INT supplierId FK "NOT NULL"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		DECIMAL costOrder "NOT NULL, CHECK"
 	}
 ```
 
 ```mermaid
 ---
-title: Ventas
+title: Tabla de Ventas
 ---
 erDiagram
 	SALES {
-		int ticket PK
-		datetime fullDate "NOT NULL"
-		int customerId FK "NOT NULL"
-		float amount "CHECK"
+		INT id PK "AUTO_INCREMENT"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		INT customerId FK "NOT NULL"
+		DECIMAL amount "NOT NULL, CHECK"
 	}
 ```
 
 ```mermaid
 ---
-title: Clientes
+title: Tabla de Clientes
 ---
 erDiagram
 	CUSTOMERS {
-		int customerId PK
-		string name "NOT NULL"
-		string email "NOT NULL, UNIQUE"
-		int phoneNumber "NOT NULL, UNIQUE"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR name "NOT NULL"
+		VARCHAR email "NOT NULL, UNIQUE"
+		VARCHAR phoneNumber "NOT NULL, UNIQUE"
 	}
 ```
 
 ```mermaid
 ---
-title: Categorías
+title: Tabla de Categorías
 ---
 erDiagram
 	CATEGORIES {
-		int categoryId PK
-		string category	"NOT NULL, UNIQUE"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR category	"NOT NULL, UNIQUE"
 	}
 ```
 
@@ -500,9 +500,9 @@ title: Catálogo de proveedor
 ---
 erDiagram
 	SUPPLIER_CATALOGO {
-		int supplierId PK,FK
-		int productId PK,FK
-		float unitCost "CHECK"
+		INT supplierId PK,FK
+		INT productId PK,FK
+		DECIMAL unitCost "NOT NULL, CHECK"
 	}
 ```
 
@@ -512,11 +512,11 @@ title: Detalle de recepción
 ---
 erDiagram
 	ENTRY_DETAIL {
-		int entryId PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitCost "CHECK"
-		float totalCost "CHECK"
+		INT entryId PK,FK
+		INT productId PK,FK
+		INT quantity "NOT NULL, CHECK"
+		DECIMAL unitCost "NOT NULL, CHECK"
+		DECIMAL totalCost "NOT NULL, CHECK"
 	}
 ```
 
@@ -526,11 +526,11 @@ title: Detalle de pedido
 ---
 erDiagram
 	ORDER_DETAIL {
-		int orderId PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitCost "CHECK"
-		float totalCost "CHECK"
+		INT orderId PK,FK
+		INT productId PK,FK
+		INT quantity "NOT NULL, CHECK"
+		DECIMAL unitCost "NOT NULL, CHECK"
+		DECIMAL totalCost "NOT NULL, CHECK"
 	}
 ```
 
@@ -540,11 +540,11 @@ title: Detalle de venta
 ---
 erDiagram
 	SALE_DETAIL {
-		int ticket PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitPrice "CHECK"
-		float totalSale "CHECK"
+		INT ticket PK,FK
+		INT productId PK,FK
+		DECIMAL quantity "NOT NULL, CHECK"
+		DECIMAL unitPrice "NOT NULL, CHECK"
+		DECIMAL totalSale "NOT NULL, CHECK"
 	}
 ```
 
@@ -555,12 +555,12 @@ Véase la sección de **Relaciones entre dos identidades**. En la tabla se muest
 | Entidad                   | Clave foránea                                                             | Tipo de entidad     |
 | ------------------------- | ------------------------------------------------------------------------- | ------------------- |
 | **Productos**             | Categoría de producto (`categoryId`)                                      | Entidad fuerte.     |
-| **Proveedores**           | —                                                                         | Entidad fuerte.     |
+| **Proveedores**           |                                                                           | Entidad fuerte.     |
 | **Recepciones**           | Número de pedido a surtir (`orderId`); Número de proveedor (`supplierId`) | Entidad fuerte.     |
 | **Pedidos**               | Número de proveedor (`supplierId`)                                        | Entidad fuerte.     |
 | **Ventas**                | Número de cliente (`customerId`)                                          | Entidad fuerte.     |
-| **Clientes**              | —                                                                         | Entidad fuerte.     |
-| **Categorías**            | —                                                                         | Entidad fuerte.     |
+| **Clientes**              |                                                                           | Entidad fuerte.     |
+| **Categorías**            |                                                                           | Entidad fuerte.     |
 | **Catálogo de proveedor** | Número de proveedor (`supplierId`); Código de producto (`productId`)      | Entidad asociativa. |
 | **Detalle de recepción**  | Número de recepción (`entryId`); Código de producto (`productId`)         | Entidad asociativa. |
 | **Detalle de pedido**     | Número de pedido (`orderId`); Código de producto (`productId`)            | Entidad asociativa. |
@@ -568,7 +568,7 @@ Véase la sección de **Relaciones entre dos identidades**. En la tabla se muest
 
 ### Restricciones de seguridad
 
-Se aplicó `NOT NULL` a los atributos que requieran una medida adicional para evitar introducir datos vacíos como las referencias de llaves foráneas u otros casos. En las llaves primarias no se aplicó `NOT NULL` ni en los campos que requieran reglas de dominio ya que estas por definición o restricción no pueden estar vacíos. Algunos atributos que pudieron ser candidatos a llave primaria así como datos de correos y números telefónicos se aplicó `UNIQUE` con la finalidad de evitar duplicaciones en campos de valores únicos o información de carácter unívoco. Por cuestiones de tiempo, no se preparó una política referencial como `ON DELETE` y `ON UPDATE` (`RESTRICT`, `CASCADE`, `SET NULL` ) y este es de lo detalles críticos que se han de trabajar en la siguiente ronda de desarrollo. Por último, algunos atributos como los campos de precios y cantidades de productos (excepto en cuestión de existencias) se aplicaron reglas de dominio `CHECK` con la finalidad de que estos tengan valores flotantes o decimales no negativos.
+Se aplicó `NOT NULL` a los atributos que requieran una medida adicional para evitar introducir datos vacíos como las referencias de llaves foráneas u otros casos. En las llaves primarias no se aplicó `NOT NULL` ya que estas por definición o restricción no pueden estar vacíos. Algunos atributos que pudieron ser candidatos a llave primaria así como datos de correos y números telefónicos se aplicó `UNIQUE` con la finalidad de evitar duplicaciones en campos de valores únicos o información de carácter unívoco. Por cuestiones de tiempo, no se preparó una política referencial como `ON DELETE` y `ON UPDATE` (`RESTRICT`, `CASCADE`, `SET NULL` ) y este es de lo detalles críticos que se han de trabajar en la siguiente ronda de desarrollo. Por último, algunos atributos como los campos de precios y cantidades de productos (excepto en cuestión de existencias) se aplicaron reglas de dominio `CHECK` con la finalidad de que estos tengan valores decimales no negativos.
 
 ### Esquema Relacional
 
@@ -587,85 +587,85 @@ erDiagram
 	ORDERS }o--|| SUPPLIERS : ""
 	ENTRIES }o--|| SUPPLIERS : ""
 	ENTRIES ||--o| ORDERS : ""
-	
+
 	PRODUCTS {
-		int productId PK
-		string name "NOT NULL"
-		float salePrice "CHECK"
-		int stock "NOT NULL"
-		int categoryId FK "NOT NULL"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR sku "NOT NULL, UNIQUE"
+		VARCHAR name "NOT NULL"
+		DECIMAL salePrice "NOT NULL, CHECK"
+		INT stock "NOT NULL"
+		INT categoryId FK "NOT NULL"
 	}
 
 	SUPPLIERS {
-		int supplierId PK
-		string name "NOT NULL"
-		string email "NOT NULL, UNIQUE"
-		int phoneNumber "NOT NULL, UNIQUE"
-	}
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR name "NOT NULL"
+		VARCHAR email "NOT NULL, UNIQUE"
+		VARCHAR phoneNumber "NOT NULL, UNIQUE"
+}
 
 	ENTRIES {
-		int entryId PK
-		int orderId FK "NOT NULL"
-		int supplierId FK "NOT NULL"
-		string reference "NOT NULL"
-		datetime fullDate "NOT NULL"
-		float costEntry "CHECK"
+		INT id PK "UTO_INCREMENT"
+		INT orderId FK "NOT NULL"
+		VARCHAR reference "NOT NULL"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		DECIMAL costEntry "NOT NULL, CHECK"
 	}
 
 	ORDERS {
-		int orderId PK
-		int supplierId FK "NOT NULL"
-		datetime fullDate "NOT NULL"
-		float costOrder "CHECK"
+		INT id PK "AUTO_INCREMENT"
+		INT supplierId FK "NOT NULL"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		DECIMAL costOrder "NOT NULL, CHECK"
 	}
 
 	SALES {
-		int ticket PK
-		datetime fullDate "NOT NULL"
-		int customerId FK "NOT NULL"
-		float amount "CHECK"
+		INT id PK "AUTO_INCREMENT"
+		DATETIME fullDate "NOT NULL, DEFAULT"
+		INT customerId FK "NOT NULL"
+		DECIMAL amount "NOT NULL, CHECK"
 	}
 
 	CUSTOMERS {
-		int customerId PK
-		string name "NOT NULL"
-		string email "NOT NULL, UNIQUE"
-		int phoneNumber "NOT NULL, UNIQUE"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR name "NOT NULL"
+		VARCHAR email "NOT NULL, UNIQUE"
+		VARCHAR(20) phoneNumber "NOT NULL, UNIQUE"
 	}
 
 	CATEGORIES {
-		int categoryId PK
-		string category	"NOT NULL, UNIQUE"
+		INT id PK "AUTO_INCREMENT"
+		VARCHAR category	"NOT NULL, UNIQUE"
 	}
 
 	SUPPLIER_CATALOGO {
-		int supplierId PK,FK
-		int productId PK,FK
-		float unitCost "CHECK"
+		INT supplierId PK,FK
+		INT productId PK,FK
+		DECIMAL unitCost "NOT NULL, CHECK"
 	}
 
 	ENTRY_DETAIL {
-		int entryId PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitCost "CHECK"
-		float totalCost "CHECK"
+		INT entryId PK,FK
+		INT productId PK,FK
+		INT quantity "NOT NULL, CHECK"
+		DECIMAL unitCost "NOT NULL, CHECK"
+		DECIMAL totalCost "NOT NULL, CHECK"
 	}
 
 	ORDER_DETAIL {
-		int orderId PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitCost "CHECK"
-		float totalCost "CHECK"
+		INT orderId PK,FK
+		INT productId PK,FK
+		INT quantity "NOT NULL, CHECK"
+		DECIMAL unitCost "NOT NULL, CHECK"
+		DECIMAL totalCost "NOT NULL, CHECK"
 	}
-	
+
 	SALE_DETAIL {
-		int ticket PK,FK
-		int productId PK,FK
-		int quantity "CHECK"
-		float unitPrice "CHECK"
-		float totalSale "CHECK"
+		INT ticket PK,FK
+		INT productId PK,FK
+		DECIMAL quantity "NOT NULL, CHECK"
+		DECIMAL unitPrice "NOT NULL, CHECK"
+		DECIMAL totalSale "NOT NULL, CHECK"
 	}
 ```
 
@@ -681,49 +681,49 @@ Se han identificado 11 entidades para el modelo relacional para la base de datos
 | -------------------- | ------------------------------------------------------------------------------------------------ |
 | Nombre               | `PRODUCTS`                                                                                       |
 | Descripción          | Los artículos que vende una tienda, que adquiere el cliente y fabrica o distribuye un proveedor. |
-| Clave(s) primaria(s) | `productId`                                                                                      |
+| Clave(s) primaria(s) | `id`                                                                                      |
 | Clave(s) foránea(s)  | `categoryId`                                                                                     |
 
 | Campo                | Contenido                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------- |
 | Nombre               | `SUPPLIERS`                                                                            |
 | Descripción          | Los agentes que entregan la mercancía a la tienda para que este lo distribuya y venda. |
-| Clave(s) primaria(s) | `supplierId`                                                                           |
+| Clave(s) primaria(s) | `id`                                                                           |
 | Clave(s) foránea(s)  | —                                                                                      |
 
 | Campo                | Contenido                                                      |
 | -------------------- | -------------------------------------------------------------- |
 | Nombre               | `ENTRIES`                                                      |
 | Descripción          | El proceso de una tienda de recibir la mercancía al proveedor. |
-| Clave(s) primaria(s) | `entryId`                                                      |
+| Clave(s) primaria(s) | `id`                                                      |
 | Clave(s) foránea(s)  | `orderId`, `supplierId`                                        |
 
 | Campo                | Contenido                                                                  |
 | -------------------- | -------------------------------------------------------------------------- |
 | Nombre               | `ORDERS`                                                                   |
 | Descripción          | El proceso de una tienda de solicitar resurtido de mercancía al proveedor. |
-| Clave(s) primaria(s) | `orderId`                                                                  |
+| Clave(s) primaria(s) | `id`                                                                  |
 | Clave(s) foránea(s)  | `supplierId`                                                               |
 
 | Campo                | Contenido                                                                                             |
 | -------------------- | ----------------------------------------------------------------------------------------------------- |
 | Nombre               | `SALES`                                                                                               |
 | Descripción          | Las transacciones entre clientes y la tienda, donde el primero adquiere un artículo usando su dinero. |
-| Clave(s) primaria(s) | `ticket`                                                                                              |
+| Clave(s) primaria(s) | `id`                                                                                              |
 | Clave(s) foránea(s)  | `customerId`                                                                                          |
 
 | Campo                | Contenido                                                       |
 | -------------------- | --------------------------------------------------------------- |
 | Nombre               | `CUSTOMERS`                                                     |
 | Descripción          | Los agentes que adquiere los productos ofertados por la tienda. |
-| Clave(s) primaria(s) | `customerid`                                                    |
+| Clave(s) primaria(s) | `id`                                                    |
 | Clave(s) foránea(s)  | —                                                               |
 
 | Campo                | Contenido                                                                        |
 | -------------------- | -------------------------------------------------------------------------------- |
 | Nombre               | `CATEGORIES`                                                                     |
 | Descripción          | La clasificación de la mercancía según su utilidad, caducidad u otros criterios. |
-| Clave(s) primaria(s) | `categoryId`                                                                     |
+| Clave(s) primaria(s) | `id`                                                                     |
 | Clave(s) foránea(s)  | —                                                                                |
 
 | Campo                | Contenido                                    |
@@ -758,85 +758,85 @@ Se han identificado 11 entidades para el modelo relacional para la base de datos
 
 Se han identificado 11 entidades para el modelo relacional para la base de datos, y por lo tanto, 11 tablas de especificaciones de atributos se describirán a continuación.
 
-| Tabla      | Columna      | Tipo   | Longitud o precisión | Nulo | Clave              | Valor por defecto | Restricciones | Descripción                      |
-| ---------- | ------------ | ------ | -------------------- | ---- | ------------------ | ----------------- | ------------- | -------------------------------- |
-| `PRODUCTS` | `productId`  | INT    |                      | No   | PK                 | AUTO_INCREMENTAL  |               | Identificador único de producto. |
-|            | `name`       | STRING | 50                   | No   |                    |                   |               | Nombre descriptivo del producto. |
-|            | `salePrice`  | FLOAT  | (10, 2)              | No   |                    |                   | CHECK >= 0    | Precio de venta.                 |
-|            | `stock`      | INT    |                      | No   |                    |                   |               | Existencias del producto.        |
-|            | `categoryId` | INT    |                      | No   | FK -> `CATEGORIES` |                   |               | Categoría única del producto.    |
+| Tabla      | Columna      | Tipo    | Longitud o precisión | Nulo | Clave              | Valor por defecto | Restricciones | Descripción                        |
+| ---------- | ------------ | ------- | -------------------- | ---- | ------------------ | ----------------- | ------------- | ---------------------------------- |
+| `PRODUCTS` | `id`         | INT     |                      | No   | PK                 | AUTO_INCREMENT    |               | Identificador único de producto.   |
+|            | `sku`        | VARCHAR | 30                   | No   |                    |                   | UNIQUE        | Código EAN-13 u otros de producto. |
+|            | `name`       | VARCHAR | 50                   | No   |                    |                   |               | Nombre descriptivo del producto.   |
+|            | `salePrice`  | DECIMAL | (10, 2)              | No   |                    |                   | CHECK >= 0    | Precio de venta.                   |
+|            | `stock`      | INT     |                      | No   |                    |                   |               | Existencias del producto.          |
+|            | `categoryId` | INT     |                      | No   | FK -> `CATEGORIES` |                   |               | Categoría única del producto.      |
 
-| Tabla       | Columna       | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                          |
-| ----------- | ------------- | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------------ |
-| `SUPPLIERS` | `supplierId`  | INT    |                      | No   | PK    |                   |               | Identificador único de proveedor.    |
-|             | `name`        | STRING |                      | No   |       |                   |               | Nombre o razón social del proveedor. |
-|             | `email`       | STRING |                      | No   |       |                   | UNIQUE        | Correo electrónico del proveedor.    |
-|             | `phoneNumber` | INT    |                      | No   |       |                   | UNIQUE        | Número telefónico del proveedor.     |
+| Tabla       | Columna       | Tipo    | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                          |
+| ----------- | ------------- | ------- | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------------ |
+| `SUPPLIERS` | `id`          | INT     |                      | No   | PK    | AUTO_INCREMENT    |               | Identificador único de proveedor.    |
+|             | `name`        | VARCHAR | 50                   | No   |       |                   |               | Nombre o razón social del proveedor. |
+|             | `email`       | VARCHAR | 50                   | No   |       |                   | UNIQUE        | Correo electrónico del proveedor.    |
+|             | `phoneNumber` | VARCHAR | 20                   | No   |       |                   | UNIQUE        | Número telefónico del proveedor.     |
 
-| Tabla     | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto      | Restricciones | Descripción                                         |
-| --------- | ------------ | -------- | -------------------- | ---- | ----------------- | ---------------------- | ------------- | --------------------------------------------------- |
-| `ENTRIES` | `entryId`    | INT      |                      | No   | PK                |                        |               | Identificador único de recepción de mercancía.      |
-|           | `orderId`    | INT      |                      | No   | FK -> `ORDERS`    |                        |               | Identificador de pedido.                            |
-|           | `supplierId` | INT      |                      | No   | FK -> `SUPPLIERS` |                        |               | Identificador de proveedor.                         |
-|           | `reference`  | STRING   |                      | No   |                   |                        |               | Nota de venta o factura entregada por el proveedor. |
-|           | `fullDate`   | DATETIME |                      | No   |                   | CURRENT_TIMESTAMP      |               | Fecha y hora de recepción.                          |
-|           | `costEntry`  | FLOAT    | (10, 2)              | No   |                   | Suma en `ENTRY_DETAIL` | CHECK >= 0    | Costo total de la recepción.                        |
+| Tabla     | Columna     | Tipo     | Longitud o precisión | Nulo | Clave          | Valor por defecto | Restricciones | Descripción                                         |
+| --------- | ----------- | -------- | -------------------- | ---- | -------------- | ----------------- | ------------- | --------------------------------------------------- |
+| `ENTRIES` | `id`        | INT      |                      | No   | PK             | AUTO_INCREMENT    |               | Identificador único de recepción de mercancía.      |
+|           | `orderId`   | INT      |                      | No   | FK -> `ORDERS` |                   |               | Identificador de pedido.                            |
+|           | `reference` | VARCHAR  | 36                   | No   |                |                   |               | Nota de venta o factura entregada por el proveedor. |
+|           | `fullDate`  | DATETIME |                      | No   |                | CURRENT_TIMESTAMP |               | Fecha y hora de recepción.                          |
+|           | `costEntry` | DECIMAL  | (10, 2)              | No   |                |                   | CHECK >= 0    | Costo total de la recepción.                        |
 
-| Tabla    | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto      | Restricciones | Descripción                                 |
-| -------- | ------------ | -------- | -------------------- | ---- | ----------------- | ---------------------- | ------------- | ------------------------------------------- |
-| `ORDERS` | `orderId`    | INT      |                      | No   | PK                |                        |               | Identificador único de pedido de mercancía. |
-|          | `supplierId` | INT      |                      | No   | FK -> `SUPPLIERS` |                        |               | Identificador de proveedor.                 |
-|          | `fullDate`   | DATETIME |                      | No   |                   | CURRENT_TIMESTAMP      |               | Fecha y hora de solicitud de pedido.        |
-|          | `costOrder`  | FLOAT    | (10, 2)              | No   |                   | Suma en `ORDER_DETAIL` | CHECK >= 0    | Costo total del pedido.                     |
+| Tabla    | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto | Restricciones | Descripción                                 |
+| -------- | ------------ | -------- | -------------------- | ---- | ----------------- | ----------------- | ------------- | ------------------------------------------- |
+| `ORDERS` | `id`         | INT      |                      | No   | PK                | AUTO_INCREMENT    |               | Identificador único de pedido de mercancía. |
+|          | `supplierId` | INT      |                      | No   | FK -> `SUPPLIERS` |                   |               | Identificador de proveedor.                 |
+|          | `fullDate`   | DATETIME |                      | No   |                   | CURRENT_TIMESTAMP |               | Fecha y hora de solicitud de pedido.        |
+|          | `costOrder`  | DECIMAL  | (10, 2)              | No   |                   |                   | CHECK >= 0    | Costo total del pedido.                     |
 
-| Tabla   | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto     | Restricciones | Descripción                    |
-| ------- | ------------ | -------- | -------------------- | ---- | ----------------- | --------------------- | ------------- | ------------------------------ |
-| `SALES` | `ticket`     | INT      |                      | No   | PK                |                       |               | Identificador único de venta.  |
-|         | `fullDate`   | DATETIME |                      | No   |                   |                       |               | Fecha y hora de la venta.      |
-|         | `customerId` | INT      |                      | No   | FK -> `CUSTOMERS` | CURRENT_TIMESTAMP     |               | Cliente vinculado a la compra. |
-|         | `amount`     | FLOAT    | (10,2)               | No   |                   | Suma en `SALE_DETAIL` | CHECK >= 0    | Monto total de la venta.       |
+| Tabla   | Columna      | Tipo     | Longitud o precisión | Nulo | Clave             | Valor por defecto | Restricciones | Descripción                    |
+| ------- | ------------ | -------- | -------------------- | ---- | ----------------- | ----------------- | ------------- | ------------------------------ |
+| `SALES` | `id`         | INT      |                      | No   | PK                | AUTO_INCREMENT    |               | Identificador único de venta.  |
+|         | `fullDate`   | DATETIME |                      | No   |                   |                   |               | Fecha y hora de la venta.      |
+|         | `customerId` | INT      |                      | No   | FK -> `CUSTOMERS` | CURRENT_TIMESTAMP |               | Cliente vinculado a la compra. |
+|         | `amount`     | DECIMAL  | (10,2)               | No   |                   |                   | CHECK >= 0    | Monto total de la venta.       |
 
-| Tabla       | Columna       | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                     |
-| ----------- | ------------- | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------- |
-| `CUSTOMERS` | `customerId`  | INT    |                      | No   | PK    |                   |               | Identificador único de cliente. |
-|             | `name`        | STRING |                      | No   |       |                   |               | Nombre del cliente.             |
-|             | `email`       | STRING |                      | No   |       |                   | UNIQUE        | Correo electrónico del cliente. |
-|             | `phoneNumber` | INT    |                      | No   |       |                   | UNIQUE        | Número telefónico del cliente.  |
+| Tabla       | Columna       | Tipo    | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                     |
+| ----------- | ------------- | ------- | -------------------- | ---- | ----- | ----------------- | ------------- | ------------------------------- |
+| `CUSTOMERS` | `id`          | INT     |                      | No   | PK    | AUTO_INCREMENT    |               | Identificador único de cliente. |
+|             | `name`        | VARCHAR | 50                   | No   |       |                   |               | Nombre del cliente.             |
+|             | `email`       | VARCHAR | 50                   | No   |       |                   | UNIQUE        | Correo electrónico del cliente. |
+|             | `phoneNumber` | VARCHAR | 20                   | No   |       |                   | UNIQUE        | Número telefónico del cliente.  |
 
-| Tabla        | Columna      | Tipo   | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                         |
-| ------------ | ------------ | ------ | -------------------- | ---- | ----- | ----------------- | ------------- | ----------------------------------- |
-| `CATEGORIES` | `categoryId` | INT    |                      | No   | PK    |                   |               | Identificador único de categoría.   |
-|              | `category`   | STRING |                      | No   |       |                   | UNIQUE        | Nombre descriptivo de la categoría. |
+| Tabla        | Columna    | Tipo    | Longitud o precisión | Nulo | Clave | Valor por defecto | Restricciones | Descripción                         |
+| ------------ | ---------- | ------- | -------------------- | ---- | ----- | ----------------- | ------------- | ----------------------------------- |
+| `CATEGORIES` | `id`       | INT     |                      | No   | PK    | AUTO_INCREMENT    |               | Identificador único de categoría.   |
+|              | `category` | VARCHAR | 50                   | No   |       |                   | UNIQUE        | Nombre descriptivo de la categoría. |
 
-| Tabla               | Columna      | Tipo  | Longitud o precisión | Nulo | Clave                 | Valor por defecto | Restricciones | Descripción                                    |
-| ------------------- | ------------ | ----- | -------------------- | ---- | --------------------- | ----------------- | ------------- | ---------------------------------------------- |
-| `SUPPLIER_CATALOGO` | `supplierId` | INT   |                      | No   | PK, FK -> `SUPPLIERS` |                   |               | Identificador de proveedor.                    |
-|                     | `productId`  | INT   |                      | No   | PK, FK -> `PRODUCTS`  |                   |               | Identificador de producto.                     |
-|                     | `unitCost`   | FLOAT | (10,2)               | No   |                       |                   | CHECK >= 0    | Costo unitario, precio proveedor del producto. |
+| Tabla               | Columna      | Tipo    | Longitud o precisión | Nulo | Clave                 | Valor por defecto | Restricciones | Descripción                                    |
+| ------------------- | ------------ | ------- | -------------------- | ---- | --------------------- | ----------------- | ------------- | ---------------------------------------------- |
+| `SUPPLIER_CATALOGO` | `supplierId` | INT     |                      | No   | PK, FK -> `SUPPLIERS` |                   |               | Identificador de proveedor.                    |
+|                     | `productId`  | INT     |                      | No   | PK, FK -> `PRODUCTS`  |                   |               | Identificador de producto.                     |
+|                     | `unitCost`   | DECIMAL | (10,2)               | No   |                       |                   | CHECK >= 0    | Costo unitario, precio proveedor del producto. |
 
-| Tabla          | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto    | Restricciones | Descripción                                   |
-| -------------- | ----------- | ----- | -------------------- | ---- | -------------------- | -------------------- | ------------- | --------------------------------------------- |
-| `ENTRY_DETAIL` | `entryId`   | INT   |                      | No   | PK, FK -> `ENTRIES`  |                      |               | Identificador de recepción de mercancía.      |
-|                | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                      |               | Identificador de producto.                    |
-|                | `quantity`  | INT   |                      | No   |                      |                      | CHECK >= 0    | Cantidad recibida de producto.                |
-|                | `unitCost`  | FLOAT | (10,2)               | No   |                      |                      | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
-|                | `totalCost` | FLOAT | (10,2)               | No   |                      | quantity \* unitCost | CHECK >= 0    | Costo total por producto                      |
+| Tabla          | Columna     | Tipo    | Longitud o precisión | Nulo | Clave                | Valor por defecto | Restricciones | Descripción                                   |
+| -------------- | ----------- | ------- | -------------------- | ---- | -------------------- | ----------------- | ------------- | --------------------------------------------- |
+| `ENTRY_DETAIL` | `entryId`   | INT     |                      | No   | PK, FK -> `ENTRIES`  |                   |               | Identificador de recepción de mercancía.      |
+|                | `productId` | INT     |                      | No   | PK, FK -> `PRODUCTS` |                   |               | Identificador de producto.                    |
+|                | `quantity`  | INT     |                      | No   |                      |                   | CHECK >= 0    | Cantidad recibida de producto.                |
+|                | `unitCost`  | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
+|                | `totalCost` | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Costo total por producto                      |
 
-| Tabla          | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto    | Restricciones | Descripción                                   |
-| -------------- | ----------- | ----- | -------------------- | ---- | -------------------- | -------------------- | ------------- | --------------------------------------------- |
-| `ORDER_DETAIL` | `orderId`   | INT   |                      | No   | PK, FK -> `ORDERS`   |                      |               | Identificador de pedido de mercancía.         |
-|                | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                      |               | Identificador de producto.                    |
-|                | `quantity`  | INT   |                      | No   |                      |                      | CHECK >= 0    | Cantidad solicitada de producto.              |
-|                | `unitCost`  | FLOAT | (10,2)               | No   |                      |                      | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
-|                | `totalCost` | FLOAT | (10,2)               | No   |                      | quantity \* unitCost | CHECK >= 0    | Costo total por producto                      |
+| Tabla          | Columna     | Tipo    | Longitud o precisión | Nulo | Clave                | Valor por defecto | Restricciones | Descripción                                   |
+| -------------- | ----------- | ------- | -------------------- | ---- | -------------------- | ----------------- | ------------- | --------------------------------------------- |
+| `ORDER_DETAIL` | `orderId`   | INT     |                      | No   | PK, FK -> `ORDERS`   |                   |               | Identificador de pedido de mercancía.         |
+|                | `productId` | INT     |                      | No   | PK, FK -> `PRODUCTS` |                   |               | Identificador de producto.                    |
+|                | `quantity`  | INT     |                      | No   |                      |                   | CHECK >= 0    | Cantidad solicitada de producto.              |
+|                | `unitCost`  | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Costo unitario de producto, precio proveedor. |
+|                | `totalCost` | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Costo total por producto                      |
 
-| Tabla         | Columna     | Tipo  | Longitud o precisión | Nulo | Clave                | Valor por defecto     | Restricciones | Descripción                                    |
-| ------------- | ----------- | ----- | -------------------- | ---- | -------------------- | --------------------- | ------------- | ---------------------------------------------- |
-| `SALE_DETAIL` | `ticket`    | INT   |                      | No   | PK, FK -> `ORDERS`   |                       |               | Identificador de venta.                        |
-|               | `productId` | INT   |                      | No   | PK, FK -> `PRODUCTS` |                       |               | Identificador de producto.                     |
-|               | `quantity`  | INT   |                      | No   |                      |                       | CHECK >= 0    | Cantidad vendida de producto.                  |
-|               | `unitPrice` | FLOAT | (10,2)               | No   |                      |                       | CHECK >= 0    | Precio unitario, precio de venta del producto. |
-|               | `totalSale` | FLOAT | (10,2)               | No   |                      | quantity \* unitPrice | CHECK >= 0    | Monto total de venta.                          |
+| Tabla         | Columna     | Tipo    | Longitud o precisión | Nulo | Clave                | Valor por defecto | Restricciones | Descripción                                    |
+| ------------- | ----------- | ------- | -------------------- | ---- | -------------------- | ----------------- | ------------- | ---------------------------------------------- |
+| `SALE_DETAIL` | `ticket`    | INT     |                      | No   | PK, FK -> `ORDERS`   |                   |               | Identificador de venta.                        |
+|               | `productId` | INT     |                      | No   | PK, FK -> `PRODUCTS` |                   |               | Identificador de producto.                     |
+|               | `quantity`  | INT     |                      | No   |                      |                   | CHECK >= 0    | Cantidad vendida de producto.                  |
+|               | `unitPrice` | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Precio unitario, precio de venta del producto. |
+|               | `totalSale` | DECIMAL | (10,2)               | No   |                      |                   | CHECK >= 0    | Monto total de venta.                          |
 
 ### Por relación
 
