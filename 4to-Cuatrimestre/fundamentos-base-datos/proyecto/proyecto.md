@@ -160,11 +160,11 @@ A continuación se enumeran los *atributos* de las entidades fuertes identificad
 	- Correo electrónico -> `email`, y
 	- Número telefónico -> `phoneNumber`.
 - **Recepciones**:
-	- Número de recepción -> `id,
+	- Número de recepción -> `id`,
 	- Número de pedido a surtir -> `orderId`,
 	- Referencia (número de nota de venta o de factura del proveedor) -> `reference`,
 	- Fecha y hora de recepción -> `fullDate`, y
-	- Valor monetario de la recepción (costo) -> `costEntry.
+	- Valor monetario de la recepción (costo) -> `costEntry`.
 - **Pedidos**:
 	- Número de pedido -> `id`,
 	- Número de proveedor -> `supplierId`,
