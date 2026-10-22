@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS SALE_DETAIL (
 );
 ```
 
-# Consultas
+# Consultas principales
 
 ```sql
 -- Listado de todos los productos registrados.
@@ -240,7 +240,7 @@ SELECT
 	PRODUCTS.sku AS "SKU",
 	PRODUCTS.name AS "PRODUCTO",
 	SUM(SALE_DETAIL.quantity) AS "CANTIDADES VENDIDAS",
-	AVG(SALE_DETAIL.unitPrice) AS "PRECIO DE VENTA PROMEDIO", -- Precio de venta promedio.
+	PRODUCTS.salePrice AS "PRECIO DE VENTA",
 	SUM(SALE_DETAIL.totalSale) AS "VENTAS ACUMULADAS"
 FROM PRODUCTS
 INNER JOIN SALE_DETAIL
@@ -248,4 +248,162 @@ ON PRODUCTS.id = SALE_DETAIL.productId
 GROUP BY PRODUCTS.id
 ORDER BY PRODUCTS.name ASC
 LIMIT 1000000; -- Límite modificable.
+```
+
+# Consultas secundarias
+
+```sql
+-- Vista de Productos
+SELECT
+	PRODUCTS.id AS "NO.",
+	PRODUCTS.sku AS "SKU",
+	PRODUCTS.name AS "PRODUCTO",
+	PRODUCTS.salePrice AS "PRECIO DE VENTA",
+	PRODUCTS.stock AS "EXISTENCIAS",
+	CATEGORIES.category AS "CATEGORÍA"
+WHERE PRODUCTS
+INNER JOIN CATEGORIES
+ON PRODUCTS.categoryId = CATEGORIES.id
+ORDER BY PRODUCTS.name ASC;
+
+-- Vista de Proveedores
+SELECT
+	id AS "NO.",
+	name AS "PROVEEDOR",
+	email AS "CORREO ELECTRÓNICO",
+	phoneNumber AS "TELEFÓNO"
+WHERE SUPPLIERS
+ORDER BY name ASC;
+
+-- Vista de Recepciones
+SELECT
+	ENTRIES.id AS "NO. RECEPCIÓN",
+	ORDERS.id AS "NO. PEDIDO",
+	SUPPLIERS.id AS "NO. PROVEEDOR"
+	SUPPLIERS.name AS "PROVEEDOR",
+	ENTRIES.reference AS "REFERENCIA",
+	DATE(ENTRIES.fullDate) AS "FECHA DE RECEPCIÓN",
+	ENTRIES.costEntry AS "COSTO RECEPCIÓN (MXN)"
+FROM ENTRIES
+INNER JOIN ORDERS
+ON ENTRIES.orderId = ORDERS.id
+INNER JOIN SUPPLIERS
+ON ORDERS.supplierId = SUPPLIERS.id
+ORDER BY ENTRIES.fullDate DESC;
+ 
+-- Vista de Pedidos
+SELECT
+	ORDERS.id AS "NO. PEDIDO",
+	SUPPLIERS.id AS "NO. PROVEEDOR",
+	SUPPLIERS.name AS "PROVEEDOR",
+	DATE(ORDERS.fullDate) AS "FECHA DE PEDIDO",
+	ORDERS.costOrder AS "COSTO PEDIDO (MXN)"
+FROM ORDERS
+INNER JOIN SUPPLIERS
+ON ORDERS.supplierId = SUPPLIERS.id
+ORDER BY ENTRIES.fullDate DESC;
+
+-- Vista de Ventas
+SELECT
+	DAY(fullDate) AS "DÍA",
+	DATE(fullDate) AS "FECHA",
+	id AS "NO. TICKET",
+	amount AS "TOTAL"
+FROM SALES
+ORDER BY fullDate DESC;
+
+-- Vista de Clientes
+SELECT
+	id AS "NO. CLIENTE",
+	name AS "NOMBRE",
+	email AS "CORREO ELECTRÓNICO",
+	phoneNumber AS "TELEFÓNO"
+FROM CUSTOMERS
+ORDER BY name ASC;
+
+-- Vista de Categorías
+SELECT
+	id AS "NO.",
+	category AS "CATEGORÍA"
+FROM CATEGORIES;
+
+-- Catálogo de proveedor
+SELECT
+	SUPPLIERS.id AS "NO. PROVEEDOR",
+	SUPPLIERS.name AS "PROVEEDOR",
+	PRODUCTS.sku AS "SKU",
+	PRODUCTS.name AS "PRODUCTO",
+	SUPPLIER_CATALOGO.unitCost AS "COSTO UNITARIO"
+FROM SUPPLIER_CATALOGO
+INNER JOIN SUPPLIERS
+ON SUPPLIER_CATALOGO.supplierId = SUPPLIERS.id
+INNER JOIN PRODUCTS
+ON SUPPLIER_CATALOGO.productId = PRODUCTS.id
+ORDER BY SUPPLIERS.name, PRODUCTS.name;
+
+-- Detalles de recepciones
+SELECT
+	ENTRIES.id AS "NO. RECEPCIÓN",
+	ORDERS.id AS "NO. PEDIDO",
+	SUPPLIERS.id AS "NO. PROVEEDOR"
+	SUPPLIERS.name AS "PROVEEDOR",
+	ENTRIES.reference AS "REFERENCIA",
+	DATE(ENTRIES.fullDate) AS "FECHA DE RECEPCIÓN",
+	PRODUCTS.sku AS "SKU",
+	PRODUCTS.name AS "PRODUCTO RECIBIDO",
+	PRODUCTS.quantity AS "CANTIDAD RECIBIDA",
+	ENTRY_DETAIL.unitCost AS "COSTO UNITARIO",
+	ENTRY_DETAIL.totalCost AS "COSTO TOTAL"
+FROM ENTRIES_DETAIL
+INNER JOIN ORDERS
+ON ENTRIES.orderId = ORDERS.id
+INNER JOIN SUPPLIERS
+ON ORDERS.supplierId = SUPPLIERS.id
+INNER JOIN PRODUCTS
+ON ENTRIES_DETAIL.productId = PRODUCTS.id
+ORDER BY ENTRIES.fullDate DESC, SUPPLIERS.name, PRODUCTS.name;
+
+-- Detalles de pedidos
+
+
+-- Tickets
+
+```
+
+# Operaciones de inserción de datos
+
+```sql
+-- Ingreso de datos a categorías
+-- Ingreso de datos de productos
+-- Ingreso de datos de proveedores
+-- Ingreso de datos de pedidos
+-- Ingreso de datos de recepciones
+-- Ingreso de datos de clientes
+-- Ingreso de datos de ventas
+-- Creación de catálogo de proveedor
+-- Creación de detalles de recepción
+-- Creación de detalles de pedido
+-- Creación de detalles de venta
+```
+
+# Inserción fundamental de datos
+
+```sql
+-- Primera inserción de datos para dejar habilitada la base de datos y lista para su uso.
+```
+
+# Inserción masiva de datos
+
+```sql
+-- Inserción de 10 categorías de productos
+-- Inserción de 10 productos
+-- Inserción de 10 proveedores
+-- Inserción de 10 pedidos
+-- Inserción de 10 recepciones
+-- Inserción de 10 clientes
+-- Inserción de 10 ventas
+-- Inserción de 10 catalogos de proveedor
+-- Inserción de 10 detalles de recepciones
+-- Inserción de 10 detalles de pedidos
+-- Inserción de 10 detales de venta
 ```

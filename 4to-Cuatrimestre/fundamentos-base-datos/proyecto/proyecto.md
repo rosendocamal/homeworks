@@ -436,7 +436,7 @@ title: Tabla de Recepciones
 ---
 erDiagram
 	ENTRIES {
-		INT id PK "UTO_INCREMENT"
+		INT id PK "AUTO_INCREMENT"
 		INT orderId FK "NOT NULL"
 		VARCHAR reference "NOT NULL"
 		DATETIME fullDate "NOT NULL, DEFAULT"
@@ -605,7 +605,7 @@ erDiagram
 }
 
 	ENTRIES {
-		INT id PK "UTO_INCREMENT"
+		INT id PK "AUTO_INCREMENT"
 		INT orderId FK "NOT NULL"
 		VARCHAR reference "NOT NULL"
 		DATETIME fullDate "NOT NULL, DEFAULT"
@@ -630,7 +630,7 @@ erDiagram
 		INT id PK "AUTO_INCREMENT"
 		VARCHAR name "NOT NULL"
 		VARCHAR email "NOT NULL, UNIQUE"
-		VARCHAR(20) phoneNumber "NOT NULL, UNIQUE"
+		VARCHAR phoneNumber "NOT NULL, UNIQUE"
 	}
 
 	CATEGORIES {
@@ -856,8 +856,3 @@ Se han identificado 9 relaciones principales para el modelo relacional para la b
 
 ## Implementación de la Base de Datos
 
-> Creación de la base de datos y sus tablas. Realización de consultas. Scripts para inserción de datos.
-
-## Pruebas de la Base de Datos
-
-> Pruebas de estrés al automatizar la creación de la base de datos, las tablas, las consultas y la inserción de datos. Además de explotar vulnerabilidades o defectos sin protección. Es decir, hallar los límites, identificarlos, corregirlos o presentar los límites.
