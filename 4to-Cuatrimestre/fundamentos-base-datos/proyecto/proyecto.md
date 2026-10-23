@@ -1139,21 +1139,130 @@ VALUES
 	(9, 17, 12, 129.50, 1554.00),
 	(9, 18, 18, 84.00, 1512.00),
 	(10, 19, 7, 209.30, 1465.10),
-	(10, 20, 9, 174.30, 1568.70); -- Se añade productos a cada pedido.
+	(10, 20, 9, 174.30, 1568.70); -- Se añade productos a cada pedido, también es necesario primero utilizar las consultas secundarias para ver catálogo de productos.
 
 UPDATE ORDERS
 SET ORDERS.costOrder = (
-	SELECT SUM(ORDER_DETAIL)
+	SELECT SUM(ORDER_DETAIL.totalCost)
 	FROM ORDER_DETAIL
 	WHERE ORDER_DETAIL.orderId = ORDERS.id
 ); -- Se actualiza los valores de los pedidos.
 
 -- Recepción de mercancías.
+INSERT INTO ENTRIES (orderId, reference, fullDate, costEntry)
+VALUES
+	(1, "923-123", NOW(), 0.00),
+	(2, "ABC-ABC", NOW(), 0.00),
+	(3, "ENT-444", NOW(), 0.00),
+	(4, "ENT-456", NOW(), 0.00),
+	(5, "AAA-AA5", NOW(), 0.00),
+	(6, "ENT-AA6", NOW(), 0.00),
+	(7, "888-008", NOW(), 0.00),
+	(8, "123-008", NOW(), 0.00),
+	(9, "133-999", NOW(), 0.00),
+	(10, "999-QWE", NOW(), 0.00); -- Se genera varias recepciones.
+	
+INSERT INTO ENTRY_DETAIL (entryId, productId, quantity, unitCost, totalCost)
+VALUES
+	(1, 1, 10, 12.95, 129.50),
+	(1, 2, 5, 16.80, 84.00),
+	(2, 3, 15, 20.93, 313.95),
+	(2, 4, 20, 19.25, 385.00),
+	(3, 5, 8, 45.50, 364.00),
+	(3, 6, 12, 22.75, 273.00),
+	(4, 7, 6, 33.60, 201.60),
+	(4, 8, 25, 24.50, 612.50),
+	(5, 9, 15, 90.30, 1354.50),
+	(5, 10, 4, 419.30, 1677.20),
+	(6, 11, 2, 3149.30, 6298.60),
+	(6, 12, 50, 69.30, 3465.00),
+	(7, 13, 10, 315.00, 3150.00),
+	(7, 14, 3, 979.30, 2937.90),
+	(8, 15, 40, 17.50, 700.00),
+	(8, 16, 30, 29.40, 882.00),
+	(9, 17, 12, 129.50, 1554.00),
+	(9, 18, 18, 84.00, 1512.00),
+	(10, 19, 7, 209.30, 1465.10),
+	(10, 20, 9, 174.30, 1568.70); -- Se añaden productos recibidos, también es necesario primero utilizar las consultas secundarias de pedido y catálogo de proveedores.
+	
+UPDATE ENTRIES
+SET ENTRIES.costEntry = (
+	SELECT SUM(ENTRY_DETAIL.totalCost)
+	FROM ENTRY_DETAIL
+	WHERE ENTRY_DETAIL.entryId = ENTRIES.id
+); -- Se actualiza los costos de productos recibidos.
+
+-- Actualización de mercancías.
+UPDATE PRODUCTS
+JOIN ENTRY_DETAIL
+ON PRODUCTS.id = ENTRY_DETAIL.productId
+SET PRODUCTS.stock = PRODUCTS.stock + ENTRY_DETAIL.quantity 
+WHERE ENTRY_DETAIL.entryId IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10); -- Se actualiza el stock usando los números de recepción.
 ``` 
 
 Se realiza una venta, luego se genera el detalle de una venta. A partir de aquí se puede realizar las operaciones del proceso de compra-venta: pedidos (y sus detalles), recepciones (y sus detalles), alta de proveedores y productos, alta de clientes, ventas (y detalles). Las correcciones y bajas de pedidos, recepciones, productos, clientes y ventas aún no se pueden realizar de manera fiable. Sin embargo, se listará la modificación de stock en los productos por ser relevante para realizar ventas.
 
 ```sql
+-- Se ejecuta varias ventas.
+INSERT INTO SALES (fullDate, customerId, amount)
+VALUES
+	(NOW(), 1, 0.00),
+	(NOW(), 1, 0.00),
+	(NOW(), 1, 0.00),
+	(NOW(), 8, 0.00),
+	(NOW(), 1, 0.00),
+	(NOW(), 1, 0.00),
+	(NOW(), 1, 0.00),
+	(NOW(), 2, 0.00),
+	(NOW(), 5, 0.00),
+	(NOW(), 1, 0.00); -- Se genera los tickets.
+
+-- Se genera el detalle de venta.
+INSERT INTO SALE_DETAIL (ticket, productId, quantity, unitPrice, totalSale)
+VALUES
+	(1, 1, 3, 18.50, 55.50),
+	(1, 2, 2, 24.00, 48.00),
+	(1, 3, 1, 29.90, 29.90),
+	(2, 4, 4, 27.50, 110.00),
+	(2, 6, 2, 32.50, 65.00),
+	(2, 8, 1, 35.00, 35.00),
+	(3, 1, 1, 18.50, 18.50),
+	(3, 2, 1, 24.00, 24.00),
+	(3, 7, 2, 48.00, 96.00),
+	(4, 5, 1, 65.00, 65.00),
+	(4, 12, 3, 99.00, 297.00),
+	(5, 3, 2, 29.90, 59.80),
+	(5, 15, 6, 25.00, 150.00),
+	(5, 16, 2, 42.00, 84.00),
+	(6, 2, 3, 24.00, 72.00),
+	(6, 11, 1, 4499.00, 4499.00),
+	(6, 13, 1, 450.00, 450.00),
+	(7, 1, 4, 18.50, 74.00),
+	(7, 4, 2, 27.50, 55.00),
+	(7, 8, 3, 35.00, 105.00),
+	(7, 18, 1, 120.00, 120.00),
+	(8, 6, 2, 32.50, 65.00),
+	(8, 9, 1, 129.00, 129.00),
+	(8, 17, 2, 185.00, 370.00),
+	(9, 7, 2, 48.00, 96.00),
+	(9, 14, 1, 1399.00, 1399.00),
+	(10, 15, 4, 25.00, 100.00),
+	(10, 19, 1, 299.00, 299.00),
+	(10, 20, 1, 249.00, 249.00); -- Se genera los detalles de las ventas.
+	
+UPDATE SALES
+SET SALES.amount = (
+	SELECT SUM(SALE_DETAIL.totalSale)
+	FROM SALE_DETAIL
+	WHERE SALE_DETAIL.ticket = SALES.id
+); -- Se actualiza el monto de venta.
+
+-- Actualización del stock.
+UPDATE PRODUCTS
+JOIN SALE_DETAIL
+ON PRODUCTS.id = SALE_DETAIL.productId
+SET PRODUCTS.stock = PRODUCTS.stock - SALE_DETAIL.quantity 
+WHERE SALE_DETAIL.ticket IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10); -- Se actualiza el stock usando los tickets.
 ```
 
 ### Operaciones solicitadas por la empresa
