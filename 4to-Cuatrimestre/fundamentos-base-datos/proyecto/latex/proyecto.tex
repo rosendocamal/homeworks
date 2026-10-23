@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 
 
 % Codificación de caracteres e idioma
@@ -6,13 +6,16 @@
 \usepackage[spanish]{babel}
 
 % Tamaño de página y márgenes
-\usepackage[letterpaper, margin=2.54cm]{geometry}
+\usepackage[letterpaper, margin=2.5cm]{geometry}
 
 % Orientación horizontal de página
-\usepackage{pdflscape}
+\usepackage{lscape, lscape}
 
 % Comillas, columnas, gráficos, símbolos matemáticos e ingreso de código de programación
 \usepackage{csquotes, multicol, graphicx, amssymb, amsmath, listings, xcolor}
+
+% Para tablas grandes y líneas estéticas de tablas
+\usepackage{xltabular, booktabs}
 
 % Para hacer mosaico de figuras
 \usepackage{subcaption}
@@ -107,92 +110,279 @@
 
 \begin{table}
 \centering
-\begin{tabular}{|p{0.22\textwidth}|p{0.50\textwidth}|p{0.14\textwidth}|p{0.14\textwidth}|}
-	\hline
-	\textbf{Tabla} & \textbf{Descripción} & \textbf{Clave(s) primarias(s)} & \textbf{Clave(s) foránea(s)} \\
-    \hline
-    \texttt{PRODUCTS}            & Los artículos que vende una tienda, que adquiere el cliente y fabrica o distribuye un proveedor.      & \texttt{id}                               & \texttt{categoryId} \\
-    \hline
-    \texttt{SUPPLIERS}           & Los agentes que entregan la mercancía a la tienda para que este lo distribuya y venda.                & \texttt{id}                               & \\
-    \hline
-    \texttt{ENTRIES}             & El proceso de una tienda de recibir la mercancía al proveedor.                                        & \texttt{id}                               & \texttt{orderId} \\
-    \hline
-    \texttt{ORDERS}              & El proceso de una tienda de solicitar resurtido de mercancía al proveedor.                            & \texttt{id}                               & \texttt{supplierId} \\
-    \hline
-    \texttt{SALES}               & Las transacciones entre clientes y la tienda, donde el primero adquiere un artículo usando su dinero. & \texttt{id}                               & \texttt{customerId} \\
-    \hline
-    \texttt{CUSTOMERS}           & Los agentes que adquiere los productos ofertados por la tienda.                                       & \texttt{id}                               & \\
-    \hline
-    \texttt{CATEGORIES}          & La clasificación de la mercancía según su utilidad, caducidad u otros criterios.                      & \texttt{id}                               & \\
-    \hline
-    \texttt{SUPPLIER\_CATALOGO}  & Los productos ofertados por los proveedores.                                                          & \texttt{supplierId}, \texttt{productId}   & \texttt{supplierId}, \texttt{productId} \\
-    \hline
-    \texttt{ENTRY\_DETAIL}       & El desglose de mercancía recibida de un proveedor.                                                    & \texttt{entryId}, \texttt{productId}      &  \texttt{entryId}, \texttt{productId} \\
-    \hline
-    \texttt{ORDER\_DETAIL}       & El desglose de mercancía solicitada a un proveedor.                                                   & \texttt{orderid}, \texttt{productId}      & \texttt{orderid}, \texttt{productId} \\
-    \hline
-    \texttt{SALE\_DETAIL}        & El desglose de una venta, los productos y precios vendidos a un cliente.                              & \texttt{ticket}, \texttt{productId}       & \texttt{ticket}, \texttt{productId} \\
-    \hline
-\end{tabular}
-\caption{Diccionario de datos por entidad}
+\caption{\textit{Diccionario de datos por entidad}}
 \label{tab:diccionario-entidad}
+\begin{tabular}{
+    | p{3.3cm}
+    | p{4.0cm}
+    | p{3.4cm}
+    | p{3.5cm} |
+}
+	\toprule
+	\textbf{Tabla} & \textbf{Descripción} & \textbf{Clave(s) primarias(s)} & \textbf{Clave(s) foránea(s)} \\
+    \midrule
+    \texttt{PRODUCTS}            & Los artículos que vende una tienda, que adquiere el cliente y fabrica o distribuye un proveedor.      & \texttt{id}                               & \texttt{categoryId} \\
+    \midrule
+    \texttt{SUPPLIERS}           & Los agentes que entregan la mercancía a la tienda para que este lo distribuya y venda.                & \texttt{id}                               & \\
+    \midrule
+    \texttt{ENTRIES}             & El proceso de una tienda de recibir la mercancía al proveedor.                                        & \texttt{id}                               & \texttt{orderId} \\
+    \midrule
+    \texttt{ORDERS}              & El proceso de una tienda de solicitar resurtido de mercancía al proveedor.                            & \texttt{id}                               & \texttt{supplierId} \\
+    \midrule
+    \texttt{SALES}               & Las transacciones entre clientes y la tienda, donde el primero adquiere un artículo usando su dinero. & \texttt{id}                               & \texttt{customerId} \\
+    \midrule
+    \texttt{CUSTOMERS}           & Los agentes que adquiere los productos ofertados por la tienda.                                       & \texttt{id}                               & \\
+    \midrule
+    \texttt{CATEGORIES}          & La clasificación de la mercancía según su utilidad, caducidad u otros criterios.                      & \texttt{id}                               & \\
+    \midrule
+    \texttt{SUPPLIER\_CATALOGO}  & Los productos ofertados por los proveedores.                                                          & \texttt{supplierId}, \texttt{productId}   & \texttt{supplierId}, \texttt{productId} \\
+    \midrule
+    \texttt{ENTRY\_DETAIL}       & El desglose de mercancía recibida de un proveedor.                                                    & \texttt{entryId}, \texttt{productId}      &  \texttt{entryId}, \texttt{productId} \\
+    \midrule
+    \texttt{ORDER\_DETAIL}       & El desglose de mercancía solicitada a un proveedor.                                                   & \texttt{orderid}, \texttt{productId}      & \texttt{orderid}, \texttt{productId} \\
+    \midrule
+    \texttt{SALE\_DETAIL}        & El desglose de una venta, los productos y precios vendidos a un cliente.                              & \texttt{ticket}, \texttt{productId}       & \texttt{ticket}, \texttt{productId} \\
+    \bottomrule
+\end{tabular}
 \end{table}
 
-\begin{table}
-\centering
-\begin{tabular}{cccccc}
-    \textbf{Tabla} & \textbf{Columna} & \textbf{Tipo} & \textbf{Longitud o precisión} & \textbf{Nulo} & \textbf{Clave} & \textbf{Valor por defecto} & \textbf{Restricciones} & \textbf{Descripción} \\
+
+\begin{landscape}
+\begingroup
+\small
+\setlength{\tabcolsep}{2pt}
+
+\begin{xltabular}{\textheight}{
+    | p{3.1cm} 
+    | p{2.0cm} 
+    | p{1.5cm} 
+    | p{1.4cm} 
+    | p{0.9cm} 
+    | p{3.0cm} 
+    | p{3.0cm} 
+    | p{2.0cm} 
+    | p{3.5cm} |
+}
+    \caption{\textit{Diccionario de datos por atributo}} \label{tab:diccionario-atributo} \\
+    \toprule
+    \textbf{Tabla} & \textbf{Columna} & \textbf{Tipo} & \textbf{Tamaño} & \textbf{Nulo} & \textbf{Clave} & \textbf{Valor por defecto} & \textbf{Restricción} & \textbf{Descripción} \\
+    \midrule
+    \endfirsthead
+    
+    \multicolumn{9}{c}{--- Continuación de la página anterior ---} \\
+    \toprule
+    \textbf{Tabla} & \textbf{Columna} & \textbf{Tipo} & \textbf{Tamaño} & \textbf{Nulo} & \textbf{Clave} & \textbf{Valor por defecto} & \textbf{Restricción} & \textbf{Descripción} \\
+    \midrule
+    \endhead
+    
+    \midrule
+    \multicolumn{9}{c}{--- Continúa en la página siguiente ---} \\
+    \endfoot
+
+
+    \bottomrule
+    \endlastfoot
+    
     \texttt{PRODUCTS}           & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de producto. \\
+    \midrule
     \texttt{PRODUCTS}           & \texttt{sku}         & \texttt{VARCHAR}   & 30                   & No   &                                                                &                             & \texttt{UNIQUE}        & Código EAN-13 u otros de producto. \\
+    \midrule
     \texttt{PRODUCTS}           & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre descriptivo del producto. \\
+    \midrule
     \texttt{PRODUCTS}           & \texttt{salePrice}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Precio de venta. \\
+    \midrule
     \texttt{PRODUCTS}           & \texttt{stock}       & \texttt{INT}       &                      & No   &                                                                &                             &               & Existencias del producto. \\
-    \texttt{PRODUCTS}           & \texttt{categoryId}  & \texttt{INT}       &                      & No   & \texttt{FK} \longrightarrow \texttt{CATEGORIES}                &                             &               & Categoría única del producto. \\
+    \midrule
+    \texttt{PRODUCTS}           & \texttt{categoryId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{CATEGORIES}                &                             &               & Categoría única del producto. \\
+    \midrule
     \texttt{SUPPLIERS}          & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de proveedor. \\
+    \midrule
     \texttt{SUPPLIERS}          & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre o razón social del proveedor. \\
+    \midrule
     \texttt{SUPPLIERS}          & \texttt{email}       & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             & \texttt{UNIQUE}        & Correo electrónico del proveedor. \\
+    \midrule
     \texttt{SUPPLIERS}          & \texttt{phoneNumber} & \texttt{VARCHAR}   & 20                   & No   &                                                                &                             & \texttt{UNIQUE}        & Número telefónico del proveedor. \\
+    \midrule
     \texttt{ENTRIES}            & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de recepción de mercancía. \\
-    \texttt{ENTRIES}            & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{FK} \longrightarrow \texttt{ORDERS}                    &                             &               & Identificador de pedido. \\  
+    \midrule
+    \texttt{ENTRIES}            & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{ORDERS}                    &                             &               & Identificador de pedido. \\  
+    \midrule
     \texttt{ENTRIES}            & \texttt{reference}   & \texttt{VARCHAR}   & 36                   & No   &                                                                &                             &               & Nota de venta o factura entregada por el proveedor. \\
+    \midrule
     \texttt{ENTRIES}            & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                & \texttt{CURRENT\_TIMESTAMP} &               & Fecha y hora de recepción. \\
+    \midrule
     \texttt{ENTRIES}            & \texttt{costEntry}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Costo total de la recepción. \\
+    \midrule
     \texttt{ORDERS}             & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de pedido de mercancía. \\
-    \texttt{ORDERS}             & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{FK} \longrightarrow \texttt{SUPPLIERS}                 &                             &               & Identificador de proveedor. \\
+    \midrule
+    \texttt{ORDERS}             & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{SUPPLIERS}                 &                             &               & Identificador de proveedor. \\
+    \midrule
     \texttt{ORDERS}             & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                & \texttt{CURRENT\_TIMESTAMP} &               & Fecha y hora de solicitud de pedido. \\
+    \midrule
     \texttt{ORDERS}             & \texttt{costOrder}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Costo total del pedido. \\    
+    \midrule
     \texttt{SALES}              & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de venta. \\
+    \midrule
     \texttt{SALES}              & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                &                             &               & Fecha y hora de la venta. \\
-    \texttt{SALES}              & \texttt{customerId}  & \texttt{INT}       &                      & No   & \texttt{FK} \longrightarrow \texttt{CUSTOMERS}                 & \texttt{CURRENT\_TIMESTAMP} &               & Cliente vinculado a la compra. \\
+    \midrule
+    \texttt{SALES}              & \texttt{customerId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{CUSTOMERS}                 & \texttt{CURRENT\_TIMESTAMP} &               & Cliente vinculado a la compra. \\
+    \midrule
     \texttt{SALES}              & \texttt{amount}      & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                             & \texttt{CHECK >= 0}    & Monto total de la venta. \\      
+    \midrule
     \texttt{CUSTOMERS}          & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de cliente. \\
+    \midrule
     \texttt{CUSTOMERS}          & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre del cliente. \\             
+    \midrule
     \texttt{CUSTOMERS}          & \texttt{email}       & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             & \texttt{UNIQUE}        & Correo electrónico del cliente. \\ 
+    \midrule
     \texttt{CUSTOMERS}          & \texttt{phoneNumber} & \texttt{VARCHAR}   & 20                   & No   &                                                                &                             & \texttt{UNIQUE}        & Número telefónico del cliente. \\  
+    \midrule
     \texttt{CATEGORIES}         & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de categoría. \\   
+    \midrule
     \texttt{CATEGORIES}         & \texttt{category}    & \texttt{VARCHAR}   & 50                   & No   &                                                                &                   & \texttt{UNIQUE}        & Nombre descriptivo de la categoría. \\ 
-    \texttt{SUPPLIER\_CATALOGO} & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{SUPPLIERS}    &                   &               & Identificador de proveedor. \\                    
-    \texttt{SUPPLIER\_CATALOGO} & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                     
+    \midrule
+    \texttt{SUPPLIER\_CATALOGO} & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{SUPPLIERS}    &                   &               & Identificador de proveedor. \\                    
+    \midrule
+    \texttt{SUPPLIER\_CATALOGO} & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                     
+    \midrule
     \texttt{SUPPLIER\_CATALOGO} & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario, precio proveedor del producto. \\ 
-    \texttt{ENTRY\_DETAIL}      & \texttt{entryId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{ENTRIES}      &                   &               & Identificador de recepción de mercancía. \\      
-    \texttt{ENTRY\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                    
+    \midrule
+    \texttt{ENTRY\_DETAIL}      & \texttt{entryId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ENTRIES}      &                   &               & Identificador de recepción de mercancía. \\      
+    \midrule
+    \texttt{ENTRY\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                    
+    \midrule
     \texttt{ENTRY\_DETAIL}      & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad recibida de producto. \\                
+    \midrule
     \texttt{ENTRY\_DETAIL}      & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario de producto, precio proveedor.  \\
+    \midrule
     \texttt{ENTRY\_DETAIL}      & \texttt{totalCost}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo total por producto.  \\
-    \texttt{ORDER\_DETAIL}      & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{ORDERS}       &                   &               & Identificador de pedido de mercancía.  \\
-    \texttt{ORDER\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\           
+    \midrule
+    \texttt{ORDER\_DETAIL}      & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ORDERS}       &                   &               & Identificador de pedido de mercancía.  \\
+    \midrule
+    \texttt{ORDER\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\           
+    \midrule
     \texttt{ORDER\_DETAIL}      & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad solicitada de producto. \\
+    \midrule
     \texttt{ORDER\_DETAIL}      & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario de producto, precio proveedor. \\
+    \midrule
     \texttt{ORDER\_DETAIL}      & \texttt{totalCost}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo total por producto. \\                    
-    \texttt{SALE\_DETAIL}       & \texttt{ticket}      & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{ORDERS}       &                   &               & Identificador de venta. \\                  
-    \texttt{SALE\_DETAIL}       & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} \longrightarrow \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\               
+    \midrule
+    \texttt{SALE\_DETAIL}       & \texttt{ticket}      & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ORDERS}       &                   &               & Identificador de venta. \\                  
+    \midrule
+    \texttt{SALE\_DETAIL}       & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\               
+    \midrule
     \texttt{SALE\_DETAIL}       & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad vendida de producto. \\
+    \midrule
     \texttt{SALE\_DETAIL}       & \texttt{unitPrice}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Precio unitario, precio de venta del producto. \\
+    \midrule
     \texttt{SALE\_DETAIL}       & \texttt{totalSale}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Monto total de venta. \\                  
-\end{tabular}
-\caption{Diccionario de datos por atributo}
-\label{tab:diccionario-atributo}
-\end{table}{}
+\end{xltabular}
+\endgroup
+\end{landscape}
+
+% \begin{sidewaystable}[htbp]
+% \centering
+% \begin{tabular}{ccccccccc}
+%     \textbf{Tabla} & \textbf{Columna} & \textbf{Tipo} & \textbf{Longitud o precisión} & \textbf{Nulo} & \textbf{Clave} & \textbf{Valor por defecto} & \textbf{Restricciones} & \textbf{Descripción} \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de producto. \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{sku}         & \texttt{VARCHAR}   & 30                   & No   &                                                                &                             & \texttt{UNIQUE}        & Código EAN-13 u otros de producto. \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre descriptivo del producto. \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{salePrice}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Precio de venta. \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{stock}       & \texttt{INT}       &                      & No   &                                                                &                             &               & Existencias del producto. \\
+%     \hline
+%     \texttt{PRODUCTS}           & \texttt{categoryId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{CATEGORIES}                &                             &               & Categoría única del producto. \\
+%     \hline
+%     \texttt{SUPPLIERS}          & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de proveedor. \\
+%     \hline
+%     \texttt{SUPPLIERS}          & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre o razón social del proveedor. \\
+%     \hline
+%     \texttt{SUPPLIERS}          & \texttt{email}       & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             & \texttt{UNIQUE}        & Correo electrónico del proveedor. \\
+%     \hline
+%     \texttt{SUPPLIERS}          & \texttt{phoneNumber} & \texttt{VARCHAR}   & 20                   & No   &                                                                &                             & \texttt{UNIQUE}        & Número telefónico del proveedor. \\
+%     \hline
+%     \texttt{ENTRIES}            & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de recepción de mercancía. \\
+%     \hline
+%     \texttt{ENTRIES}            & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{ORDERS}                    &                             &               & Identificador de pedido. \\  
+%     \hline
+%     \texttt{ENTRIES}            & \texttt{reference}   & \texttt{VARCHAR}   & 36                   & No   &                                                                &                             &               & Nota de venta o factura entregada por el proveedor. \\
+%     \hline
+%     \texttt{ENTRIES}            & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                & \texttt{CURRENT\_TIMESTAMP} &               & Fecha y hora de recepción. \\
+%     \hline
+%     \texttt{ENTRIES}            & \texttt{costEntry}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Costo total de la recepción. \\
+%     \hline
+%     \texttt{ORDERS}             & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de pedido de mercancía. \\
+%     \hline
+%     \texttt{ORDERS}             & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{SUPPLIERS}                 &                             &               & Identificador de proveedor. \\
+%     \hline
+%     \texttt{ORDERS}             & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                & \texttt{CURRENT\_TIMESTAMP} &               & Fecha y hora de solicitud de pedido. \\
+%     \hline
+%     \texttt{ORDERS}             & \texttt{costOrder}   & \texttt{DECIMAL}   & (10, 2)              & No   &                                                                &                             & \texttt{CHECK >= 0}    & Costo total del pedido. \\    
+%     \hline
+%     \texttt{SALES}              & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de venta. \\
+%     \hline
+%     \texttt{SALES}              & \texttt{fullDate}    & \texttt{DATETIME}  &                      & No   &                                                                &                             &               & Fecha y hora de la venta. \\
+%     \hline
+%     \texttt{SALES}              & \texttt{customerId}  & \texttt{INT}       &                      & No   & \texttt{FK} $\longrightarrow$ \texttt{CUSTOMERS}                 & \texttt{CURRENT\_TIMESTAMP} &               & Cliente vinculado a la compra. \\
+%     \hline
+%     \texttt{SALES}              & \texttt{amount}      & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                             & \texttt{CHECK >= 0}    & Monto total de la venta. \\      
+%     \hline
+%     \texttt{CUSTOMERS}          & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de cliente. \\
+%     \hline
+%     \texttt{CUSTOMERS}          & \texttt{name}        & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             &               & Nombre del cliente. \\             
+%     \hline
+%     \texttt{CUSTOMERS}          & \texttt{email}       & \texttt{VARCHAR}   & 50                   & No   &                                                                &                             & \texttt{UNIQUE}        & Correo electrónico del cliente. \\ 
+%     \hline
+%     \texttt{CUSTOMERS}          & \texttt{phoneNumber} & \texttt{VARCHAR}   & 20                   & No   &                                                                &                             & \texttt{UNIQUE}        & Número telefónico del cliente. \\  
+%     \hline
+%     \texttt{CATEGORIES}         & \texttt{id}          & \texttt{INT}       &                      & No   & \texttt{PK}                                                    & \texttt{AUTO\_INCREMENT}    &               & Identificador único de categoría. \\   
+%     \hline
+%     \texttt{CATEGORIES}         & \texttt{category}    & \texttt{VARCHAR}   & 50                   & No   &                                                                &                   & \texttt{UNIQUE}        & Nombre descriptivo de la categoría. \\ 
+%     \hline
+%     \texttt{SUPPLIER\_CATALOGO} & \texttt{supplierId}  & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{SUPPLIERS}    &                   &               & Identificador de proveedor. \\                    
+%     \hline
+%     \texttt{SUPPLIER\_CATALOGO} & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                     
+%     \hline
+%     \texttt{SUPPLIER\_CATALOGO} & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario, precio proveedor del producto. \\ 
+%     \hline
+%     \texttt{ENTRY\_DETAIL}      & \texttt{entryId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ENTRIES}      &                   &               & Identificador de recepción de mercancía. \\      
+%     \hline
+%     \texttt{ENTRY\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\                    
+%     \hline
+%     \texttt{ENTRY\_DETAIL}      & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad recibida de producto. \\                
+%     \hline
+%     \texttt{ENTRY\_DETAIL}      & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario de producto, precio proveedor.  \\
+%     \hline
+%     \texttt{ENTRY\_DETAIL}      & \texttt{totalCost}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo total por producto.  \\
+%     \hline
+%     \texttt{ORDER\_DETAIL}      & \texttt{orderId}     & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ORDERS}       &                   &               & Identificador de pedido de mercancía.  \\
+%     \hline
+%     \texttt{ORDER\_DETAIL}      & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\           
+%     \hline
+%     \texttt{ORDER\_DETAIL}      & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad solicitada de producto. \\
+%     \hline
+%     \texttt{ORDER\_DETAIL}      & \texttt{unitCost}    & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo unitario de producto, precio proveedor. \\
+%     \hline
+%     \texttt{ORDER\_DETAIL}      & \texttt{totalCost}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Costo total por producto. \\                    
+%     \hline
+%     \texttt{SALE\_DETAIL}       & \texttt{ticket}      & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{ORDERS}       &                   &               & Identificador de venta. \\                  
+%     \hline
+%     \texttt{SALE\_DETAIL}       & \texttt{productId}   & \texttt{INT}       &                      & No   & \texttt{PK}, \texttt{FK} $\longrightarrow$ \texttt{PRODUCTS}     &                   &               & Identificador de producto. \\               
+%     \hline
+%     \texttt{SALE\_DETAIL}       & \texttt{quantity}    & \texttt{INT}       &                      & No   &                                                                &                   & \texttt{CHECK >= 0}    & Cantidad vendida de producto. \\
+%     \hline
+%     \texttt{SALE\_DETAIL}       & \texttt{unitPrice}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Precio unitario, precio de venta del producto. \\
+%     \hline
+%     \texttt{SALE\_DETAIL}       & \texttt{totalSale}   & \texttt{DECIMAL}   & (10,2)               & No   &                                                                &                   & \texttt{CHECK >= 0}    & Monto total de venta. \\                  
+%     \hline
+% \end{tabular}
+% \caption{Diccionario de datos por atributo}
+% \label{tab:diccionario-atributo}
+% \end{sidewaystable}
 
 \section*{}
 \addcontentsline{toc}{section}{}
