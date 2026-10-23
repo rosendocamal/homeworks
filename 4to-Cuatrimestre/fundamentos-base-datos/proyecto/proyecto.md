@@ -568,7 +568,7 @@ La **segunda forma normal (2FN)** implica que las claves primarias, en este dise
 
 La **tercera forma normal (3FN)** implica el mantener los datos descriptivos en sus tablas correspondientes y referenciarlos mediante claves, evitando que atributos no clave dependan de otros atributos no clave. Es decir, que datos que se puedan calcular, recalcular y obtener mediante ciertas operaciones como las aritméticas cuyos operandos sean los mismos atributos no claves no deberían almacenarse en las tablas, basta con conservar los operandos sin registrar el resultado. Esto no ocurre en este diseño de base de datos, o al menos en la mayor parte de los atributos. Esto se ha dejado así (como los cálculos de costos, detalles de ventas, cálculo de stock) para facilitar el registro y consulta de datos para la generación de reportes que requiera la tienda comercial.
 
-Por lo tanto, no se cumple la **3FN** de forma estricta, mientras que **1FN** y **2FN** sí. Dado que no se normalizó de manera deliberada bajo la tercera forma normal por decisiones de diseño, el esquema relacional está normalizado hasta donde corresponde.
+Por lo tanto, no se cumple la **3FN** de forma estricta, mientras que **1FN** y **2FN** sí. Dado que no se normalizó, de manera deliberada, bajo la tercera forma normal por decisiones de diseño, el esquema relacional está normalizado hasta donde corresponde.
 
 ### Esquema Relacional
 
