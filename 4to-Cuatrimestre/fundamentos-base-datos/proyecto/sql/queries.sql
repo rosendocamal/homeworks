@@ -1,4 +1,4 @@
--- CONSULTAS SOLICITADAS
+-- OPERACIONES SOLICITADAS POR LA TIENDA
 -- Listado de todos los productos registrados.
 SELECT
 	PRODUCTS.id AS "NO.",
@@ -20,9 +20,20 @@ FROM PRODUCTS
 INNER JOIN CATEGORIES
 ON PRODUCTS.categoryId = CATEGORIES.id
 WHERE
-	PRODUCTS.name = "NAME_INPUT" OR -- Reemplazar NAME_INPUT.
-	CATEGORIES.category = "CATEGORY_INPUT" -- Reemplazar CATEGORY_INPUT.
-ORDER BY PRODUCTS.name asc;
+	PRODUCTS.name = "REFRESCO COLA 600ML" -- Reemplazar valor de nombre.
+ORDER BY PRODUCTS.name asc; -- Búsqueda por nombre.
+
+SELECT
+	PRODUCTS.id AS "NO.",
+	PRODUCTS.sku AS "SKU",
+	PRODUCTS.name AS "PRODUCTO",
+	CATEGORIES.category AS "CATEGORÍA"
+FROM PRODUCTS
+INNER JOIN CATEGORIES
+ON PRODUCTS.categoryId = CATEGORIES.id
+WHERE
+	CATEGORIES.category = "ALIMENTOS Y BEBIDAS" -- Reemplazar valor de categoría.
+ORDER BY PRODUCTS.name asc; -- Búsqueda por categoría.
 
 -- Consulta de las ventas realizadas.
 SELECT
@@ -52,7 +63,7 @@ LIMIT 100; -- Se puede modificar este límite.
 SELECT
 	SUM(amount) AS "VENTAS DEL PERIODO (MXN)"
 FROM SALES
-WHERE fullDate >= "YYYY-MM-DD" AND fullDate < "YYYY-MM-DD"; -- Las fechas son entradas del usuario. La fecha final es excluyente, la fecha final es el día siguiente del fin de periodo.
+WHERE fullDate >= "2026-01-01" AND fullDate < "2027-01-01"; -- Las fechas son entradas del usuario. La fecha final es excluyente, la fecha final es el día siguiente del fin de periodo.
 
 -- Identificación de productos con existencias bajas.
 SELECT
@@ -73,7 +84,7 @@ FROM SALES
 INNER JOIN CUSTOMERS
 ON SALES.customerId = CUSTOMERS.id
 WHERE
-	CUSTOMERS.id = INT_INPUT -- Reemplazar INT_INPUT.
+	CUSTOMERS.id = 1 -- Reemplazar valor de ID.
 ORDER BY fullDate DESC
 LIMIT 1000000;
 
@@ -85,11 +96,11 @@ FROM SALES
 INNER JOIN CUSTOMERS
 ON SALES.customerId = CUSTOMERS.id
 WHERE
-	CUSTOMERS.name = "NAME_INPUT" -- Reemplazar NAME_INPUT.
+	CUSTOMERS.name = "PÚBLICO GENERAL" -- Reemplazar valor de nombre.
 ORDER BY fullDate DESC
 LIMIT 1000000;
 
--- RETO ADICIONAL. Generación de un reporte [no se especificarán los detalles aquí]
+-- Generación de un reporte [no se especificarán los detalles aquí]
 SELECT
 	PRODUCTS.id AS "NO.",
 	PRODUCTS.sku AS "SKU",
@@ -104,7 +115,7 @@ GROUP BY PRODUCTS.id
 ORDER BY PRODUCTS.name ASC
 LIMIT 1000000; -- Límite modificable.
 
--- CONSULTAS SECUNDARIAS
+-- OTRAS TIPOS DE CONSULTAS
 -- Vista de Productos
 SELECT
 	PRODUCTS.id AS "NO.",
@@ -246,7 +257,7 @@ SELECT
 	PRODUCTS.name AS "PRODUCTO",
 	SALE_DETAIL.quantity AS "CANTIDAD VENDIDA",
 	SALE_DETAIL.unitPrice AS "PRECIO UNITARIO",
-	SALE_DETAIL.totalSale AS "TOTAL DEL PRODUCTO (MXN)",
+	SALE_DETAIL.totalSale AS "TOTAL DEL PRODUCTO (MXN)"
 FROM SALE_DETAIL
 INNER JOIN SALES
 ON SALE_DETAIL.ticket = SALES.id

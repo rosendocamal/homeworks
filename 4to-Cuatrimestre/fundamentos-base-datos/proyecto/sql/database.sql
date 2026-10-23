@@ -1,9 +1,13 @@
--- BASES DE DATOS
-
+-- GESTIÓN DE LA BASE DE DATOS
 CREATE DATABASE IF NOT EXISTS PURCHASE_SALE_MANAGEMENT; -- Crear la base de datos.
 
 USE PURCHASE_SALE_MANAGEMENT; -- Seleccionar la base de datos anteriormente creada.
 
+SELECT DATABASE(); -- Verificamos que base de datos tenemos seleccionada.
+
+
+
+-- CREACIÓN DE LAS TABLAS
 -- Tabla de Categorías
 CREATE TABLE IF NOT EXISTS CATEGORIES (
 	id INT AUTO_INCREMENT,
@@ -12,7 +16,6 @@ CREATE TABLE IF NOT EXISTS CATEGORIES (
 	PRIMARY KEY (id)
 );
 
--- TABLAS
 -- Tabla de Productos
 CREATE TABLE IF NOT EXISTS PRODUCTS (
 	id INT AUTO_INCREMENT,
@@ -129,6 +132,7 @@ CREATE TABLE IF NOT EXISTS SALE_DETAIL (
 	FOREIGN KEY (ticket) REFERENCES SALES(id),
 	FOREIGN KEY (productId) REFERENCES PRODUCTS(id)
 );
+
 
 
 -- CARGA DE DATOS
@@ -266,11 +270,12 @@ VALUES
 	(10, 20, 9, 174.30, 1568.70); -- Se añade productos a cada pedido, también es necesario primero utilizar las consultas secundarias para ver catálogo de productos.
 
 UPDATE ORDERS
-SET ORDERS.costOrder = (
-	SELECT SUM(ORDER_DETAIL.totalCost)
-	FROM ORDER_DETAIL
-	WHERE ORDER_DETAIL.orderId = ORDERS.id
-); -- Se actualiza los valores de los pedidos.
+SET costOrder = COALESCE((
+    SELECT SUM(ORDER_DETAIL.totalCost)
+    FROM ORDER_DETAIL
+    WHERE ORDER_DETAIL.orderId = ORDERS.id
+), 0)
+WHERE id > 0; -- Se actualiza los valores de los pedidos.
 
 -- Recepción de mercancías.
 INSERT INTO ENTRIES (orderId, reference, fullDate, costEntry)
@@ -310,18 +315,24 @@ VALUES
 	(10, 20, 9, 174.30, 1568.70); -- Se añaden productos recibidos, también es necesario primero utilizar las consultas secundarias de pedido y catálogo de proveedores.
 	
 UPDATE ENTRIES
-SET ENTRIES.costEntry = (
-	SELECT SUM(ENTRY_DETAIL.totalCost)
-	FROM ENTRY_DETAIL
-	WHERE ENTRY_DETAIL.entryId = ENTRIES.id
-); -- Se actualiza los costos de productos recibidos.
+SET costEntry = COALESCE((
+    SELECT SUM(ENTRY_DETAIL.totalCost)
+    FROM ENTRY_DETAIL
+    WHERE ENTRY_DETAIL.entryId = ENTRIES.id
+), 0)
+WHERE id > 0; -- Se actualiza los costos de productos recibidos.
 
 -- Actualización de mercancías.
 UPDATE PRODUCTS
-JOIN ENTRY_DETAIL
-ON PRODUCTS.id = ENTRY_DETAIL.productId
-SET PRODUCTS.stock = PRODUCTS.stock + ENTRY_DETAIL.quantity 
-WHERE ENTRY_DETAIL.entryId IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10); -- Se actualiza el stock usando los números de recepción.
+JOIN (
+    SELECT productId, SUM(quantity) AS receivedQuantity
+    FROM ENTRY_DETAIL
+    WHERE entryId IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    GROUP BY productId
+) AS received
+    ON PRODUCTS.id = received.productId
+SET PRODUCTS.stock = PRODUCTS.stock + received.receivedQuantity
+WHERE PRODUCTS.id > 0; -- Se actualiza el stock usando los números de recepción.
 
 -- Se ejecuta varias ventas.
 INSERT INTO SALES (fullDate, customerId, amount)
@@ -371,15 +382,21 @@ VALUES
 	(10, 20, 1, 249.00, 249.00); -- Se genera los detalles de las ventas.
 	
 UPDATE SALES
-SET SALES.amount = (
-	SELECT SUM(SALE_DETAIL.totalSale)
-	FROM SALE_DETAIL
-	WHERE SALE_DETAIL.ticket = SALES.id
-); -- Se actualiza el monto de venta.
+SET amount = COALESCE((
+    SELECT SUM(SALE_DETAIL.totalSale)
+    FROM SALE_DETAIL
+    WHERE SALE_DETAIL.ticket = SALES.id
+), 0)
+WHERE id > 0; -- Se actualiza el monto de venta.
 
 -- Actualización del stock.
 UPDATE PRODUCTS
-JOIN SALE_DETAIL
-ON PRODUCTS.id = SALE_DETAIL.productId
-SET PRODUCTS.stock = PRODUCTS.stock - SALE_DETAIL.quantity 
-WHERE SALE_DETAIL.ticket IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10); -- Se actualiza el stock usando los tickets.
+JOIN (
+    SELECT productId, SUM(quantity) AS soldQuantity
+    FROM SALE_DETAIL
+    WHERE ticket IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    GROUP BY productId
+) AS sold
+    ON PRODUCTS.id = sold.productId
+SET PRODUCTS.stock = PRODUCTS.stock - sold.soldQuantity
+WHERE PRODUCTS.id > 0; -- Se actualiza el stock usando los tickets.
