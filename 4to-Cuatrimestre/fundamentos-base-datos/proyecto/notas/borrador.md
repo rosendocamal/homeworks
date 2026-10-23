@@ -1,7 +1,7 @@
 ---
 title: Proyecto final de Fundamentos de bases de datos
 author: Rosendo Camal
-teacher: Emmanuel Andrés Martínez Lopéz
+teacher: Emmanuel Andrés Martínez López
 bachelor: Ingeniería en Sistemas Computacionales
 period: 4to Cuatrimestre
 date: 2026-10-21
@@ -681,7 +681,7 @@ Se han identificado 11 entidades para el modelo relacional para la base de datos
 | -------------------- | ------------------------------------------------------------------------------------------------ |
 | Nombre               | `PRODUCTS`                                                                                       |
 | Descripción          | Los artículos que vende una tienda, que adquiere el cliente y fabrica o distribuye un proveedor. |
-| Clave(s) primaria(s) | `id`                                                                                      |
+| Clave(s) primaria(s) | `id`                                                                                             |
 | Clave(s) foránea(s)  | `categoryId`                                                                                     |
 
 | Campo                | Contenido                                                                              |
@@ -1555,6 +1555,4 @@ ORDER BY SALES.fullDate DESC, CUSTOMERS.name, PRODUCTS.name;
 
 # Evidencias de Ejecución y resultado
 
-Los *scripts* se ejecutaron sin errores ni interrupciones. La creación de la base de datos, la definición de tablas, la carga de datos y las consultas solicitadas y adicionales se efectuaron sin detalles alguno.
-
-![[evidencia-2026-10-22-22-50-30.png]]![[evidencia-2026-10-22-22-51-00.png]]![[evidencia-2026-10-22-22-59-11.png]]
+Los *scripts* se ejecutaron sin errores ni interrupciones. La creación de la base de datos, la definición de tablas, la carga de datos y las consultas solicitadas y adicionales se efectuaron sin detalles alguno. **Incluir una captura de pantalla por cada consulta realizada a la base de datos. La finalidad es demostrar que la consulta cumple lo que pretender obtener.**
