@@ -33,7 +33,7 @@ Los empleados de la empresa deben poder ejecutar las siguientes operaciones[^+]:
 - Utilización de operaciones de inserción y consulta de datos.
 - Generación de un reporte[^\*] que muestre los productos vendidos, las cantidades, los precios y el importe total vendido por producto.
 
-Los puntos o conceptos más importantes de la problemática de la tienda son: `base de datos`, `productos`, `proveedores`, `clientes`, `ventas`, `detalles de ventas`, `generación de reportes`, `operaciones en la base de datos`. Estos conceptos son el núcleo de lo que el usuario (la tienda comercial) solicita como fundamental y crítico en su petición. Por lo que se comprende que la tienda no requiere control relacionado con la gestión de empleados, nómina, contabilidad y otras áreas de operación y administración. En síntesis, la tienda requiere una base de datos para apoyar a su **proceso o ciclo de compra-venta**. 
+Los puntos o conceptos más importantes de la problemática de la tienda son: `base de datos`, `productos`, `proveedores`, `clientes`, `ventas`, `detalles de ventas`, `generación de reportes`, `operaciones en la base de datos`. Estos conceptos son el núcleo de lo que el usuario (la tienda comercial) solicita como fundamental y crítico en su petición. Por lo que se comprende que la tienda no requiere control relacionado con la gestión de empleados, nómina, contabilidad y otras áreas de operación y administración. Y también, se asumirá la operación de una sola tienda, la moneda será el **peso mexicano**, la zona horaria se considerará como base el horario de la ciudad de **Cancún**. En síntesis, la tienda requiere una base de datos para apoyar a su **proceso o ciclo de compra-venta**. 
 
 [^+]: La mayoría de las operaciones no son descritas con precisión ni claridad. Se asumirán primero reglas intuitivas y sencillas, lo demás detalles serán tratados en la fase pertinente.
 
@@ -394,8 +394,7 @@ Veáse listado de atributos de las entidades asociativas en la sección **Atribu
 
 ### Diagrama Entidad-Relación
 
-> [!IMPORTANT]
-> **FALTA EL DIAGRAMA DE ENTIDAD RELACIÓN CON NOTACIÓN DE PETER CHEN**
+![[erDiagram.drawio.svg]]
 
 ## Modelo Relacional
 
@@ -1000,6 +999,163 @@ CREATE TABLE IF NOT EXISTS SALE_DETAIL (
 );
 ```
 
+### Inserción fundamental de datos
+
+Inserción fundamental de datos para dejar habilitada la base de datos para su primer y posteriores usos. Para operar la tienda primero debe definir las categorías de productos, dar de alta los productos y después a los proveedores. Una vez hecho esto, ya podemos generar el catálogo de los proveedores y la lista de clientes.
+
+```sql
+-- Registrar categorías, sola la categoría GENERAL es obligatoria al principio.
+INSERT INTO CATEGORIES (category)
+VALUES
+	("ALIMENTOS Y BEBIDAS"),
+	("ALIMENTOS FRESCOS"),
+	("CUIDADO PERSONAL Y BELLEZA"),
+	("LIMPIEZA DEL HOGAR"),
+	("MODA, ROPA Y CALZADO"),
+	("ELECTRÓNICA Y TECNOLOGÍA"),
+	("ELECTRODOMÉSTICOS Y HOGAR"),
+	("FARMACIA Y SALUD"),
+	("MASCOTAS"),
+	("JUGUETERÍA Y ENTRETENIMIENTO"),
+	("GENERAL");
+
+-- Registrar productos, aquí es necesario los productos para poder vender.
+INSERT INTO PRODUCTS (sku, name, salePrice, stock, categoryId)
+VALUES
+	("AB-001", "REFRESCO COLA 600ML", 18.50, 0, 1),  
+	("AB-002", "ARROZ EXTRA GRANO ENTERO 1KG", 24.00, 0, 1),  
+	("FR-001", "PLATANO TABASCO KG", 29.90, 0, 2),  
+	("FR-002", "LECHE ENTERA PASTEURIZADA 1L", 27.50, 0, 2),  
+	("CP-001", "CHAMPU CONTROL CASPA 400ML", 65.00, 0, 3),  
+	("CP-002", "PASTA DENTAL MAX FRESCURA 100ML", 32.50, 0, 3),  
+	("LH-001", "DETERGENTE LIQ ROPA COLOR 1L", 48.00, 0, 4),  
+	("LH-002", "PAPEL HIGIENICO MULTIROLLO 4PZ", 35.00, 0, 4),  
+	("MR-001", "PLAYERA CABALLERO ALGODON G", 129.00, 0, 5),  
+	("MR-002", "TENIS DEPORTIVO NEGRO MULTITALLA", 599.00, 0, 5),  
+	("ET-001", "SMART TV LED 43 PULGADAS 4K", 4499.00, 0, 6),  
+	("ET-002", "CABLE DE CARGA USB C A C 1M", 99.00, 0, 6),  
+	("EH-001", "LICUADORA 2 VELOCIDADES VASO VIDRIO", 450.00, 0, 7),  
+	("EH-002", "HORNO DE MICROONDAS 0.7P3 GRIS", 1399.00, 0, 7),  
+	("FS-001", "PARACETAMOL TABLETAS 500MG 20PZ", 25.00, 0, 8),  
+	("FS-002", "ALCOHOL GEL ANTIBACTERIAL 500ML", 42.00, 0, 8),  
+	("PM-001", "ALIMENTO PERRO ADULTO RAZA MDA 2KG", 185.00, 0, 9),  
+	("PM-002", "ARENA GATO CONTROL OLOR 5KG", 120.00, 0, 9),  
+	("JE-001", "JUEGO DE MESA ESTRATEGIA FAMILIAR", 299.00, 0, 10),  
+	("JE-002", "MUNECA ARTICULADA CON ACCESORIOS", 249.00, 0, 10);
+
+-- Registrar proveedores.
+INSERT INTO SUPPLIERS (name, email, phoneNumber)
+VALUES
+	("DISTRIBUIDORA DE ABARROTES SA", "contacto@distribuidora.abarrotes.com.mx", "525551111234"),  
+	("ALIMENTOS FRESCOS DEL CAMPO", "ventas@alimentosfrescoscampo.com.mx", "525552222345"),  
+	("PRODUCTOS DE BELLEZA CORPORAL", "info@bellezacorporal.com.mx", "525553333456"),  
+	("QUIMICOS Y LIMPIEZA NACIONAL", "contacto@quimicoslimpieza.com.mx", "525554444567"),  
+	("TEXTILES Y MODA MAYORISTA", "ventas@textilesymodamayorista.com", "525555555678"),  
+	("TECNOLOGIA Y ELECTRONICA MX", "soporte@tecnologiamx.com.mx", "525556666789"),  
+	("ELECTRODOMESTICOS DEL HOGAR", "comercial@electrodomesticoshogar.com", "525557777890"),  
+	("FARMACEUTICA Y SALUD GLOBAL", "contacto@farmaceuticasalud.com.mx", "525558888901"),  
+	("LOGISTICA Y NUTRICION ANIMAL", "ventas@nutricionanimal.com.mx", "525559999012"),  
+	("DISTRIBUIDORA DE JUGUETES MEX", "info@juguetesmex.com.mx", "525550000123");
+	
+-- Registrar Catálogo de Proveedores, primero se debe tener a la mano los números de proveedor y su producto.
+SELECT * FROM SUPPLIERS; -- Para ver identificadores de proveedor.
+SELECT * FROM PRODUCTS; -- Para ver identificadores de producto.
+
+INSERT INTO SUPPLIER_CATALOGO (supplierId, productId, unitCost)
+VALUES
+	(1, 1, 12.95),
+	(1, 2, 16.80),
+	(2, 3, 20.93),
+	(2, 4, 19.25),
+	(3, 5, 45.50),
+	(3, 6, 22.75),
+	(4, 7, 33.60),
+	(4, 8, 24.50),
+	(5, 9, 90.30),
+	(5, 10, 419.30),
+	(6, 11, 3149.30),
+	(6, 12, 69.30),
+	(7, 13, 315.00),
+	(7, 14, 979.30),
+	(8, 15, 17.50),
+	(8, 16, 29.40),
+	(9, 17, 129.50),
+	(9, 18, 84.00),
+	(10, 19, 209.30),
+	(10, 20, 174.30);
+	
+-- Registrar Clientes, solo el cliente general es obligatorio.
+INSERT INTO CUSTOMERS (name, email, phoneNumber)
+VALUES
+	("PÚBLICO GENERAL", "null@tiendacomercial.com", "000000000000"),
+	("MARIA RODRIGUEZ LOPEZ", "maria.rodriguez@email.com", "525552345678"),
+	("ALEJANDRO MARTINEZ DIAZ", "alejandro.martinez@email.com", "525553456789"),
+	("ANA HERNANDEZ SILVA", "ana.hernandez@email.com", "525554567890"),  
+	("CARLOS RAMIREZ TORRES", "carlos.ramirez@email.com", "525555678901"),  
+	("LAURA FLORES CASTRO", "laura.flores@email.com", "525556789012"),  
+	("REGINA SANCHEZ RUIZ", "regina.sanchez@email.com", "525557890123"),  
+	("DIEGO ESPINOZA MEJIA", "diego.espinoza@email.com", "525558901234"),  
+	("SOFIA MORALES ORTIZ", "sofia.morales@email.com", "525559012345"),
+	("JAVIER GUTIERREZ REYES", "javier.gutierrez@email.com", "525550123456");
+```
+
+Una vez hecho lo anterior, debemos generar pedidos a los proveedores, recibir mercancía y modificar las existencias de los productos. En paralelo, se generan los detalles de los primeros pedidos, luego el de la recepción. Con ello tenemos listo el stock para vender.
+
+```sql
+-- Realización de un pedido y generación de su detalle.
+SELECT * FROM SUPPLIERS; -- Número de proveedor
+
+INSERT INTO ORDERS (supplierId, fullDate, costOrder)
+VALUES
+	(1, NOW(), 0.00),
+	(2, NOW(), 0.00),
+	(3, NOW(), 0.00),
+	(4, NOW(), 0.00),
+	(5, NOW(), 0.00),
+	(6, NOW(), 0.00),
+	(7, NOW(), 0.00),
+	(8, NOW(), 0.00),
+	(9, NOW(), 0.00),
+	(10, NOW(), 0.00); -- Se genera varios pedidos sin solicitar productos.
+
+INSERT INTO ORDER_DETAIL (orderId, productId, quantity, unitCost, totalCost)
+VALUES
+	(1, 1, 10, 12.95, 129.50),
+	(1, 2, 5, 16.80, 84.00),
+	(2, 3, 15, 20.93, 313.95),
+	(2, 4, 20, 19.25, 385.00),
+	(3, 5, 8, 45.50, 364.00),
+	(3, 6, 12, 22.75, 273.00),
+	(4, 7, 6, 33.60, 201.60),
+	(4, 8, 25, 24.50, 612.50),
+	(5, 9, 15, 90.30, 1354.50),
+	(5, 10, 4, 419.30, 1677.20),
+	(6, 11, 2, 3149.30, 6298.60),
+	(6, 12, 50, 69.30, 3465.00),
+	(7, 13, 10, 315.00, 3150.00),
+	(7, 14, 3, 979.30, 2937.90),
+	(8, 15, 40, 17.50, 700.00),
+	(8, 16, 30, 29.40, 882.00),
+	(9, 17, 12, 129.50, 1554.00),
+	(9, 18, 18, 84.00, 1512.00),
+	(10, 19, 7, 209.30, 1465.10),
+	(10, 20, 9, 174.30, 1568.70); -- Se añade productos a cada pedido.
+
+UPDATE ORDERS
+SET ORDERS.costOrder = (
+	SELECT SUM(ORDER_DETAIL)
+	FROM ORDER_DETAIL
+	WHERE ORDER_DETAIL.orderId = ORDERS.id
+); -- Se actualiza los valores de los pedidos.
+
+-- Recepción de mercancías.
+``` 
+
+Se realiza una venta, luego se genera el detalle de una venta. A partir de aquí se puede realizar las operaciones del proceso de compra-venta: pedidos (y sus detalles), recepciones (y sus detalles), alta de proveedores y productos, alta de clientes, ventas (y detalles). Las correcciones y bajas de pedidos, recepciones, productos, clientes y ventas aún no se pueden realizar de manera fiable. Sin embargo, se listará la modificación de stock en los productos por ser relevante para realizar ventas.
+
+```sql
+```
+
 ### Operaciones solicitadas por la empresa
 
 ```sql
@@ -1262,43 +1418,4 @@ ON SALES.customerId = CUSTOMERS.id
 INNER JOIN PRODUCTS
 ON SALE_DETAIL.productId = PRODUCTS.id
 ORDER BY SALES.fullDate DESC, CUSTOMERS.name, PRODUCTS.name;
-```
-
-### Operaciones de inserción de datos
-
-```sql
--- Ingreso de datos a categorías
--- Ingreso de datos de productos
--- Ingreso de datos de proveedores
--- Ingreso de datos de pedidos
--- Ingreso de datos de recepciones
--- Ingreso de datos de clientes
--- Ingreso de datos de ventas
--- Creación de catálogo de proveedor
--- Creación de detalles de recepción
--- Creación de detalles de pedido
--- Creación de detalles de venta
--- Existencias de mercancía (PRODUCTS.stock)
-```
-
-### Inserción fundamental de datos
-
-```sql
--- Primera inserción de datos para dejar habilitada la base de datos y lista para su uso.
-```
-
-### Inserción masiva de datos
-
-```sql
--- Inserción de 10 categorías de productos
--- Inserción de 10 productos
--- Inserción de 10 proveedores
--- Inserción de 10 pedidos
--- Inserción de 10 recepciones
--- Inserción de 10 clientes
--- Inserción de 10 ventas
--- Inserción de 10 catalogos de proveedor
--- Inserción de 10 detalles de recepciones
--- Inserción de 10 detalles de pedidos
--- Inserción de 10 detales de venta
 ```
