@@ -394,7 +394,7 @@ Veáse listado de atributos de las entidades asociativas en la sección **Atribu
 
 ### Diagrama Entidad-Relación
 
-![[erDiagram.drawio.svg]]
+![](img/erDiagram.drawio.svg)
 
 ## Modelo Relacional
 
@@ -1528,3 +1528,5 @@ INNER JOIN PRODUCTS
 ON SALE_DETAIL.productId = PRODUCTS.id
 ORDER BY SALES.fullDate DESC, CUSTOMERS.name, PRODUCTS.name;
 ```
+
+# Evidencias de Ejecución y resultado
