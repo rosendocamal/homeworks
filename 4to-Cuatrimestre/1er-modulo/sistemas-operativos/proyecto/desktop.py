@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 import time
 
 class Desktop:
@@ -96,8 +96,8 @@ class Desktop:
         self.update_clock()
 
   
-        self.create_icon("ŧ\nNote", self.open_note)
-        self.create_icon("ð\nCalc", self.open_calc)
+        self.create_icon("ŧ\nObsidian", self.open_note)
+        self.create_icon("ð\nCalculadora", self.open_calc)
 
     def update_clock(self):
         clock = time.strftime("%H:%M:%S")
@@ -127,6 +127,10 @@ class Desktop:
                     self.desktop.destroy()
                     self.taskbar.destroy()
                     time.sleep(2)
+                    
+
+                    import os
+                    os.system('reboot')
             case 'POWER OFF':
                 answer = messagebox.askyesno("POWER OFF", "¿You want to shutdown now?")
                 if answer:
@@ -136,49 +140,21 @@ class Desktop:
                     time.sleep(0.5)
                     self.taskbar.destroy()
                     time.sleep(1)
+
+
+                    import os
+                    os.system('shutdown now')
             case _:
                 pass
 
     def open_note(self):
-        note_windows = tk.Toplevel(self.root, bg="#DB8FFA")
-        note_windows.title("NOTE")
-        note_windows.geometry("600x700")
-        area_txt = tk.Text(note_windows, font=("Arial", 12))
-        area_txt.pack(fill=tk.BOTH, expand=True)
+        import os
+        os.system('flatpak run md.obsidian.Obsidian &')
 
     def open_calc(self):
-        calc_windows = tk.Toplevel(self.root)
-        calc_windows.title("CALC")
-        calc_windows.geometry("600x700")
-        calc_windows.resizable(False, False)
-        
-        screen = tk.Entry(calc_windows, font=("Arial", 20), justify="right", bd=5, relief="sunken")
-        screen.pack(fill=tk.X, padx=10, pady=10)
-        
-        grid_btn = tk.Frame(calc_windows)
-        grid_btn.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
-        
-        buttons = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', 'C', '0', '=', '+']
-        
-        def press_btn(value):
-            if value == "C": screen.delete(0, tk.END)
-            elif value == "=":
-                try:
-                    result = eval(screen.get())
-                    screen.delete(0, tk.END)
-                    screen.insert(tk.END, str(result))
-                except Exception:
-                    screen.delete(0, tk.END)
-                    screen.insert(tk.END, "ERROR")
-            else: screen.insert(tk.END, value)
-
-        row, column = 0, 0
-        for btn in buttons:
-            cmd = lambda x=btn: press_btn(x)
-            tk.Button(grid_btn, text=btn, font=("Arial", 14), command=cmd, height=2, width=4).grid(row=row, column=column, padx=2, pady=2)
-            column += 1
-            if column > 3: column, row = 0, row + 1
-
+        import os
+        os.system('gnome-calculator &')
+  
 if __name__ == "__main__":
     root = tk.Tk()
     app = Desktop(root)

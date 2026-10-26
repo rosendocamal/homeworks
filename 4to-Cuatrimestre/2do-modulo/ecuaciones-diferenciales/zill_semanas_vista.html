@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zill · Capítulos por semana y ejercicios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   Zill · Capítulos por semana y ejercicios
+   ------------------------------------------------------------------ */
+
+:root {
+  --ink: #1e2230;
+  --muted: #5e6472;
+  --rule: #ddd7c9;
+  --paper: #f6f3ec;
+  --page: #fbf9f4;
+  --card: #ffffff;
+  --navy: #0f1e2e;
+  --gold: #b8903c;
+  --gold-t: #efe6cf;
+  --phy: #8c3b2b;
+  --phy-t: #f7ece8;
+  --phy-m: #d4a496;
+
+  --d: #3a4052;
+  --d-t: #eef0f4;
+  --i: #1f8a8a;
+  --i-ink: #146464;
+  --i-t: #e0f2f1;
+  --i-b: #9ed2cf;
+  --c: #c9821a;
+  --c-ink: #8a5206;
+  --c-t: #fbefd9;
+  --c-b: #e8c58a;
+
+  --serif: "Lora", Georgia, "Times New Roman", serif;
+  --sans: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --shadow: 0 1px 2px rgba(15, 30, 46, .06), 0 8px 24px rgba(15, 30, 46, .06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8e9ee;
+    --muted: #a3a9b6;
+    --rule: #2f3645;
+    --paper: #1a202c;
+    --page: #121722;
+    --card: #181e2a;
+    --gold: #d4ad5d;
+    --gold-t: #2b2619;
+    --phy: #e0907d;
+    --phy-t: #2d1a16;
+    --phy-m: #7a3f33;
+    --d: #c3c8d4;
+    --d-t: #262d3b;
+    --i-ink: #7ad3cf;
+    --i-t: #10302f;
+    --i-b: #1f6663;
+    --c-ink: #f2c06e;
+    --c-t: #33250c;
+    --c-b: #7a5518;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+main, footer { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+small { font-size: .78em; }
+
+/* ---------------------------------------------------------------- portada */
+.cover {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px) 0 0 / 24px 100%,
+    var(--navy);
+  color: #fff;
+  padding: 72px 24px 120px;
+}
+.cover-in { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+.eyebrow {
+  margin: 0 0 18px;
+  font: 500 12px/1 var(--sans);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #d4ad5d;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 36px; height: 3px;
+  background: #d4ad5d;
+  vertical-align: middle;
+  margin-right: 14px;
+}
+.cover h1 {
+  margin: 0;
+  max-width: 17ch;
+  font: 700 clamp(34px, 5.6vw, 58px)/1.08 var(--serif);
+  letter-spacing: -.01em;
+}
+.src {
+  margin: 26px 0 0;
+  max-width: 62ch;
+  font-size: 15px;
+  color: #b9c4d0;
+}
+.wave { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 110px; }
+.wave path { fill: none; stroke-linecap: round; }
+.wave .env { stroke: #d4ad5d; stroke-width: 1.2; stroke-dasharray: 3 5; opacity: .75; transform: translateY(-4px); }
+.wave .w1 { stroke: #6db3e0; stroke-width: 2.4; }
+
+/* ---------------------------------------------------------------- navegación */
+.top {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; gap: 6px; flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px 16px;
+  background: color-mix(in srgb, var(--page) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.top a {
+  font: 500 12px/1 var(--sans);
+  letter-spacing: .06em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: background .15s, color .15s;
+}
+.top a:hover { background: var(--phy-t); color: var(--phy); }
+
+/* ---------------------------------------------------------------- títulos de sección */
+main h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 56px 0 22px;
+  font: 700 28px/1.15 var(--serif);
+  color: var(--ink);
+}
+main h2 span {
+  font: 600 12px/1 var(--sans);
+  letter-spacing: .18em;
+  color: var(--gold);
+}
+
+/* ---------------------------------------------------------------- panorama */
+.ovgrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+.ov {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 14px 14px 13px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--phy);
+  border-radius: 10px;
+  transition: transform .15s, box-shadow .15s;
+}
+a.ov:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.ov .ow { font: 700 24px/1 var(--serif); color: var(--phy); }
+.ov .oc { font: 600 12px/1.3 var(--sans); color: var(--ink); margin-top: 6px; }
+.ov .op { font: 400 11px/1.3 var(--sans); color: var(--muted); }
+.ov.off { border-top-color: var(--rule); border-style: dashed; background: transparent; }
+.ov.off .ow { color: var(--muted); }
+.aviso {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  background: var(--gold-t);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  font-size: 14.5px;
+}
+
+/* ---------------------------------------------------------------- leyenda */
+.legrid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
+.lcard {
+  padding: 18px 20px 16px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+}
+.lcard h5 {
+  margin: 0 0 12px;
+  font: 600 11px/1 var(--sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lcard ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lcard li { display: flex; gap: 12px; align-items: baseline; font-size: 14.5px; }
+.lcard li .badge { flex: none; min-width: 112px; text-align: center; }
+.mini { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+
+/* ---------------------------------------------------------------- semanas */
+.weeks { display: grid; gap: 40px; margin-top: 56px; }
+.week {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--phy);
+  border-radius: 14px;
+  padding: 26px 28px 30px;
+  box-shadow: var(--shadow);
+}
+.wh { display: grid; grid-template-columns: auto 1fr; gap: 20px 24px; align-items: center; }
+.wn {
+  width: 72px; height: 72px;
+  display: grid; place-content: center; text-align: center;
+  background: var(--navy);
+  border-radius: 12px;
+  color: #fff;
+}
+.wn small { font: 500 9px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: #d4ad5d; }
+.wn b { font: 700 34px/1 var(--serif); margin-top: 4px; }
+.wt h3 { margin: 0; font: 700 21px/1.25 var(--serif); }
+.proj { margin: 8px 0 0; font-size: 14.5px; color: var(--muted); }
+.proj span {
+  font: 600 10px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--gold); margin-right: 10px;
+}
+.wstats {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+  margin: 6px 0 0;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 10px; overflow: hidden;
+}
+.wstats div { background: var(--phy-t); padding: 10px 14px 11px; }
+.wstats dt { font: 500 10px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.wstats dd { margin: 6px 0 0; font: 700 20px/1.1 var(--serif); color: var(--phy); }
+.wstats div:first-child dd { font-size: 17px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 4px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 13px;
+  background: var(--page);
+  transition: border-color .15s, background .15s;
+}
+.chip:hover { border-color: var(--phy); background: var(--phy-t); }
+.chip b {
+  display: grid; place-content: center;
+  min-width: 26px; height: 26px; padding: 0 4px;
+  border-radius: 999px;
+  background: var(--phy); color: #fff;
+  font: 600 12px/1 var(--sans);
+}
+.chip span { max-width: 30ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------------------------------------------------------------- capítulo */
+.chap { margin-top: 30px; }
+.chh {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px;
+  padding-bottom: 10px; margin-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.cn { font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--phy); }
+.chh h4 { margin: 0; font: 700 18px/1.3 var(--serif); }
+.cp { font: 400 12px/1 var(--sans); color: var(--muted); margin-left: auto; }
+.tagprev {
+  font: 600 10px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase;
+  padding: 5px 9px; border: 1px solid var(--gold); color: var(--gold); border-radius: 999px;
+}
+
+.tbl { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.row {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.45fr) 148px 132px minmax(120px, .85fr) minmax(210px, 1.55fr);
+  align-items: start;
+  border-bottom: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+}
+.row:last-child { border-bottom: 0; }
+.cell { padding: 11px 12px; min-width: 0; font-size: 14px; }
+.row.hd {
+  background: var(--phy);
+  border-left-color: var(--phy);
+  color: #fff;
+}
+.row.hd .cell {
+  padding: 9px 12px;
+  font: 500 10px/1.2 var(--sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.row.hd small { letter-spacing: .02em; text-transform: none; opacity: .75; font-size: 9px; }
+.row.p { border-left-color: var(--phy); background: color-mix(in srgb, var(--phy-t) 55%, transparent); }
+.row.c { border-left-color: var(--phy-m); }
+.row.o { border-left-color: transparent; }
+.row.o .cell, .row.n .cell { color: var(--muted); }
+.row.o .sec .st, .row.n .sec .st { font-weight: 400; }
+.row.n { font-style: italic; }
+
+.sec { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.sec .sn { font: 700 12px/1.4 var(--sans); color: var(--phy); letter-spacing: .02em; }
+.row.o .sec .sn, .row.n .sec .sn { color: var(--muted); font-weight: 600; }
+.sec .st { font: 600 14px/1.35 var(--serif); flex: 1 1 100%; order: 3; color: var(--ink); }
+.row.o .sec .st, .row.n .sec .st { color: var(--muted); }
+.sec .pg { font: 400 11px/1.4 var(--sans); color: var(--muted); }
+
+.cnt { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cnt b { font: 700 14px/1 var(--serif); min-width: 20px; }
+.bar { display: flex; width: 54px; height: 8px; border-radius: 4px; overflow: hidden; background: var(--rule); gap: 1px; }
+.bar i { display: block; height: 100%; }
+.bar i.d { background: var(--d); }
+.bar i.i { background: var(--i); }
+.bar i.c { background: var(--c); }
+.cnt small { font: 400 10px/1 var(--sans); color: var(--muted); letter-spacing: .02em; }
+
+.badge {
+  display: inline-block;
+  font: 600 10px/1 var(--sans);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 6px 10px 5px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.badge.p { background: var(--phy); color: #fff; }
+.badge.c { background: transparent; color: var(--phy); border: 1px solid var(--phy); padding: 5px 9px 4px; }
+.badge.o { background: transparent; color: var(--muted); border: 1px dashed var(--muted); padding: 5px 9px 4px; }
+.badge.n { background: transparent; color: var(--muted); font-weight: 500; padding-left: 0; }
+.lcard .badge.n { display: none; }
+
+.num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 22px; padding: 0 6px; margin: 2px 4px 2px 0;
+  border-radius: 6px;
+  font: 600 12px/1 var(--sans);
+  border: 1px solid transparent;
+}
+.num.d { background: var(--d-t); color: var(--d); }
+.num.i { background: var(--i-t); color: var(--i-ink); border-color: var(--i-b); }
+.num.c { background: var(--c-t); color: var(--c-ink); border-color: var(--c-b); }
+.ex { line-height: 1.1; }
+.none { color: var(--muted); }
+.why { color: var(--ink); font-size: 13.5px; line-height: 1.5; }
+.row.o .why, .row.n .why { color: var(--muted); }
+.why sub { font-size: .7em; }
+
+.adic {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px;
+  margin-top: 10px; padding: 9px 14px;
+  background: var(--paper);
+  border-radius: 8px;
+  font-size: 13px; color: var(--muted);
+}
+.adic .al { font: 600 10px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.adic .num { margin: 0 2px; }
+
+/* ---------------------------------------------------------------- fuera del temario */
+.outl { list-style: none; margin: 0; padding: 0; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--card); }
+.outl li {
+  display: grid; grid-template-columns: 76px minmax(0, 1.4fr) 110px minmax(0, 1.6fr);
+  gap: 12px; align-items: baseline;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+.outl li:last-child { border-bottom: 0; }
+.outl b { font: 700 12px/1 var(--sans); color: var(--phy); letter-spacing: .06em; text-transform: uppercase; }
+.outl .ot { font-weight: 600; }
+.outl .op { font: 400 11px/1 var(--sans); color: var(--muted); }
+.outl .on { color: var(--muted); }
+
+footer { padding-top: 40px; padding-bottom: 56px; }
+footer p { margin: 0; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--muted); }
+
+/* ---------------------------------------------------------------- adaptación */
+@media (max-width: 1020px) {
+  .ovgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .legrid { grid-template-columns: 1fr; }
+  .row { grid-template-columns: minmax(180px, 1.3fr) 130px 120px minmax(110px, .8fr); }
+  .row .why { grid-column: 1 / -1; padding-top: 0; padding-left: 12px; }
+  .row.hd .cell:last-child { display: none; }
+}
+
+@media (max-width: 720px) {
+  main, footer { padding: 0 16px; }
+  .cover { padding: 52px 16px 100px; }
+  .ovgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .week { padding: 20px 16px 22px; border-radius: 12px; }
+  .wh { grid-template-columns: 1fr; }
+  .wstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cp { margin-left: 0; flex-basis: 100%; }
+  .row.hd { display: none; }
+  .row { display: block; padding: 12px 10px 12px 12px; }
+  .row .cell { padding: 4px 0; }
+  .row .cell[data-l]::before {
+    content: attr(data-l);
+    display: block;
+    font: 600 9px/1 var(--sans);
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .row.o .cell.ex, .row.n .cell.ex, .row.n .cell.cnt-c, .row.n .cell.dec { display: none; }
+  .row .why { padding-left: 0; }
+  .outl li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+@media print {
+  .top, .wave { display: none; }
+  body { background: #fff; font-size: 12px; }
+  .cover { background: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 32px 24px 40px; }
+  .week { box-shadow: none; break-inside: auto; }
+  .row, .chh { break-inside: avoid; }
+  .row, .badge, .num, .bar i, .wn, .wstats div, .chip b { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  main h2 { margin-top: 28px; }
+}
+
+.num.rg { padding: 0 9px; }
+.cnt .imp { font: 400 11px/1.3 var(--sans); color: var(--muted); margin-left: 8px; }
+
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-in">
+    <p class="eyebrow">Differential Equations · Módulo de ocho semanas</p>
+    <h1>Capítulos por semana y secciones con ejercicios</h1>
+    <p class="src">Zill, <i>Ecuaciones diferenciales con aplicaciones de modelado</i>, novena edición (Cengage, 2009).
+    La numeración de capítulos, secciones y problemas corresponde a esta edición.</p>
+  </div>
+  <svg class="wave" viewBox="0 0 800 140" preserveAspectRatio="none" aria-hidden="true">
+    <path class="env" d="M0 70 C 60 -10, 120 -10, 180 70 S 300 130, 360 70 S 470 20, 520 70 S 610 100, 650 70 S 720 60, 800 70" />
+    <path class="w1" d="M0 70 C 50 -20, 110 -20, 170 70 S 290 150, 350 70 S 460 10, 510 70 S 600 108, 645 70 S 715 56, 800 70" />
+  </svg>
+</header>
+
+<nav class="top" aria-label="Semanas">
+  <a href="#panorama">Panorama</a>
+  <a href="#s1">S1</a><a href="#s2">S2</a><a href="#s3">S3</a><a href="#s4">S4</a><a href="#s5">S5</a><a href="#s6">S6</a><a href="#s7">S7</a>
+  <a href="#fuera">Fuera del temario</a>
+</nav>
+
+<main>
+
+<section id="panorama" class="pan">
+  <h2><span>01</span>Panorama</h2>
+  <div class="ovgrid"><a class="ov" href="#s1"><span class="ow">S1</span><span class="oc">Cap. 1, 2</span><span class="op">70 págs.</span></a><a class="ov" href="#s2"><span class="ow">S2</span><span class="oc">Cap. 2, 3, 9</span><span class="op">44 págs.</span></a><a class="ov" href="#s3"><span class="ow">S3</span><span class="oc">Cap. 4, 5</span><span class="op">29 págs.</span></a><a class="ov" href="#s4"><span class="ow">S4</span><span class="oc">Cap. 4, 5</span><span class="op">32 págs.</span></a><a class="ov" href="#s5"><span class="ow">S5</span><span class="oc">Cap. 7</span><span class="op">39 págs.</span></a><a class="ov" href="#s6"><span class="ow">S6</span><span class="oc">Cap. 8, 7</span><span class="op">38 págs.</span></a><a class="ov" href="#s7"><span class="ow">S7</span><span class="oc">Cap. 3, 4, 5, 9</span><span class="op">29 págs.</span></a></div>
+</section>
+
+<section class="leg">
+  <h2><span>02</span>Lectura de la tabla</h2>
+  <div class="legrid">
+    <div class="lcard">
+      <h5>Decisión</h5>
+      <ul>
+        <li><span class="badge p">Prioritaria</span> Sección cuyos problemas sostienen el proyecto semanal o un tema que la semana exige.</li>
+        <li><span class="badge c">Complementaria</span> Aporta práctica útil, con menor retorno o con solapamiento.</li>
+        <li><span class="badge o">Omitir</span> Bastan la lectura y los ejemplos resueltos.</li>
+      </ul>
+    </div>
+    <div class="lcard">
+      <h5>Tipo de ejercicio</h5>
+      <ul>
+        <li><span class="num rg d">1–10</span> Procedimiento: resolver o calcular.</li>
+        <li><span class="num rg i">1–10</span> Análisis y verificación: comprobar, justificar, clasificar.</li>
+        <li><span class="num rg c">1–10</span> Modelado y cómputo: aplicaciones, SAC y solucionador numérico.</li>
+      </ul>
+      <p class="mini">Zill no codifica la dificultad de los problemas; los rangos recomendados provienen de las instrucciones de cada bloque. Las respuestas de los problemas con número impar se encuentran al final del libro.</p>
+    </div>
+  </div>
+</section>
+
+<div class="weeks">
+<section class="week" id="s1"><header class="wh"><div class="wn"><small>Semana</small><b>1</b></div><div class="wt"><h3>Ecuaciones separables, lineales, exactas y con factor integrante; campos de direcciones; existencia y unicidad</h3><p class="proj"><span>Proyecto</span>Seis ecuaciones, seis métodos</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>1, 2</dd></div><div><dt>Páginas</dt><dd>70</dd></div><div><dt>Prioritarias</dt><dd>5</dd></div><div><dt>Complementarias</dt><dd>2</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 1"><a class="chip" href="#s1-c1"><b>1</b><span>Introducción a las ecuaciones diferenciales</span></a><a class="chip" href="#s1-c2"><b>2</b><span>Ecuaciones diferenciales de primer orden</span></a></nav><article class="chap" id="s1-c1"><header class="chh"><span class="cn">Cap. 1</span><h4>Introducción a las ecuaciones diferenciales</h4><span class="cp">30 págs. de lectura y ejercicios</span><span class="tagprev">Lectura previa</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">1.1</span><span class="st">Definiciones y terminología</span><span class="pg">pp. 2–12</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>60</b><small>30 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg i" title="Problemas 15–24 · Análisis y verificación">15–24</span><span class="num rg i" title="Problemas 33–38 · Análisis y verificación">33–38</span></div><div class="cell why" role="cell" data-l="Motivo">Verificar por sustitución es el control de calidad de todo el módulo (checkodesol).</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">1.2</span><span class="st">Problemas con valores iniciales</span><span class="pg">pp. 13–18</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>45</b><small>23 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg i" title="Problemas 17–28 · Análisis y verificación">17–28</span></div><div class="cell why" role="cell" data-l="Motivo">Región de existencia y unicidad: tema explícito de la semana.</div></div><div class="row o" role="row"><div class="cell sec" role="cell"><span class="sn">1.3</span><span class="st">Ecuaciones diferenciales como modelos matemáticos</span><span class="pg">pp. 19–31</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>35</b><small>18 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge o">Omitir</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="none">—</span></div><div class="cell why" role="cell" data-l="Motivo">Introducción al modelado; la práctica se concentra en los problemas del capítulo 3.</div></div></div></article><article class="chap" id="s1-c2"><header class="chh"><span class="cn">Cap. 2</span><h4>Ecuaciones diferenciales de primer orden</h4><span class="cp">40 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.1</span><span class="st">Curvas solución sin una solución: campos direccionales</span><span class="pg">pp. 35–43</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>42</b><small>21 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–12 · Modelado y cómputo">1–12</span></div><div class="cell why" role="cell" data-l="Motivo">Campos de direcciones generados por computadora, requeridos por el proyecto S1; las autónomas (21–30) se trabajan en S2.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.2</span><span class="st">Variables separables</span><span class="pg">pp. 44–52</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>52</b><small>26 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–22 · Procedimiento">1–22</span><span class="num rg d" title="Problemas 23–30 · Procedimiento">23–30</span></div><div class="cell why" role="cell" data-l="Motivo">Primer método del proyecto S1; 22 ejercicios de separación y ocho problemas con valores iniciales.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.3</span><span class="st">Ecuaciones lineales</span><span class="pg">pp. 53–61</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>50</b><small>25 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–24 · Procedimiento">1–24</span><span class="num rg d" title="Problemas 25–34 · Procedimiento">25–34</span></div><div class="cell why" role="cell" data-l="Motivo">Factor integrante lineal; segundo método del proyecto S1.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.4</span><span class="st">Ecuaciones exactas</span><span class="pg">pp. 62–69</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>46</b><small>23 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 21–26 · Procedimiento">21–26</span><span class="num rg d" title="Problemas 31–38 · Procedimiento">31–38</span></div><div class="cell why" role="cell" data-l="Motivo">Ecuaciones exactas y factor integrante. Los problemas 1–20 se limitan a decidir si la ecuación es exacta.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.5</span><span class="st">Soluciones por sustitución</span><span class="pg">pp. 70–74</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>38</b><small>19 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–14 · Procedimiento">1–14</span><span class="num rg d" title="Problemas 15–30 · Procedimiento">15–30</span></div><div class="cell why" role="cell" data-l="Motivo">Sustituciones homogéneas y de Bernoulli, ambas incluidas en el proyecto S1.</div></div></div></article></section><section class="week" id="s2"><header class="wh"><div class="wn"><small>Semana</small><b>2</b></div><div class="wt"><h3>Modelado; ecuaciones autónomas; equilibrios, estabilidad y bifurcaciones; métodos de Euler y de Runge–Kutta</h3><p class="proj"><span>Proyecto</span>Logística con cosecha constante</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>2, 3, 9</dd></div><div><dt>Páginas</dt><dd>44</dd></div><div><dt>Prioritarias</dt><dd>5</dd></div><div><dt>Complementarias</dt><dd>0</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 2"><a class="chip" href="#s2-c2"><b>2</b><span>Ecuaciones diferenciales de primer orden</span></a><a class="chip" href="#s2-c3"><b>3</b><span>Modelado con ecuaciones diferenciales de primer orden</span></a><a class="chip" href="#s2-c9"><b>9</b><span>Soluciones numéricas de ecuaciones diferenciales ordinarias</span></a></nav><article class="chap" id="s2-c2"><header class="chh"><span class="cn">Cap. 2</span><h4>Ecuaciones diferenciales de primer orden</h4><span class="cp">12 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.1.2</span><span class="st">ED de primer orden autónomas</span><span class="pg">pp. 37–43</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>10</b><small>5 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 21–30 · Procedimiento">21–30</span></div><div class="cell why" role="cell" data-l="Motivo">Puntos críticos y esquema de fase: base del análisis de equilibrios y estabilidad del proyecto S2.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">2.6</span><span class="st">Un método numérico</span><span class="pg">pp. 75–79</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>14</b><small>7 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–12 · Modelado y cómputo">1–12</span></div><div class="cell why" role="cell" data-l="Motivo">Método de Euler con solucionador numérico: primer paso del estudio del error global en el proyecto S2.</div></div></div></article><article class="chap" id="s2-c3"><header class="chh"><span class="cn">Cap. 3</span><h4>Modelado con ecuaciones diferenciales de primer orden</h4><span class="cp">22 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row o" role="row"><div class="cell sec" role="cell"><span class="sn">3.1</span><span class="st">Modelos lineales</span><span class="pg">pp. 83–93</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>48</b><small>24 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge o">Omitir</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="none">—</span></div><div class="cell why" role="cell" data-l="Motivo">Decaimiento, enfriamiento y mezclas: aplicaciones directas de las lineales de S1; el proyecto S2 emplea modelos no lineales.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">3.2</span><span class="st">Modelos no lineales</span><span class="pg">pp. 94–104</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>35</b><small>18 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–35 · Modelado y cómputo">1–35</span></div><div class="cell why" role="cell" data-l="Motivo">Ecuación logística y sus variantes: antecede al proyecto S2 (logística con cosecha constante). Se recomienda toda la sección.</div></div></div></article><article class="chap" id="s2-c9"><header class="chh"><span class="cn">Cap. 9</span><h4>Soluciones numéricas de ecuaciones diferenciales ordinarias</h4><span class="cp">10 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">9.1</span><span class="st">Métodos de Euler y análisis de errores</span><span class="pg">pp. 340–344</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>21</b><small>11 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–21 · Modelado y cómputo">1–21</span></div><div class="cell why" role="cell" data-l="Motivo">Error local y global de Euler; el proyecto S2 mide el orden de convergencia.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">9.2</span><span class="st">Métodos de Runge–Kutta</span><span class="pg">pp. 345–349</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>22</b><small>11 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 3–12 · Modelado y cómputo">3–12</span></div><div class="cell why" role="cell" data-l="Motivo">RK4 con distintos pasos; contraparte de Euler en el proyecto S2.</div></div></div></article></section><section class="week" id="s3"><header class="wh"><div class="wn"><small>Semana</small><b>3</b></div><div class="wt"><h3>Ecuaciones lineales de segundo orden homogéneas; ecuación característica; Wronskiano; reducción de orden</h3><p class="proj"><span>Proyecto</span>Masa–resorte–amortiguador: regímenes</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>4, 5</dd></div><div><dt>Páginas</dt><dd>29</dd></div><div><dt>Prioritarias</dt><dd>4</dd></div><div><dt>Complementarias</dt><dd>0</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 3"><a class="chip" href="#s3-c4"><b>4</b><span>Ecuaciones diferenciales de orden superior</span></a><a class="chip" href="#s3-c5"><b>5</b><span>Modelado con ecuaciones diferenciales de orden superior</span></a></nav><article class="chap" id="s3-c4"><header class="chh"><span class="cn">Cap. 4</span><h4>Ecuaciones diferenciales de orden superior</h4><span class="cp">22 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.1</span><span class="st">Teoría preliminar: ecuaciones lineales</span><span class="pg">pp. 118–129</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>42</b><small>21 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg i" title="Problemas 15–22 · Análisis y verificación">15–22</span><span class="num rg i" title="Problemas 23–30 · Análisis y verificación">23–30</span><span class="num rg i" title="Problemas 31–34 · Análisis y verificación">31–34</span></div><div class="cell why" role="cell" data-l="Motivo">Independencia lineal y conjuntos fundamentales: soporte del Wronskiano exigido en el proyecto S3.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.2</span><span class="st">Reducción de orden</span><span class="pg">pp. 130–132</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>23</b><small>12 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–16 · Procedimiento">1–16</span><span class="num rg d" title="Problemas 17–20 · Procedimiento">17–20</span></div><div class="cell why" role="cell" data-l="Motivo">Segunda solución a partir de una conocida; contenido explícito de la semana.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.3</span><span class="st">Ecuaciones lineales homogéneas con coeficientes constantes</span><span class="pg">pp. 133–139</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>60</b><small>30 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–28 · Procedimiento">1–28</span><span class="num rg d" title="Problemas 29–42 · Procedimiento">29–42</span></div><div class="cell why" role="cell" data-l="Motivo">Ecuación auxiliar y sus tres tipos de raíces: los tres regímenes del proyecto S3.</div></div></div></article><article class="chap" id="s3-c5"><header class="chh"><span class="cn">Cap. 5</span><h4>Modelado con ecuaciones diferenciales de orden superior</h4><span class="cp">7 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">5.1.1–5.1.2</span><span class="st">Movimiento libre: no amortiguado y amortiguado (5.1.1–5.1.2)</span><span class="pg">pp. 182–188</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>28</b><small>14 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–28 · Modelado y cómputo">1–28</span></div><div class="cell why" role="cell" data-l="Motivo">Sistemas resorte/masa de los tres regímenes: aplicación inmediata del proyecto S3. Los problemas 1–28 cubren 5.1.1 y 5.1.2.</div></div></div></article></section><section class="week" id="s4"><header class="wh"><div class="wn"><small>Semana</small><b>4</b></div><div class="wt"><h3>Ecuaciones no homogéneas: coeficientes indeterminados y variación de parámetros; vibraciones forzadas y resonancia</h3><p class="proj"><span>Proyecto</span>Oscilador forzado por dos métodos</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>4, 5</dd></div><div><dt>Páginas</dt><dd>32</dd></div><div><dt>Prioritarias</dt><dd>3</dd></div><div><dt>Complementarias</dt><dd>1</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 4"><a class="chip" href="#s4-c4"><b>4</b><span>Ecuaciones diferenciales de orden superior</span></a><a class="chip" href="#s4-c5"><b>5</b><span>Modelado con ecuaciones diferenciales de orden superior</span></a></nav><article class="chap" id="s4-c4"><header class="chh"><span class="cn">Cap. 4</span><h4>Ecuaciones diferenciales de orden superior</h4><span class="cp">22 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.4</span><span class="st">Coeficientes indeterminados: método de superposición</span><span class="pg">pp. 140–149</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>47</b><small>24 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–26 · Procedimiento">1–26</span><span class="num rg d" title="Problemas 27–36 · Procedimiento">27–36</span></div><div class="cell why" role="cell" data-l="Motivo">Primer método del proyecto S4; 36 ejercicios de solución general y con valores iniciales.</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">4.5</span><span class="st">Coeficientes indeterminados: método del anulador</span><span class="pg">pp. 150–156</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>73</b><small>37 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 35–64 · Procedimiento">35–64</span></div><div class="cell why" role="cell" data-l="Motivo">Mismo problema por el enfoque del operador anulador; contraste útil con 4.4.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.6</span><span class="st">Variación de parámetros</span><span class="pg">pp. 157–161</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>34</b><small>17 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–18 · Procedimiento">1–18</span><span class="num rg d" title="Problemas 19–22 · Procedimiento">19–22</span></div><div class="cell why" role="cell" data-l="Motivo">Segundo método del proyecto S4.</div></div></div></article><article class="chap" id="s4-c5"><header class="chh"><span class="cn">Cap. 5</span><h4>Modelado con ecuaciones diferenciales de orden superior</h4><span class="cp">10 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">5.1.3–5.1.4</span><span class="st">Movimiento forzado y circuito en serie análogo (5.1.3–5.1.4)</span><span class="pg">pp. 189–198</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>30</b><small>15 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 29–44 · Modelado y cómputo">29–44</span><span class="num rg c" title="Problemas 45–58 · Modelado y cómputo">45–58</span></div><div class="cell why" role="cell" data-l="Motivo">Batimiento, resonancia y circuito LRC: contenido central del proyecto S4. Los problemas 29–58 cubren 5.1.3 y 5.1.4.</div></div></div></article></section><section class="week" id="s5"><header class="wh"><div class="wn"><small>Semana</small><b>5</b></div><div class="wt"><h3>Transformada de Laplace; función escalón y delta de Dirac; convolución; función de transferencia</h3><p class="proj"><span>Proyecto</span>Sistema de segundo orden con Laplace</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>7</dd></div><div><dt>Páginas</dt><dd>39</dd></div><div><dt>Prioritarias</dt><dd>4</dd></div><div><dt>Complementarias</dt><dd>1</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 5"><a class="chip" href="#s5-c7"><b>7</b><span>La transformada de Laplace</span></a></nav><article class="chap" id="s5-c7"><header class="chh"><span class="cn">Cap. 7</span><h4>La transformada de Laplace</h4><span class="cp">39 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">7.1</span><span class="st">Definición de la transformada de Laplace</span><span class="pg">pp. 256–261</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>48</b><small>24 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 19–40 · Procedimiento">19–40</span></div><div class="cell why" role="cell" data-l="Motivo">Uso de la tabla de transformadas; basta con los ejercicios del teorema.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">7.2</span><span class="st">Transformadas inversas y transformadas de derivadas</span><span class="pg">pp. 262–269</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>46</b><small>23 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–30 · Procedimiento">1–30</span><span class="num rg d" title="Problemas 31–42 · Procedimiento">31–42</span></div><div class="cell why" role="cell" data-l="Motivo">Fracciones parciales y solución de problemas con valores iniciales: requisitos del proyecto S5.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">7.3</span><span class="st">Propiedades operacionales I</span><span class="pg">pp. 270–281</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>83</b><small>42 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 21–30 · Procedimiento">21–30</span><span class="num rg d" title="Problemas 55–70 · Procedimiento">55–70</span><span class="num rg c" title="Problemas 73–74 · Modelado y cómputo">73–74</span></div><div class="cell why" role="cell" data-l="Motivo">Traslaciones y funciones escalón; los problemas 73–74 resuelven la carga en un capacitor.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">7.4</span><span class="st">Propiedades operacionales II</span><span class="pg">pp. 282–291</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>64</b><small>32 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 9–14 · Procedimiento">9–14</span><span class="num rg d" title="Problemas 37–46 · Procedimiento">37–46</span><span class="num rg c" title="Problemas 47–48 · Modelado y cómputo">47–48</span><span class="num rg c" title="Problemas 55–58 · Modelado y cómputo">55–58</span></div><div class="cell why" role="cell" data-l="Motivo">Convolución y ecuaciones integrales; los problemas 47–48 y 55–58 la aplican a circuitos y a un sistema resorte/masa forzado.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">7.5</span><span class="st">La función delta de Dirac</span><span class="pg">pp. 292–294</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>15</b><small>8 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–12 · Procedimiento">1–12</span></div><div class="cell why" role="cell" data-l="Motivo">Respuesta al impulso: parte del proyecto S5.</div></div></div></article></section><section class="week" id="s6"><header class="wh"><div class="wn"><small>Semana</small><b>6</b></div><div class="wt"><h3>Sistemas lineales; autovalores y autovectores; plano de fase; exponencial matricial</h3><p class="proj"><span>Proyecto</span>Retratos de fase de sistemas lineales</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>8, 7</dd></div><div><dt>Páginas</dt><dd>38</dd></div><div><dt>Prioritarias</dt><dd>3</dd></div><div><dt>Complementarias</dt><dd>2</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 6"><a class="chip" href="#s6-c8"><b>8</b><span>Sistemas de ecuaciones diferenciales lineales de primer orden</span></a><a class="chip" href="#s6-c7"><b>7</b><span>La transformada de Laplace</span></a></nav><article class="chap" id="s6-c8"><header class="chh"><span class="cn">Cap. 8</span><h4>Sistemas de ecuaciones diferenciales lineales de primer orden</h4><span class="cp">33 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">8.1</span><span class="st">Teoría preliminar: sistemas lineales</span><span class="pg">pp. 304–310</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>26</b><small>13 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg i" title="Problemas 7–24 · Análisis y verificación">7–24</span></div><div class="cell why" role="cell" data-l="Motivo">Notación matricial y verificación de soluciones; el proyecto S6 parte de X′ = AX.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">8.2</span><span class="st">Sistemas lineales homogéneos</span><span class="pg">pp. 311–325</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>52</b><small>26 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 19–28 · Procedimiento">19–28</span><span class="num rg d" title="Problemas 33–46 · Procedimiento">33–46</span></div><div class="cell why" role="cell" data-l="Motivo">Eigenvalores reales, repetidos y complejos: clasifican el nodo, el foco, la silla y el centro del proyecto S6.</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">8.3</span><span class="st">Sistemas lineales no homogéneos</span><span class="pg">pp. 326–333</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>35</b><small>18 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–8 · Procedimiento">1–8</span><span class="num rg d" title="Problemas 11–30 · Procedimiento">11–30</span></div><div class="cell why" role="cell" data-l="Motivo">Extensión forzada de 8.2; no requerida por el proyecto S6.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">8.4</span><span class="st">Matriz exponencial</span><span class="pg">pp. 334–336</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>25</b><small>13 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 3–12 · Procedimiento">3–12</span><span class="num rg d" title="Problemas 15–24 · Procedimiento">15–24</span></div><div class="cell why" role="cell" data-l="Motivo">Cálculo de e<sup>At</sup>, contrastable con scipy.linalg.expm en el proyecto S6.</div></div></div></article><article class="chap" id="s6-c7"><header class="chh"><span class="cn">Cap. 7</span><h4>La transformada de Laplace</h4><span class="cp">5 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">7.6</span><span class="st">Sistemas de ecuaciones diferenciales lineales (Laplace)</span><span class="pg">pp. 295–299</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>20</b><small>10 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg d" title="Problemas 1–12 · Procedimiento">1–12</span></div><div class="cell why" role="cell" data-l="Motivo">Resolución de sistemas por transformada, alternativa a 8.2.</div></div></div></article></section><section class="week" id="s7"><header class="wh"><div class="wn"><small>Semana</small><b>7</b></div><div class="wt"><h3>Sistemas no lineales; linealización y matriz Jacobiana; estabilidad de Lyapunov; stiffness</h3><p class="proj"><span>Proyecto</span>Van der Pol y stiffness</p></div><dl class="wstats"><div><dt>Capítulos</dt><dd>3, 4, 5, 9</dd></div><div><dt>Páginas</dt><dd>29</dd></div><div><dt>Prioritarias</dt><dd>3</dd></div><div><dt>Complementarias</dt><dd>2</dd></div></dl></header><nav class="chips" aria-label="Capítulos de la semana 7"><a class="chip" href="#s7-c3"><b>3</b><span>Modelado con ecuaciones diferenciales de primer orden</span></a><a class="chip" href="#s7-c4"><b>4</b><span>Ecuaciones diferenciales de orden superior</span></a><a class="chip" href="#s7-c5"><b>5</b><span>Modelado con ecuaciones diferenciales de orden superior</span></a><a class="chip" href="#s7-c9"><b>9</b><span>Soluciones numéricas de ecuaciones diferenciales ordinarias</span></a></nav><article class="chap" id="s7-c3"><header class="chh"><span class="cn">Cap. 3</span><h4>Modelado con ecuaciones diferenciales de primer orden</h4><span class="cp">8 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">3.3</span><span class="st">Modelado con sistemas de ED de primer orden</span><span class="pg">pp. 105–112</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>21</b><small>11 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–21 · Modelado y cómputo">1–21</span></div><div class="cell why" role="cell" data-l="Motivo">Sistemas con aplicaciones (incluye el modelo depredador–presa de Lotka–Volterra): primer contacto con sistemas no lineales.</div></div></div></article><article class="chap" id="s7-c4"><header class="chh"><span class="cn">Cap. 4</span><h4>Ecuaciones diferenciales de orden superior</h4><span class="cp">4 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">4.9</span><span class="st">Ecuaciones diferenciales no lineales</span><span class="pg">pp. 174–177</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>18</b><small>9 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg i" title="Problemas 1–16 · Análisis y verificación">1–16</span></div><div class="cell why" role="cell" data-l="Motivo">Reducción de orden de ecuaciones no lineales y soluciones en serie; paso previo a la linealización.</div></div></div></article><article class="chap" id="s7-c5"><header class="chh"><span class="cn">Cap. 5</span><h4>Modelado con ecuaciones diferenciales de orden superior</h4><span class="cp">9 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">5.3</span><span class="st">Modelos no lineales</span><span class="pg">pp. 207–215</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>24</b><small>12 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 1–24 · Modelado y cómputo">1–24</span></div><div class="cell why" role="cell" data-l="Motivo">Resortes no lineales y péndulo no lineal: contexto físico de la linealización del proyecto S7.</div></div></div></article><article class="chap" id="s7-c9"><header class="chh"><span class="cn">Cap. 9</span><h4>Soluciones numéricas de ecuaciones diferenciales ordinarias</h4><span class="cp">8 págs. de lectura y ejercicios</span></header><div class="tbl" role="table"><div class="row hd" role="row"><div class="cell" role="columnheader">Sección</div><div class="cell" role="columnheader">Problemas</div><div class="cell" role="columnheader">Decisión</div><div class="cell" role="columnheader">Ejercicios</div><div class="cell" role="columnheader">Motivo</div></div><div class="row c" role="row"><div class="cell sec" role="cell"><span class="sn">9.3</span><span class="st">Métodos multipasos</span><span class="pg">pp. 350–352</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>8</b><small>4 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge c">Complementaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 3–8 · Modelado y cómputo">3–8</span></div><div class="cell why" role="cell" data-l="Motivo">Adams–Bashforth–Moulton: método predictor–corrector, alternativa a RK4.</div></div><div class="row p" role="row"><div class="cell sec" role="cell"><span class="sn">9.4</span><span class="st">Ecuaciones y sistemas de orden superior</span><span class="pg">pp. 353–357</span></div><div class="cell cnt-c" role="cell" data-l="Problemas"><div class="cnt"><b>12</b><small>6 con respuesta</small></div></div><div class="cell dec" role="cell" data-l="Decisión"><span class="badge p">Prioritaria</span></div><div class="cell ex" role="cell" data-l="Ejercicios"><span class="num rg c" title="Problemas 3–12 · Modelado y cómputo">3–12</span></div><div class="cell why" role="cell" data-l="Motivo">Paso de una ecuación de segundo orden a un sistema y su integración numérica: estructura del proyecto S7 (Van der Pol).</div></div></div></article></section>
+</div>
+
+<section id="fuera" class="out">
+  <h2><span>03</span>Fuera del temario</h2>
+  <ul class="outl"><li><b>4.7–4.8</b><span class="ot">Ecuación de Cauchy–Euler y sistemas por eliminación</span><span class="op">pp. 162–173</span><span class="on">Fuera del temario semanal.</span></li><li><b>5.2</b><span class="ot">Problemas con valores en la frontera</span><span class="op">pp. 199–206</span><span class="on">Fuera del temario semanal.</span></li><li><b>Cap. 6</b><span class="ot">Soluciones en series de ecuaciones lineales</span><span class="op">pp. 219–252</span><span class="on">Sin semana asignada.</span></li><li><b>9.5</b><span class="ot">Problemas con valores en la frontera de segundo orden</span><span class="op">pp. 358–361</span><span class="on">Fuera del temario semanal.</span></li></ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Zill, <i>Ecuaciones diferenciales con aplicaciones de modelado</i>, 9.ª ed. · Páginas según la numeración impresa del libro; en el PDF, página impresa + 16.</p>
+</footer>
+
+</body>
+</html>
