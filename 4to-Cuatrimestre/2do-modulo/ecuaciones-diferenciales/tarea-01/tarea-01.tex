@@ -81,7 +81,7 @@
     \item \emph{Verifica si \(y = e^{2x}\) es una solución de la ecuación diferencial \(\frac{dy}{dx} = 2y\).}
 \end{itemize}
 
-Sea la ecuación diferencial
+Sea la ecuación
 \[ y = e^{2x}. \]
 
 Tenemos que
@@ -92,9 +92,12 @@ Tenemos que
 \end{align*}
 
 Dado que \(y = e^{2x}\), sustituimos:
-\[ \frac{d}{dx}\left( e^{2x} \right) = 2y. \]
+\begin{align*}
+    \frac{dy}{dx} &= 2y \\
+    \frac{d}{dx}\left( e^{2x} \right) &= 2(e^{2x}).
+\end{align*}
 
-Por lo tanto \(y = e^{2x}\) es una solución de \(\frac{dy}{dx} = 2y\).
+Por lo tanto, \(y = e^{2x}\) sí es una solución de \(\frac{dy}{dx} = 2y\).
 
 
 % Ejercicio 2
@@ -125,7 +128,7 @@ En esta ecuación diferencial, el término \(\frac{d^{2}y}{dx^{2}}\) contiene la
     \item \emph{¿La ecuación diferencial \(\frac{dy}{dx} + y^{2} = x\) es lineal o no lineal? Justifica tu respuesta.}
 \end{itemize}
 
-Es una \textbf{ecuación no lineal} porque a pesar que el término \(\frac{dy}{dx}\) está elevado a la primera potencia y no tiene como uno de sus factores la función \(y\), el término \(y^{2}\) no está en elevado a la potencia 1 y esto incumple la definición de ecuación lineal.
+Es una \textbf{ecuación no lineal} porque a pesar que el término \(\frac{dy}{dx}\) está elevado a la primera potencia y no tiene como uno de sus factores la función \(y\), el término \(y^{2}\) no está elevado a la potencia 1 y esto incumple la definición de ecuación lineal.
 
 % Ejercicio 5
 \subsection*{\centering Ejercicio 05 }
@@ -181,7 +184,7 @@ Después, se sustituye \(x = 1\) y \(y = 3\) en \(y = 2x^{2} + C\):
 \begin{align*}
     3 &= 2(1)^{2} + C \\
     3 &= 2 + C \\
-    C + 2 &= 3 \\
+    2 + C &= 3 \\
     C &= 3 - 2 \\
     C &= 1
 \end{align*}
@@ -234,6 +237,6 @@ Sea la función \(f(x, y) = \sqrt{y}\) y su derivada parcial:
     &= \frac{1}{2\sqrt{y}}.
 \end{align*}
 
-Dado que la derivada parcial no es continua cuando \(y = 0\) y la existencia de la función se da cuando \(y \geq 0\) el teorema no garantiza existencia ni unicidad.
+Dado que la derivada parcial no es continua cuando \(y = 0\) el teorema no garantiza existencia ni unicidad.
 
 \end{document}
